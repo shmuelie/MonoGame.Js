@@ -65,6 +65,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MonoGame.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
