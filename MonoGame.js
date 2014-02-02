@@ -100,7 +100,7 @@
 
 	Point.prototype.equals = function (obj)
 	{
-		return (obj instanceof Point) ? ((this.X == obj.X) && (this.Y == obj.Y)) : false;
+		return (obj instanceof Point) ? ((this.X === obj.X) && (this.Y === obj.Y)) : false;
 	};
 
 	Point.prototype.toString = function ()
@@ -169,7 +169,7 @@
 
 	Rectangle.prototype.equals = function (obj)
 	{
-		return (obj instanceof Rectangle) ? ((this.X == obj.X) && (this.Y == obj.Y) && (this.Width == obj.Width) && (this.Height == obj.Height)) : false;
+		return (obj instanceof Rectangle) ? ((this.X === obj.X) && (this.Y === obj.Y) && (this.Width === obj.Width) && (this.Height === obj.Height)) : false;
 	};
 
 	Rectangle.prototype.contains = function ()
