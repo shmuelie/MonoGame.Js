@@ -78,29 +78,29 @@
         Point.prototype.zero = Point_zeroPoint;
     }
 
-    Point.prototype.add = function (a, b)
+    Point.prototype.add = function (other)
     {
-        return new Point(a.X + b.X, a.Y + b.Y);
+        return new Point(this.X + other.X, this.Y + other.Y);
     };
 
-    Point.prototype.subtract = function (a, b)
+    Point.prototype.subtract = function (other)
     {
-        return new Point(a.X - b.X, a.Y - b.Y);
+        return new Point(this.X - other.X, this.Y - other.Y);
     };
 
-    Point.prototype.mutliply = function (a, b)
+    Point.prototype.mutliply = function (other)
     {
-        return new Point(a.X * b.X, a.Y * b.Y);
+        return new Point(this.X * other.X, this.Y * other.Y);
     };
 
-    Point.prototype.divide = function (a, b)
+    Point.prototype.divide = function (other)
     {
-        return new Point(a.X / b.X, a.Y / b.Y);
+        return new Point(this.X / other.X, this.Y / other.Y);
     };
 
     Point.prototype.equals = function (obj)
     {
-        return (obj instanceof Point) ? ((X == obj.X) && (Y == obj.Y)) : false;
+        return (obj instanceof Point) ? ((this.X == obj.X) && (this.Y == obj.Y)) : false;
     };
 
     Point.prototype.toString = function ()
@@ -109,4 +109,6 @@
     }
 
     //#endregion
+
+    
 })();
