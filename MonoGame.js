@@ -41,8 +41,25 @@
 
     function Point(x, y)
     {
-        this.X = x;
-        this.Y = y;
+        if (Object.defineProperty)
+        {
+            Object.defineProperty(this, "X", {
+                value: x,
+                writable: true,
+                enumerable: true,
+            });
+
+            Object.defineProperty(this, "Y", {
+                value: y,
+                writable: true,
+                enumerable: true,
+            });
+        }
+        else
+        {
+            this.X = x;
+            this.Y = y;
+        }
     }
 
     if (Object.defineProperty)
