@@ -34,4 +34,62 @@
             return obj;
         }
     }
+
+    //#region Point
+
+    var Point_zeroPoint = new Point(0, 0);
+
+    function Point(x, y)
+    {
+        this.X = x;
+        this.Y = y;
+    }
+
+    if (Object.defineProperty)
+    {
+        Object.defineProperty(Point.prototype, "zero", {
+            get: function ()
+            {
+                return Point_zeroPoint;
+            },
+            enumerable: true,
+            writable: false
+        });
+    }
+    else
+    {
+        Point.prototype.zero = Point_zeroPoint;
+    }
+
+    Point.prototype.add = function (a, b)
+    {
+        return new Point(a.X + b.X, a.Y + b.Y);
+    };
+
+    Point.prototype.subtract = function (a, b)
+    {
+        return new Point(a.X - b.X, a.Y - b.Y);
+    };
+
+    Point.prototype.mutliply = function (a, b)
+    {
+        return new Point(a.X * b.X, a.Y * b.Y);
+    };
+
+    Point.prototype.divide = function (a, b)
+    {
+        return new Point(a.X / b.X, a.Y / b.Y);
+    };
+
+    Point.prototype.equals = function (obj)
+    {
+        return (obj instanceof Point) ? ((X == obj.X) && (Y == obj.Y)) : false;
+    };
+
+    Point.prototype.toString = function ()
+    {
+        return "{X:" + this.X.toString() + " Y:" + this.Y.toString() + "}";
+    }
+
+    //#endregion
 })();
