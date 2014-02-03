@@ -1448,7 +1448,7 @@
 				enumerable: false
 			});
 			Object.defineProperty(this, "_currentDraw", {
-				value: canvas,
+				value: manager._game._display,
 				writable: true,
 				enumerable: false
 			});
@@ -1493,7 +1493,7 @@
 		else
 		{
 			this._manager = manager;
-			this._currentDraw = canvas;
+			this._currentDraw = manager._game._display;
 			viewport.x = clientBounds.left;
 			viewport.y = clientBounds.top;
 			viewport.width = clientBounds.right - clientBounds.left;
@@ -1528,16 +1528,16 @@
 	{
 		if (Object.defineProperty)
 		{
-		    Object.defineProperty(this, "_game", {
-		        value: game,
-		        writable: false,
-		        enumerable: false
-		    });
-		    Object.defineProperty(this, "graphicsDevice", {
-		        value: new GraphicsDevice(this, canvas),
-		        writable: false,
-		        enumerable: false
-		    });
+			Object.defineProperty(this, "_game", {
+				value: game,
+				writable: false,
+				enumerable: false
+			});
+			Object.defineProperty(this, "graphicsDevice", {
+				value: new GraphicsDevice(this, canvas),
+				writable: false,
+				enumerable: false
+			});
 		}
 		else
 		{
@@ -1548,5 +1548,7 @@
 	var GraphicsDeviceManager = Framework.GraphicsDeviceManager;
 
 	//#endregion
+
+	
 
 })();
