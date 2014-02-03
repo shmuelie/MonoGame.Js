@@ -1636,7 +1636,6 @@
 
 	Framework.Game = function ()
 	{
-		throw new Error("Don't Call");
 	}
 	var Game = Framework.Game;
 
@@ -1699,7 +1698,7 @@
 
 			cstr.call(this);
 		}
-		realGameConstructor.prototype = Game;
+		realGameConstructor.prototype = new Game();
 
 		return realGameConstructor;
 	};
