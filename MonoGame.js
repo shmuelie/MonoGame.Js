@@ -1595,7 +1595,8 @@
 		{
 			scale = new Vector2(scale);
 		}
-		else if (destinationRectangle instanceof Vector2)
+
+		if (destinationRectangle instanceof Vector2)
 		{
 		    destinationRectangle = new Rectangle(destinationRectangle.x, destinationRectangle.y, sourceRectangle.width * scale.x, sourceRectangle.height * scale.y);
 		}
