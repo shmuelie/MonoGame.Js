@@ -235,8 +235,6 @@
 
 	//#region Point
 
-	var Point_zeroPoint = new Point(0, 0);
-
 	Framework.Point = function (x, y)
 	{
 		if (Object.defineProperty)
@@ -260,6 +258,8 @@
 		}
 	}
 	var Point = Framework.Point;
+
+	var Point_zeroPoint = new Point(0, 0);
 
 	if (Object.defineProperty)
 	{
@@ -311,8 +311,6 @@
 
 	//#region Rectangle
 
-	var Rectangle_emptyRectangle = new Rectangle(0, 0, 0, 0);
-
 	Framework.Rectangle = function (x, y, width, height)
 	{
 		if (Object.defineProperty)
@@ -350,6 +348,8 @@
 		}
 	}
 	var Rectangle = Framework.Rectangle;
+
+	var Rectangle_emptyRectangle = new Rectangle(0, 0, 0, 0);
 
 	if (Object.defineProperty)
 	{
@@ -473,11 +473,6 @@
 
 	//#region Vector2
 
-	var Vector2_zeroVector = new Vector2(0);
-	var Vector2_unitVector = new Vector2(1);
-	var Vector2_unitXVector = new Vector2(1, 0);
-	var Vector2_unitYVector = new Vector2(0, 1);
-
 	Framework.Vector2 = function (x, y)
 	{
 		if (y === undefined)
@@ -506,6 +501,11 @@
 		}
 	}
 	var Vector2 = Framework.Vector2;
+
+	var Vector2_zeroVector = new Vector2(0);
+	var Vector2_unitVector = new Vector2(1);
+	var Vector2_unitXVector = new Vector2(1, 0);
+	var Vector2_unitYVector = new Vector2(0, 1);
 
 	if (Object.defineProperty)
 	{
@@ -697,11 +697,6 @@
 
 	//#region Matrix
 
-	var Matrix_identity = new Matrix(1, 0, 0, 0,
-									 0, 1, 0, 0,
-									 0, 0, 1, 0,
-									 0, 0, 0, 1);
-
 	Framework.Matrix = function (m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44)
 	{
 		if (Object.defineProperties)
@@ -814,6 +809,11 @@
 		}
 	}
 	var Matrix = Framework.Matrix;
+
+	var Matrix_identity = new Matrix(1, 0, 0, 0,
+									 0, 1, 0, 0,
+									 0, 0, 1, 0,
+									 0, 0, 0, 1);
 
 	if (Object.defineProperties)
 	{
