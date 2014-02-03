@@ -55,6 +55,8 @@
 	var Framework = window.Microsoft.Xna.Framework;
 	var Grapics = Framework.Graphics;
 
+	var MIN_DATE = new Date(-8640000000000000);
+
 	//#region MathHelper
 
 	Framework.MathHelper = {};
@@ -673,18 +675,18 @@
 
 	function Vector2_transform6 (sourceArray, sourceIndex, matrix, destinationArray, destinationIndex, length)
 	{
-	    for (var x = 0; x < length; x++) {
-	        var position = sourceArray[sourceIndex + x];
-	        var destination = destinationArray[destinationIndex + x];
-	        destination.X = (position.X * matrix.M11) + (position.Y * matrix.M21) + matrix.M41;
-	        destination.Y = (position.X * matrix.M12) + (position.Y * matrix.M22) + matrix.M42;
-	        destinationArray[destinationIndex + x] = destination;
-	    }
+		for (var x = 0; x < length; x++) {
+			var position = sourceArray[sourceIndex + x];
+			var destination = destinationArray[destinationIndex + x];
+			destination.X = (position.X * matrix.M11) + (position.Y * matrix.M21) + matrix.M41;
+			destination.Y = (position.X * matrix.M12) + (position.Y * matrix.M22) + matrix.M42;
+			destinationArray[destinationIndex + x] = destination;
+		}
 	}
 
 	Vector2.transformNormal = function (normal, matrix)
 	{
-	    return new Vector2((normal.X * matrix.M11) + (normal.Y * matrix.M21), (normal.X * matrix.M12) + (normal.Y * matrix.M22));
+		return new Vector2((normal.X * matrix.M11) + (normal.Y * matrix.M21), (normal.X * matrix.M12) + (normal.Y * matrix.M22));
 	};
 
 	//#endregion
@@ -1236,6 +1238,76 @@
 			 + "{M31:" + this.M31 + " M32:" + this.M32 + " M33:" + this.M33 + " M34:" + this.M34 + "}"
 			 + "{M41:" + this.M41 + " M42:" + this.M42 + " M43:" + this.M43 + " M44:" + this.M44 + "}";
 	};
+
+	//#endregion
+
+	//#region Stopwatch
+
+	Framework.Stopwatch = function ()
+	{
+		if (Object.defineProperty)
+		{
+			Object.defineProperty(this, "_startTime", {
+				value: MIN_DATE,
+				writable: true,
+				enumerable: false
+			});
+			Object.defineProperty(this, "isRunning", {
+				value: false,
+				writable: true,
+				enumerable: true
+			})
+		}
+		else
+		{
+			this._startTime = MIN_DATE;
+			this.isRunning = false;
+		}
+	};
+	var Stopwatch = Framework.Stopwatch;
+
+	Stopwatch.prototype.elapsedMilliseconds = function ()
+	{
+		if (this._startTime.getUTCMilliseconds() !== MIN_DATE.getMilliseconds())
+		{
+			var now = new Date();
+			return now.getMilliseconds() - this._startTime.getMilliseconds();
+		}
+		return 0;
+	};
+
+	Stopwatch.prototype.start = function ()
+	{
+	    if (this._startTime.getUTCMilliseconds() === MIN_DATE.getMilliseconds())
+	    {
+	        this._startTime = new Date();
+	    }
+	    this.isRunning = true;
+	};
+
+	Stopwatch.prototype.stop = function ()
+	{
+	    this.isRunning = false;
+	};
+
+	Stopwatch.prototype.reset = function ()
+	{
+	    this.stop();
+	    this._startTime = MIN_DATE;
+	};
+
+	Stopwatch.prototype.restart = function ()
+	{
+	    this.reset();
+	    this.start();
+	};
+
+	Stopwatch.StartNew = function ()
+	{
+	    var watch = new Stopwatch();
+	    watch.start();
+	    return watch;
+	}
 
 	//#endregion
 
