@@ -512,8 +512,7 @@
 			{
 				return Vector2_zeroVector;
 			},
-			enumerable: true,
-			writable: false
+			enumerable: true
 		});
 
 		Object.defineProperty(Vector2.prototype, "unitVector", {
@@ -521,8 +520,7 @@
 			{
 				return Vector2_unitVector;
 			},
-			enumerable: true,
-			writable: false
+			enumerable: true
 		});
 
 		Object.defineProperty(Vector2.prototype, "unitXVector", {
@@ -530,8 +528,7 @@
 			{
 				return Vector2_unitXVector;
 			},
-			enumerable: true,
-			writable: false
+			enumerable: true
 		});
 
 		Object.defineProperty(Vector2.prototype, "unitYVector", {
@@ -539,8 +536,7 @@
 			{
 				return Vector2_unitYVector;
 			},
-			enumerable: true,
-			writable: false
+			enumerable: true
 		});
 	}
 	else
