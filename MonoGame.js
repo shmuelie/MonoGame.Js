@@ -1414,23 +1414,111 @@
 		var spriteFont = {};
 		if (Object.defineProperty)
 		{
-		    Object.defineProperty(spriteFont, "_font", {
-		        value: style,
-		        writable: false,
-		        enumerable: false
-		    });
+			Object.defineProperty(spriteFont, "_font", {
+				value: style,
+				writable: false,
+				enumerable: false
+			});
 		}
 		else
 		{
-		    spriteFont._font = style;
+			spriteFont._font = style;
 		}
 		var $this = this;
 		spriteFont.measureString = function (text)
 		{
-		    return new Vector2($this._context.measureString(text).width, parseInt(size, 10));
+			return new Vector2($this._context.measureString(text).width, parseInt(size, 10));
 		};
 		return spriteFont;
 	};
+
+	//#endregion
+
+	//#region Graphics.GraphicsDevice
+
+	Graphics.GraphicsDevice = function (manager, canvas)
+	{
+		var clientBounds = canvas.getBoundingClientRect();
+		var viewport = {};
+		if (Object.defineProperty)
+		{
+		    Object.defineProperty(this, "_manager", {
+		        value: manager,
+		        writable: false,
+		        enumerable: false
+		    });
+		    Object.defineProperty(this, "_currentDraw", {
+		        value: null,
+		        writable: true,
+		        enumerable: false
+		    });
+		    Object.defineProperty(viewport, "x", {
+		        get: function ()
+		        {
+		            var xclientBounds = canvas.getBoundingClientRect();
+		            return xclientBounds.left;
+		        },
+		        enumerable: false
+		    });
+		    Object.defineProperty(viewport, "y", {
+		        get: function ()
+		        {
+		            var yclientBounds = canvas.getBoundingClientRect();
+		            return yclientBounds.top;
+		        },
+		        enumerable: false
+		    });
+		    Object.defineProperty(viewport, "width", {
+		        get: function ()
+		        {
+		            var widthclientBounds = canvas.getBoundingClientRect();
+		            return widthclientBounds.right - widthclientBounds.left;
+		        },
+		        enumerable: false
+		    });
+		    Object.defineProperty(viewport, "height", {
+		        get: function ()
+		        {
+		            var heightclientBounds = canvas.getBoundingClientRect();
+		            return heightclientBounds.bottom - heightclientBounds.top;
+		        },
+		        enumerable: false
+		    });
+		    Object.defineProperty(this, "viewport", {
+		        value: viewport,
+		        writable: false,
+		        enumerable: true
+		    });
+		}
+		else
+		{
+		    this._manager = manager;
+		    this._currentDraw = null;
+			viewport.x = clientBounds.left;
+			viewport.y = clientBounds.top;
+			viewport.width = clientBounds.right - clientBounds.left;
+			viewport.height = clientBounds.bottom - clientBounds.top;
+			this.viewport = viewport;
+		}
+	}
+	var GraphicsDevice = Graphics.GraphicsDevice;
+
+	GraphicsDevice.prototype.clear = function ()
+	{
+	    this._currentDraw.clearRect(0, 0, this._currentDraw.canvas.width, this._currentDraw.canvas.height);
+	};
+
+	GraphicsDevice.prototype.setRenderTarget = function (target)
+	{
+	    if (target === null)
+	    {
+	        this._currentDraw = this._manager._game._display;
+	    }
+	    else
+	    {
+	        this._currentDraw = target;
+	    }
+	}
 
 	//#endregion
 
