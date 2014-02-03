@@ -268,8 +268,7 @@
 			{
 				return Point_zeroPoint;
 			},
-			enumerable: true,
-			writable: false
+			enumerable: true
 		});
 	}
 	else
