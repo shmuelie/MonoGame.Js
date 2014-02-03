@@ -1680,7 +1680,16 @@
 					value: null,
 					writable: true,
 					enumerable: false
-				});	
+				});
+				Object.defineProperty(this, "_gameTime", {
+				    value: {
+				        totalGameMilliseconds: 0,
+				        elapsedGameMilliseconds: 0,
+				        isRunningSlowly: false
+				    },
+				    writable: false,
+				    enumerable: false
+				});
 			}
 			else
 			{
