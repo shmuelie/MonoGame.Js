@@ -1388,7 +1388,7 @@
 			}
 			else
 			{
-				texture2D.With = img.width;
+				texture2D.with = img.width;
 				texture2D.height = img.height;
 				texture2D._img = img;
 			}
