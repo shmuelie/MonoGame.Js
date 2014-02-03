@@ -55,9 +55,14 @@
 	{
 		window.Microsoft.Xna.Framework.Graphics = {};
 	}
+	if (window.Microsoft.Xna.Framework.Input === undefined)
+	{
+		window.Microsoft.Xna.Framework.Input = {};
+	}
 
 	var Framework = window.Microsoft.Xna.Framework;
 	var Graphics = Framework.Graphics;
+	var Input = Framework.Input;
 
 	var MIN_DATE = new Date(-8640000000000000);
 
@@ -1276,7 +1281,7 @@
 
 	Stopwatch.prototype.start = function ()
 	{
-	    if (this._startTime.valueOf() === MIN_DATE.valueOf())
+		if (this._startTime.valueOf() === MIN_DATE.valueOf())
 		{
 			this._startTime = new Date();
 		}
@@ -1358,39 +1363,39 @@
 		var texture2D = {};
 		if (Object.defineProperty)
 		{
-		    Object.defineProperty(texture2D, "width", {
-		        get: function ()
-		        {
-		            return img.width;
-		        },
-		        enumerable: true
-		    });
-		    Object.defineProperty(texture2D, "height", {
-		        get: function ()
-		        {
-		            return img.height;
-		        },
-		        enumerable: true
-		    });
-		    Object.defineProperty(texture2D, "_img", {
-		        value: img,
-		        writable: false,
-		        enumerable: false
-		    });
+			Object.defineProperty(texture2D, "width", {
+				get: function ()
+				{
+					return img.width;
+				},
+				enumerable: true
+			});
+			Object.defineProperty(texture2D, "height", {
+				get: function ()
+				{
+					return img.height;
+				},
+				enumerable: true
+			});
+			Object.defineProperty(texture2D, "_img", {
+				value: img,
+				writable: false,
+				enumerable: false
+			});
 		}
 		else
 		{
-		    texture2D.with = img.width;
-		    texture2D.height = img.height;
-		    texture2D._img = img;
+			texture2D.with = img.width;
+			texture2D.height = img.height;
+			texture2D._img = img;
 		}
 		img.onload = function ()
 		{
-		    if (!Object.defineProperties)
-		    {
-		        texture2D.height = img.height;
-		        texture2D.width = img.width;
-		    }
+			if (!Object.defineProperties)
+			{
+				texture2D.height = img.height;
+				texture2D.width = img.width;
+			}
 			callback(texture2D);
 		}
 		return texture2D;
@@ -1603,7 +1608,7 @@
 
 		if (destinationRectangle instanceof Vector2)
 		{
-		    destinationRectangle = new Rectangle(destinationRectangle.x, destinationRectangle.y, sourceRectangle.width * scale.x, sourceRectangle.height * scale.y);
+			destinationRectangle = new Rectangle(destinationRectangle.x, destinationRectangle.y, sourceRectangle.width * scale.x, sourceRectangle.height * scale.y);
 		}
 		else if (!(destinationRectangle instanceof Rectangle))
 		{
@@ -1621,13 +1626,13 @@
 
 	SpriteBatch.prototype.drawString = function (spriteFont, text, position, color, rotation, scale)
 	{
-	    text = text.toString();
+		text = text.toString();
 
-	    scale = scale || new Vector2(1);
-	    if (!(scale instanceof Vector2))
-	    {
-	        scale = new Vector2(scale);
-	    }
+		scale = scale || new Vector2(1);
+		if (!(scale instanceof Vector2))
+		{
+			scale = new Vector2(scale);
+		}
 
 		this._graphicsDevice._currentDraw.save();
 		this._graphicsDevice._currentDraw.rotate(rotation);
@@ -1693,13 +1698,13 @@
 					enumerable: false
 				});
 				Object.defineProperty(this, "_gameTime", {
-				    value: {
-				        totalGameMilliseconds: 0,
-				        elapsedGameMilliseconds: 0,
-				        isRunningSlowly: false
-				    },
-				    writable: false,
-				    enumerable: false
+					value: {
+						totalGameMilliseconds: 0,
+						elapsedGameMilliseconds: 0,
+						isRunningSlowly: false
+					},
+					writable: false,
+					enumerable: false
 				});
 			}
 			else
@@ -1883,6 +1888,82 @@
 	{
 		Game.prototype.draw.call(this, gameTime);
 	};
+
+	//#endregion
+
+	//#region Input.Mouse
+
+	var mouseState = {
+		x: 0,
+		y: 0,
+		leftButton: false,
+		middleButton: false,
+		rightButton: false,
+		scrollWheelValue: 0,
+		xButton1: false,
+		xButton2: false
+	};
+	Input.Mouse = {
+	    getState: function ()
+	    {
+	        var currentState = {};
+	        for(var p in mouseState)
+	        {
+	            if (mouseState.hasOwnProperty(p))
+	            {
+	                currentState[p] = mouseState[p];
+	            }
+	        }
+	        return currentState;
+	    }
+	};
+
+	document.addEventListener("mousemove", function (e)
+	{
+		e = e || event;
+		mouseState.x = e.clientX;
+		mouseState.y = e.clientY;
+	});
+
+	document.addEventListener("mousewheel", function (e)
+	{
+	    e = e || event;
+	    mouseState.scrollWheelValue = e.wheelDelta || e.wheelDeltaY || 0;
+	});
+
+	document.addEventListener("mousedown", function (e)
+	{
+	    e = e || event;
+	    switch (e.button)
+	    {
+	        case 0:
+	            mouseState.leftButton = true;
+	            break;
+	        case 1:
+	            mouseState.middleButton = true;
+	            break;
+	        case 2:
+	            mouseState.rightButton = true;
+	            break;
+	    }
+	});
+
+	document.addEventListener("mouseup", function (e)
+	{
+	    e = e || event;
+	    switch (e.button)
+	    {
+	        case 0:
+	            mouseState.leftButton = false;
+	            break;
+	        case 1:
+	            mouseState.middleButton = false;
+	            break;
+	        case 2:
+	            mouseState.rightButton = false;
+	            break;
+	    }
+	});
 
 	//#endregion
 
