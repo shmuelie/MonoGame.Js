@@ -1,5 +1,7 @@
 ﻿(function ()
 {
+	"use strict";
+
 	if (Object.prototype.__defineGetter__ && !Object.defineProperty)
 	{
 		Object.defineProperty = function (obj, prop, desc)
@@ -36,7 +38,7 @@
 				obj[prop] = desc.value;
 			}
 			return obj;
-		}
+		};
 	}
 
 	if (window.Microsoft === undefined)
@@ -261,7 +263,7 @@
 			this.x = x;
 			this.y = y;
 		}
-	}
+	};
 	var Point = Framework.Point;
 
 	var Point_zeroPoint = new Point(0, 0);
@@ -309,7 +311,7 @@
 	Point.prototype.toString = function ()
 	{
 		return "{x:" + this.x.toString() + " y:" + this.y.toString() + "}";
-	}
+	};
 
 	//#endregion
 
@@ -350,7 +352,7 @@
 			this.width = width;
 			this.height = height;
 		}
-	}
+	};
 	var Rectangle = Framework.Rectangle;
 
 	var Rectangle_emptyRectangle = new Rectangle(0, 0, 0, 0);
@@ -427,7 +429,7 @@
 
 	Rectangle.prototype.isEmpty = function ()
 	{
-		return ((((this.width == 0) && (this.height == 0)) && (this.x == 0)) && (this.y == 0));
+		return ((((this.width === 0) && (this.height === 0)) && (this.x === 0)) && (this.y === 0));
 	};
 
 	Rectangle.prototype.toString = function ()
@@ -450,7 +452,7 @@
 		return new Rectangle(x, y,
 							 Math.max(value1.right(), value2.right()) - x,
 								 Math.max(value1.bottom(), value2.bottom()) - y);
-	}
+	};
 
 	Rectangle.prototype.left = function ()
 	{
@@ -502,7 +504,7 @@
 			this.x = x;
 			this.y = y;
 		}
-	}
+	};
 	var Vector2 = Framework.Vector2;
 
 	var Vector2_zeroVector = new Vector2(0);
@@ -806,7 +808,7 @@
 			this.m43 = m43;
 			this.m44 = m44;
 		}
-	}
+	};
 	var Matrix = Framework.Matrix;
 
 	var Matrix_identity = new Matrix(1, 0, 0, 0,
@@ -847,7 +849,7 @@
 		matrix1.m41 + matrix2.m41,
 		matrix1.m42 + matrix2.m42,
 		matrix1.m43 + matrix2.m43,
-		matrix1.m44 + matrix2.m44)
+		matrix1.m44 + matrix2.m44);
 		return newMatrix;
 	};
 
@@ -1236,10 +1238,7 @@
 
 	Matrix.prototype.toString = function ()
 	{
-		return "{m11:" + this.m11 + " m12:" + this.m12 + " m13:" + this.m13 + " m14:" + this.m14 + "}"
-			 + "{m21:" + this.m21 + " m22:" + this.m22 + " m23:" + this.m23 + " m24:" + this.m24 + "}"
-			 + "{m31:" + this.m31 + " m32:" + this.m32 + " m33:" + this.m33 + " m34:" + this.m34 + "}"
-			 + "{m41:" + this.m41 + " m42:" + this.m42 + " m43:" + this.m43 + " m44:" + this.m44 + "}";
+		return "{m11:" + this.m11 + " m12:" + this.m12 + " m13:" + this.m13 + " m14:" + this.m14 + "}" + "{m21:" + this.m21 + " m22:" + this.m22 + " m23:" + this.m23 + " m24:" + this.m24 + "}" + "{m31:" + this.m31 + " m32:" + this.m32 + " m33:" + this.m33 + " m34:" + this.m34 + "}" + "{m41:" + this.m41 + " m42:" + this.m42 + " m43:" + this.m43 + " m44:" + this.m44 + "}";
 	};
 
 	//#endregion
@@ -1904,18 +1903,18 @@
 		xButton2: false
 	};
 	Input.Mouse = {
-	    getState: function ()
-	    {
-	        var currentState = {};
-	        for(var p in mouseState)
-	        {
-	            if (mouseState.hasOwnProperty(p))
-	            {
-	                currentState[p] = mouseState[p];
-	            }
-	        }
-	        return currentState;
-	    }
+		getState: function ()
+		{
+			var currentState = {};
+			for(var p in mouseState)
+			{
+				if (mouseState.hasOwnProperty(p))
+				{
+					currentState[p] = mouseState[p];
+				}
+			}
+			return currentState;
+		}
 	};
 
 	document.addEventListener("mousemove", function (e)
@@ -1927,42 +1926,42 @@
 
 	document.addEventListener("mousewheel", function (e)
 	{
-	    e = e || event;
-	    mouseState.scrollWheelValue = e.wheelDelta || e.wheelDeltaY || 0;
+		e = e || event;
+		mouseState.scrollWheelValue = e.wheelDelta || e.wheelDeltaY || 0;
 	});
 
 	document.addEventListener("mousedown", function (e)
 	{
-	    e = e || event;
-	    switch (e.button)
-	    {
-	        case 0:
-	            mouseState.leftButton = true;
-	            break;
-	        case 1:
-	            mouseState.middleButton = true;
-	            break;
-	        case 2:
-	            mouseState.rightButton = true;
-	            break;
-	    }
+		e = e || event;
+		switch (e.button)
+		{
+			case 0:
+				mouseState.leftButton = true;
+				break;
+			case 1:
+				mouseState.middleButton = true;
+				break;
+			case 2:
+				mouseState.rightButton = true;
+				break;
+		}
 	});
 
 	document.addEventListener("mouseup", function (e)
 	{
-	    e = e || event;
-	    switch (e.button)
-	    {
-	        case 0:
-	            mouseState.leftButton = false;
-	            break;
-	        case 1:
-	            mouseState.middleButton = false;
-	            break;
-	        case 2:
-	            mouseState.rightButton = false;
-	            break;
-	    }
+		e = e || event;
+		switch (e.button)
+		{
+			case 0:
+				mouseState.leftButton = false;
+				break;
+			case 1:
+				mouseState.middleButton = false;
+				break;
+			case 2:
+				mouseState.rightButton = false;
+				break;
+		}
 	});
 
 	//#endregion
