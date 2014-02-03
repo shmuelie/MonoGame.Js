@@ -35,49 +35,70 @@
 		}
 	}
 
+	if (window.Microsoft === undefined)
+	{
+	    window.Microsoft = {};
+	}
+	if (window.Microsoft.Xna === undefined)
+	{
+	    window.Microsoft.Xna = {};
+	}
+	if (window.Microsoft.Xna.Framework === undefined)
+	{
+	    window.Microsoft.Xna.Framework = {};
+	}
+	if (window.Microsoft.Xna.Framework.Graphics === undefined)
+	{
+	    window.Microsoft.Xna.Framework.Graphics = {};
+	}
+
+	var Framework = window.Microsoft.Xna.Framework;
+	var Grapics = Framework.Graphics;
+
 	//#region MathHelper
 
-	MathHelper = {};
+	Framework.MathHelper = {};
+	var MathHelper = Framework.MathHelper;
 
 	if (Object.defineProperty)
 	{
-		Object.defineProperty(MathHelper, "E", {
+	    Object.defineProperty(MathHelper, "E", {
 			value: Math.E,
 			writable: false,
 			enumerable: true
 		});
 
-		Object.defineProperty(MathHelper, "Log10E", {
+	    Object.defineProperty(MathHelper, "Log10E", {
 			value: 0.4342945,
 			writable: false,
 			enumerable: true
 		});
 
-		Object.defineProperty(MathHelper, "Log2E", {
+	    Object.defineProperty(MathHelper, "Log2E", {
 			value: 1.442695,
 			writable: false,
 			enumerable: true
 		});
 
-		Object.defineProperty(MathHelper, "Pi", {
+	    Object.defineProperty(MathHelper, "Pi", {
 			value: Math.PI,
 			writable: false,
 			enumerable: true
 		});
 
-		Object.defineProperty(MathHelper, "PiOver2", {
+	    Object.defineProperty(MathHelper, "PiOver2", {
 			value: Math.PI / 2,
 			writable: false,
 			enumerable: true
 		});
 
-		Object.defineProperty(MathHelper, "PiOver4", {
+	    Object.defineProperty(MathHelper, "PiOver4", {
 			value: Math.PI / 4,
 			writable: false,
 			enumerable: true
 		});
 
-		Object.defineProperty(MathHelper, "TwoPi", {
+	    Object.defineProperty(MathHelper, "TwoPi", {
 			value: 2 * Math.PI,
 			writable: false,
 			enumerable: true
@@ -85,13 +106,13 @@
 	}
 	else
 	{
-		MathHelper.E = Math.E;
-		MathHelper.Log10E = 0.4342945;
-		MathHelper.Log2E = 1.442695;
-		MathHelper.Pi = Math.PI;
-		MathHelper.PiOver2 = Math.PI / 2;
-		MathHelper.PiOver4 = Math.PI / 4;
-		MathHelper.TwoPi = Math.PI * 2;
+	    MathHelper.E = Math.E;
+	    MathHelper.Log10E = 0.4342945;
+	    MathHelper.Log2E = 1.442695;
+	    MathHelper.Pi = Math.PI;
+	    MathHelper.PiOver2 = Math.PI / 2;
+	    MathHelper.PiOver4 = Math.PI / 4;
+	    MathHelper.TwoPi = Math.PI * 2;
 	}
 
 	MathHelper.barycentric = function (value1, value2, value3, amount1, amount2)
@@ -123,7 +144,7 @@
 	    return Math.abs(value1 - value2);
 	};
 
-	MathHelper.hermite = function(value1, tangent1, value2, tangent2, amount)
+	MathHelper.hermite = function (value1, tangent1, value2, tangent2, amount)
 	{
 	    var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount, result;
 	    var sCubed = s * s * s;
@@ -210,7 +231,7 @@
 
 	var Point_zeroPoint = new Point(0, 0);
 
-	function Point(x, y)
+	Framework.Point = function (x, y)
 	{
 		if (Object.defineProperty)
 		{
@@ -232,6 +253,7 @@
 			this.Y = y;
 		}
 	}
+	var Point = Framework.Point;
 
 	if (Object.defineProperty)
 	{
@@ -285,7 +307,7 @@
 
 	var Rectangle_emptyRectangle = new Rectangle(0, 0, 0, 0);
 
-	function Rectangle(x, y, width, height)
+	Framework.Rectangle = function (x, y, width, height)
 	{
 		if (Object.defineProperty)
 		{
@@ -321,6 +343,7 @@
 			this.Height = height;
 		}
 	}
+	var Rectangle = Framework.Rectangle;
 
 	if (Object.defineProperty)
 	{
