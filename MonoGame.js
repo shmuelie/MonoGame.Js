@@ -1338,4 +1338,100 @@
 
 	//#endregion 
 
+	//#region ContentManager
+
+	Framework.ContentManager = function (context)
+	{
+		if (Object.defineProperty)
+		{
+			Object.defineProperty(this, "_context", {
+				value: context,
+				writable: false,
+				enumerable: false
+			});
+		}
+		else
+		{
+			this._context = context;
+		}
+	};
+	var ContentManager = Framework.ContentManager;
+
+	ContentManager.prototype.loadTexture = function (url, callback)
+	{
+		var img = new Image();
+		img.src = url;
+		img.onload = function ()
+		{
+			var texture2D = {};
+			if (Object.defineProperty)
+			{
+				Object.defineProperty(texture2D, "Width", {
+					get: function ()
+					{
+						return img.width;
+					},
+					enumerable: true
+				});
+				Object.defineProperty(texture2D, "Height", {
+					get: function ()
+					{
+						return img.height;
+					},
+					enumerable: true
+				});
+				Object.defineProperty(texture2D, "_img", {
+					value: img,
+					writable: false,
+					enumerable: false
+				});
+			}
+			else
+			{
+				texture2D.With = img.width;
+				texture2D.Height = img.height;
+				texture2D._img = img;
+			}
+			callback(texture2D);
+		}
+	};
+
+	ContentManager.prototype.loadFont = function (name, size, bold, italic)
+	{
+		var style = "";
+		
+		if (bold)
+		{
+			style += "bold ";
+		}
+		if (italic)
+		{
+			style += "italic";
+		}
+
+		style += size + " " + name;
+
+		var spriteFont = {};
+		if (Object.defineProperty)
+		{
+		    Object.defineProperty(spriteFont, "_font", {
+		        value: style,
+		        writable: false,
+		        enumerable: false
+		    });
+		}
+		else
+		{
+		    spriteFont._font = style;
+		}
+		var $this = this;
+		spriteFont.measureString = function (text)
+		{
+		    return new Vector2($this._context.measureString(text).width, parseInt(size, 10));
+		};
+		return spriteFont;
+	};
+
+	//#endregion
+
 })();
