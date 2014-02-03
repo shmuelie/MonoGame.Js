@@ -1442,58 +1442,58 @@
 		var viewport = {};
 		if (Object.defineProperty)
 		{
-		    Object.defineProperty(this, "_manager", {
-		        value: manager,
-		        writable: false,
-		        enumerable: false
-		    });
-		    Object.defineProperty(this, "_currentDraw", {
-		        value: canvas,
-		        writable: true,
-		        enumerable: false
-		    });
-		    Object.defineProperty(viewport, "x", {
-		        get: function ()
-		        {
-		            var xclientBounds = canvas.getBoundingClientRect();
-		            return xclientBounds.left;
-		        },
-		        enumerable: false
-		    });
-		    Object.defineProperty(viewport, "y", {
-		        get: function ()
-		        {
-		            var yclientBounds = canvas.getBoundingClientRect();
-		            return yclientBounds.top;
-		        },
-		        enumerable: false
-		    });
-		    Object.defineProperty(viewport, "width", {
-		        get: function ()
-		        {
-		            var widthclientBounds = canvas.getBoundingClientRect();
-		            return widthclientBounds.right - widthclientBounds.left;
-		        },
-		        enumerable: false
-		    });
-		    Object.defineProperty(viewport, "height", {
-		        get: function ()
-		        {
-		            var heightclientBounds = canvas.getBoundingClientRect();
-		            return heightclientBounds.bottom - heightclientBounds.top;
-		        },
-		        enumerable: false
-		    });
-		    Object.defineProperty(this, "viewport", {
-		        value: viewport,
-		        writable: false,
-		        enumerable: true
-		    });
+			Object.defineProperty(this, "_manager", {
+				value: manager,
+				writable: false,
+				enumerable: false
+			});
+			Object.defineProperty(this, "_currentDraw", {
+				value: canvas,
+				writable: true,
+				enumerable: false
+			});
+			Object.defineProperty(viewport, "x", {
+				get: function ()
+				{
+					var xclientBounds = canvas.getBoundingClientRect();
+					return xclientBounds.left;
+				},
+				enumerable: false
+			});
+			Object.defineProperty(viewport, "y", {
+				get: function ()
+				{
+					var yclientBounds = canvas.getBoundingClientRect();
+					return yclientBounds.top;
+				},
+				enumerable: false
+			});
+			Object.defineProperty(viewport, "width", {
+				get: function ()
+				{
+					var widthclientBounds = canvas.getBoundingClientRect();
+					return widthclientBounds.right - widthclientBounds.left;
+				},
+				enumerable: false
+			});
+			Object.defineProperty(viewport, "height", {
+				get: function ()
+				{
+					var heightclientBounds = canvas.getBoundingClientRect();
+					return heightclientBounds.bottom - heightclientBounds.top;
+				},
+				enumerable: false
+			});
+			Object.defineProperty(this, "viewport", {
+				value: viewport,
+				writable: false,
+				enumerable: true
+			});
 		}
 		else
 		{
-		    this._manager = manager;
-		    this._currentDraw = canvas;
+			this._manager = manager;
+			this._currentDraw = canvas;
 			viewport.x = clientBounds.left;
 			viewport.y = clientBounds.top;
 			viewport.width = clientBounds.right - clientBounds.left;
@@ -1505,20 +1505,47 @@
 
 	GraphicsDevice.prototype.clear = function ()
 	{
-	    this._currentDraw.clearRect(0, 0, this._currentDraw.canvas.width, this._currentDraw.canvas.height);
+		this._currentDraw.clearRect(0, 0, this._currentDraw.canvas.width, this._currentDraw.canvas.height);
 	};
 
 	GraphicsDevice.prototype.setRenderTarget = function (target)
 	{
-	    if (target === null)
-	    {
-	        this._currentDraw = this._manager._game._display;
-	    }
-	    else
-	    {
-	        this._currentDraw = target;
-	    }
+		if (target === null)
+		{
+			this._currentDraw = this._manager._game._display;
+		}
+		else
+		{
+			this._currentDraw = target;
+		}
 	}
+
+	//#endregion
+
+	//#region GraphicsDeviceManager
+
+	Framework.GraphicsDeviceManager = function (game, canvas)
+	{
+		if (Object.defineProperty)
+		{
+		    Object.defineProperty(this, "_game", {
+		        value: game,
+		        writable: false,
+		        enumerable: false
+		    });
+		    Object.defineProperty(this, "graphicsDevice", {
+		        value: new GraphicsDevice(this, canvas),
+		        writable: false,
+		        enumerable: false
+		    });
+		}
+		else
+		{
+			this._game = game;
+			this.graphicsDevice = new GraphicsDevice(this, canvas);
+		}
+	};
+	var GraphicsDeviceManager = Framework.GraphicsDeviceManager;
 
 	//#endregion
 
