@@ -464,7 +464,7 @@
 
 	Rectangle.prototype.bottom = function ()
 	{
-		return this.y + this.Height;
+		return this.y + this.height;
 	};
 
 	//#endregion
