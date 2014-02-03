@@ -655,6 +655,554 @@
 
 	//#endregion
 
-	
+	//#region Matrix
+
+	var Matrix_identity = new Matrix(1, 0, 0, 0,
+									 0, 1, 0, 0,
+									 0, 0, 1, 0,
+									 0, 0, 0, 1);
+
+	Framework.Matrix = function (m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44)
+	{
+		if (Object.defineProperties)
+		{
+			Object.defineProperty(Matrix, "M11", {
+				value: m11,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M12", {
+				value: m12,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M13", {
+				value: m13,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M14", {
+				value: m14,
+				writable: true,
+				enumerable: true,
+			});
+
+			Object.defineProperty(Matrix, "M21", {
+				value: m21,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M22", {
+				value: m22,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M23", {
+				value: m23,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M24", {
+				value: m24,
+				writable: true,
+				enumerable: true,
+			});
+
+			Object.defineProperty(Matrix, "M31", {
+				value: m31,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M32", {
+				value: m32,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M33", {
+				value: m33,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M34", {
+				value: m34,
+				writable: true,
+				enumerable: true,
+			});
+
+			Object.defineProperty(Matrix, "M41", {
+				value: m41,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M42", {
+				value: m42,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M43", {
+				value: m43,
+				writable: true,
+				enumerable: true,
+			});
+			Object.defineProperty(Matrix, "M44", {
+				value: m44,
+				writable: true,
+				enumerable: true,
+			});
+		}
+		else
+		{
+			this.M11 = m11;
+			this.M12 = m12;
+			this.M13 = m13;
+			this.M14 = m14;
+
+			this.M21 = m21;
+			this.M22 = m22;
+			this.M23 = m23;
+			this.M24 = m24;
+
+			this.M31 = m31;
+			this.M32 = m32;
+			this.M33 = m33;
+			this.M34 = m34;
+
+			this.M41 = m41;
+			this.M42 = m42;
+			this.M43 = m43;
+			this.M44 = m44;
+		}
+	}
+	var Matrix = Framework.Matrix;
+
+	if (Object.defineProperties)
+	{
+		Object.defineProperty(Matrix.prototype, "identity", {
+			get: function ()
+			{
+				return Matrix_identity;
+			},
+			enumerable: true
+		});
+	}
+	else
+	{
+		Matrix.prototype.identity = Matrix_identity;
+	}
+
+	Matrix.add = function (matrix1, matrix2)
+	{
+		var newMatrix = new Matrix(
+		matrix1.M11 + matrix2.M11,
+		matrix1.M12 + matrix2.M12,
+		matrix1.M13 + matrix2.M13,
+		matrix1.M14 + matrix2.M14,
+		matrix1.M21 + matrix2.M21,
+		matrix1.M22 + matrix2.M22,
+		matrix1.M23 + matrix2.M23,
+		matrix1.M24 + matrix2.M24,
+		matrix1.M31 + matrix2.M31,
+		matrix1.M32 + matrix2.M32,
+		matrix1.M33 + matrix2.M33,
+		matrix1.M34 + matrix2.M34,
+		matrix1.M41 + matrix2.M41,
+		matrix1.M42 + matrix2.M42,
+		matrix1.M43 + matrix2.M43,
+		matrix1.M44 + matrix2.M44)
+		return newMatrix;
+	};
+
+	Matrix.createOrthographic = function (width, height, zNearPlane, zFarPlane)
+	{
+		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		matrix.M11 = 2 / width;
+		matrix.M12 = matrix.M13 = matrix.M14 = 0;
+		matrix.M22 = 2 / height;
+		matrix.M21 = matrix.M23 = matrix.M24 = 0;
+		matrix.M33 = 1 / (zNearPlane - zFarPlane);
+		matrix.M31 = matrix.M32 = matrix.M34 = 0;
+		matrix.M41 = matrix.M42 = 0;
+		matrix.M43 = zNearPlane / (zNearPlane - zFarPlane);
+		matrix.M44 = 1;
+		return matrix;
+	};
+
+	Matrix.createOrthographicOffCenter = function (left, right, bottom, top, zNearPlane, zFarPlane)
+	{
+		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		matrix.M11 = (2.0 / (right - left));
+		matrix.M12 = 0.0;
+		matrix.M13 = 0.0;
+		matrix.M14 = 0.0;
+		matrix.M21 = 0.0;
+		matrix.M22 = (2.0 / (top - bottom));
+		matrix.M23 = 0.0;
+		matrix.M24 = 0.0;
+		matrix.M31 = 0.0;
+		matrix.M32 = 0.0;
+		matrix.M33 = (1.0 / (zNearPlane - zFarPlane));
+		matrix.M34 = 0.0;
+		matrix.M41 = ((left + right) / (left - right));
+		matrix.M42 = ((top + bottom) / (bottom - top));
+		matrix.M43 = (zNearPlane / (zNearPlane - zFarPlane));
+		matrix.M44 = 1.0;
+		return matrix;
+	};
+
+	Matrix.createPerspective = function (width, height, nearPlaneDistance, farPlaneDistance)
+	{
+		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		if (nearPlaneDistance <= 0)
+		{
+			throw new Error("nearPlaneDistance <= 0");
+		}
+		if (farPlaneDistance <= 0)
+		{
+			throw new Error("farPlaneDistance <= 0");
+		}
+		if (nearPlaneDistance >= farPlaneDistance)
+		{
+			throw new Error("nearPlaneDistance >= farPlaneDistance");
+		}
+		matrix.M11 = (2 * nearPlaneDistance) / width;
+		matrix.M12 = matrix.M13 = matrix.M14 = 0;
+		matrix.M22 = (2 * nearPlaneDistance) / height;
+		matrix.M21 = matrix.M23 = matrix.M24 = 0;
+		matrix.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+		matrix.M31 = matrix.M32 = 0;
+		matrix.M34 = -1;
+		matrix.M41 = matrix.M42 = matrix.M44 = 0;
+		matrix.M43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+		return matrix;
+	};
+
+	Matrix.createPerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance)
+	{
+		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		if ((fieldOfView <= 0) || (fieldOfView >= 3.141593))
+		{
+			throw new Error("fieldOfView <= 0 O >= PI");
+		}
+		if (nearPlaneDistance <= 0)
+		{
+			throw new Error("nearPlaneDistance <= 0");
+		}
+		if (farPlaneDistance <= 0)
+		{
+			throw new Error("farPlaneDistance <= 0");
+		}
+		if (nearPlaneDistance >= farPlaneDistance)
+		{
+			throw new Error("nearPlaneDistance >= farPlaneDistance");
+		}
+		var num = 1 / (Math.tan((fieldOfView * 0.5)));
+		var num9 = num / aspectRatio;
+		matrix.M11 = num9;
+		matrix.M12 = matrix.M13 = matrix.M14 = 0;
+		matrix.M22 = num;
+		matrix.M21 = matrix.M23 = matrix.M24 = 0;
+		matrix.M31 = matrix.M32 = 0;
+		matrix.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+		matrix.M34 = -1;
+		matrix.M41 = matrix.M42 = matrix.M44 = 0;
+		matrix.M43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+		return matrix;
+	};
+
+	Matrix.createPerspectiveOffCenter = function (left, right, bottom, top, nearPlaneDistance, farPlaneDistance)
+	{
+		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		if (nearPlaneDistance <= 0)
+		{
+			throw new Error("nearPlaneDistance <= 0");
+		}
+		if (farPlaneDistance <= 0)
+		{
+			throw new Error("farPlaneDistance <= 0");
+		}
+		if (nearPlaneDistance >= farPlaneDistance)
+		{
+			throw new Error("nearPlaneDistance >= farPlaneDistance");
+		}
+		matrix.M11 = (2 * nearPlaneDistance) / (right - left);
+		matrix.M12 = matrix.M13 = matrix.M14 = 0;
+		matrix.M22 = (2 * nearPlaneDistance) / (top - bottom);
+		matrix.M21 = matrix.M23 = matrix.M24 = 0;
+		matrix.M31 = (left + right) / (right - left);
+		matrix.M32 = (top + bottom) / (top - bottom);
+		matrix.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+		matrix.M34 = -1;
+		matrix.M43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+		matrix.M41 = matrix.M42 = matrix.M44 = 0;
+		return matrix;
+	};
+
+	Matrix.createScale = function ()
+	{
+		if (arguments.length === 1)
+		{
+			var scale = arguments[0];
+			return new Matrix(scale, 0, 0, 0, 0, scale, 0, 0, 0, 0, scale, 0, 0, 0, 0, 1);
+		}
+		var xScale = arguments[0];
+		var yScale = arguments[1];
+		var zScale = arguments[2];
+		return new Matrix(zScale, 0, 0, 0, 0, yScale, 0, 0, 0, 0, zScale, 0, 0, 0, 0, 1);
+	};
+
+	Matrix.createTranslation = function (xPosition, yPosition, zPosition)
+	{
+		return new Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1);
+	};
+
+	Matrix.prototype.determinant = function ()
+	{
+		var num22 = this.M11;
+		var num21 = this.M12;
+		var num20 = this.M13;
+		var num19 = this.M14;
+		var num12 = this.M21;
+		var num11 = this.M22;
+		var num10 = this.M23;
+		var num9 = this.M24;
+		var num8 = this.M31;
+		var num7 = this.M32;
+		var num6 = this.M33;
+		var num5 = this.M34;
+		var num4 = this.M41;
+		var num3 = this.M42;
+		var num2 = this.M43;
+		var num = this.M44;
+		var num18 = (num6 * num) - (num5 * num2);
+		var num17 = (num7 * num) - (num5 * num3);
+		var num16 = (num7 * num2) - (num6 * num3);
+		var num15 = (num8 * num) - (num5 * num4);
+		var num14 = (num8 * num2) - (num6 * num4);
+		var num13 = (num8 * num3) - (num7 * num4);
+		return ((((num22 * (((num11 * num18) - (num10 * num17)) + (num9 * num16))) - (num21 * (((num12 * num18) - (num10 * num15)) + (num9 * num14)))) + (num20 * (((num12 * num17) - (num11 * num15)) + (num9 * num13)))) - (num19 * (((num12 * num16) - (num11 * num14)) + (num10 * num13))));
+	};
+
+	Matrix.divide = function (matrix1, other)
+	{
+		if (other instanceof Matrix)
+		{
+			var matrix2 = new Matrix(
+			matrix1.M11 / other.M11,
+			matrix1.M12 / other.M12,
+			matrix1.M13 / other.M13,
+			matrix1.M14 / other.M14,
+			matrix1.M21 / other.M21,
+			matrix1.M22 / other.M22,
+			matrix1.M23 / other.M23,
+			matrix1.M24 / other.M24,
+			matrix1.M31 / other.M31,
+			matrix1.M32 / other.M32,
+			matrix1.M33 / other.M33,
+			matrix1.M34 / other.M34,
+			matrix1.M41 / other.M41,
+			matrix1.M42 / other.M42,
+			matrix1.M43 / other.M43,
+			matrix1.M44 / other.M44);
+			return matrix2;
+		}
+		var num = 1 / other;
+		var matrix3 = new Matrix(
+		matrix1.M11 * num,
+		matrix1.M12 * num,
+		matrix1.M13 * num,
+		matrix1.M14 * num,
+		matrix1.M21 * num,
+		matrix1.M22 * num,
+		matrix1.M23 * num,
+		matrix1.M24 * num,
+		matrix1.M31 * num,
+		matrix1.M32 * num,
+		matrix1.M33 * num,
+		matrix1.M34 * num,
+		matrix1.M41 * num,
+		matrix1.M42 * num,
+		matrix1.M43 * num,
+		matrix1.M44 * num);
+		return matrix3;
+	};
+
+	Matrix.prototype.equals = function (other)
+	{
+		return (other instanceof Matrix) ? ((((((this.M11 == other.M11) && (this.M22 == other.M22)) && ((this.M33 == other.M33) && (this.M44 == other.M44))) && (((this.M12 == other.M12) && (this.M13 == other.M13)) && ((this.M14 == other.M14) && (this.M21 == other.M21)))) && ((((this.M23 == other.M23) && (this.M24 == other.M24)) && ((this.M31 == other.M31) && (this.M32 == other.M32))) && (((this.M34 == other.M34) && (this.M41 == other.M41)) && (this.M42 == other.M42)))) && (this.M43 == other.M43)) : false;
+	};
+
+	Matrix.invert = function (matrix)
+	{
+		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		var num1 = matrix.M11;
+		var num2 = matrix.M12;
+		var num3 = matrix.M13;
+		var num4 = matrix.M14;
+		var num5 = matrix.M21;
+		var num6 = matrix.M22;
+		var num7 = matrix.M23;
+		var num8 = matrix.M24;
+		var num9 = matrix.M31;
+		var num10 = matrix.M32;
+		var num11 = matrix.M33;
+		var num12 = matrix.M34;
+		var num13 = matrix.M41;
+		var num14 = matrix.M42;
+		var num15 = matrix.M43;
+		var num16 = matrix.M44;
+		var num17 = (num11 * num16 - num12 * num15);
+		var num18 = (num10 * num16 - num12 * num14);
+		var num19 = (num10 * num15 - num11 * num14);
+		var num20 = (num9 * num16 - num12 * num13);
+		var num21 = (num9 * num15 - num11 * num13);
+		var num22 = (num9 * num14 - num10 * num13);
+		var num23 = (num6 * num17 - num7 * num18 + num8 * num19);
+		var num24 = -(num5 * num17 - num7 * num20 + num8 * num21);
+		var num25 = (num5 * num18 - num6 * num20 + num8 * num22);
+		var num26 = -(num5 * num19 - num6 * num21 + num7 * num22);
+		var num27 = (1.0 / (num1 * num23 + num2 * num24 + num3 * num25 + num4 * num26));
+
+		result.M11 = num23 * num27;
+		result.M21 = num24 * num27;
+		result.M31 = num25 * num27;
+		result.M41 = num26 * num27;
+		result.M12 = -(num2 * num17 - num3 * num18 + num4 * num19) * num27;
+		result.M22 = (num1 * num17 - num3 * num20 + num4 * num21) * num27;
+		result.M32 = -(num1 * num18 - num2 * num20 + num4 * num22) * num27;
+		result.M42 = (num1 * num19 - num2 * num21 + num3 * num22) * num27;
+		var num28 = (num7 * num16 - num8 * num15);
+		var num29 = (num6 * num16 - num8 * num14);
+		var num30 = (num6 * num15 - num7 * num14);
+		var num31 = (num5 * num16 - num8 * num13);
+		var num32 = (num5 * num15 - num7 * num13);
+		var num33 = (num5 * num14 - num6 * num13);
+		result.M13 = (num2 * num28 - num3 * num29 + num4 * num30) * num27;
+		result.M23 = -(num1 * num28 - num3 * num31 + num4 * num32) * num27;
+		result.M33 = (num1 * num29 - num2 * num31 + num4 * num33) * num27;
+		result.M43 = -(num1 * num30 - num2 * num32 + num3 * num33) * num27;
+		var num34 = (num7 * num12 - num8 * num11);
+		var num35 = (num6 * num12 - num8 * num10);
+		var num36 = (num6 * num11 - num7 * num10);
+		var num37 = (num5 * num12 - num8 * num9);
+		var num38 = (num5 * num11 - num7 * num9);
+		var num39 = (num5 * num10 - num6 * num9);
+		result.M14 = -(num2 * num34 - num3 * num35 + num4 * num36) * num27;
+		result.M24 = (num1 * num34 - num3 * num37 + num4 * num38) * num27;
+		result.M34 = -(num1 * num35 - num2 * num37 + num4 * num39) * num27;
+		result.M44 = (num1 * num36 - num2 * num38 + num3 * num39) * num27;
+	};
+
+	Matrix.lerp = function (matrix1, matrix2, amount)
+	{
+		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		result.M11 = matrix1.M11 + ((matrix2.M11 - matrix1.M11) * amount);
+		result.M12 = matrix1.M12 + ((matrix2.M12 - matrix1.M12) * amount);
+		result.M13 = matrix1.M13 + ((matrix2.M13 - matrix1.M13) * amount);
+		result.M14 = matrix1.M14 + ((matrix2.M14 - matrix1.M14) * amount);
+		result.M21 = matrix1.M21 + ((matrix2.M21 - matrix1.M21) * amount);
+		result.M22 = matrix1.M22 + ((matrix2.M22 - matrix1.M22) * amount);
+		result.M23 = matrix1.M23 + ((matrix2.M23 - matrix1.M23) * amount);
+		result.M24 = matrix1.M24 + ((matrix2.M24 - matrix1.M24) * amount);
+		result.M31 = matrix1.M31 + ((matrix2.M31 - matrix1.M31) * amount);
+		result.M32 = matrix1.M32 + ((matrix2.M32 - matrix1.M32) * amount);
+		result.M33 = matrix1.M33 + ((matrix2.M33 - matrix1.M33) * amount);
+		result.M34 = matrix1.M34 + ((matrix2.M34 - matrix1.M34) * amount);
+		result.M41 = matrix1.M41 + ((matrix2.M41 - matrix1.M41) * amount);
+		result.M42 = matrix1.M42 + ((matrix2.M42 - matrix1.M42) * amount);
+		result.M43 = matrix1.M43 + ((matrix2.M43 - matrix1.M43) * amount);
+		result.M44 = matrix1.M44 + ((matrix2.M44 - matrix1.M44) * amount);
+		return result;
+	};
+
+	Matrix.multiply = function (matrix1, other)
+	{
+		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		if (other instanceof Matrix)
+		{
+			var m11 = (((matrix1.M11 * other.M11) + (matrix1.M12 * other.M21)) + (matrix1.M13 * other.M31)) + (matrix1.M14 * other.M41);
+			var m12 = (((matrix1.M11 * other.M12) + (matrix1.M12 * other.M22)) + (matrix1.M13 * other.M32)) + (matrix1.M14 * other.M42);
+			var m13 = (((matrix1.M11 * other.M13) + (matrix1.M12 * other.M23)) + (matrix1.M13 * other.M33)) + (matrix1.M14 * other.M43);
+			var m14 = (((matrix1.M11 * other.M14) + (matrix1.M12 * other.M24)) + (matrix1.M13 * other.M34)) + (matrix1.M14 * other.M44);
+			var m21 = (((matrix1.M21 * other.M11) + (matrix1.M22 * other.M21)) + (matrix1.M23 * other.M31)) + (matrix1.M24 * other.M41);
+			var m22 = (((matrix1.M21 * other.M12) + (matrix1.M22 * other.M22)) + (matrix1.M23 * other.M32)) + (matrix1.M24 * other.M42);
+			var m23 = (((matrix1.M21 * other.M13) + (matrix1.M22 * other.M23)) + (matrix1.M23 * other.M33)) + (matrix1.M24 * other.M43);
+			var m24 = (((matrix1.M21 * other.M14) + (matrix1.M22 * other.M24)) + (matrix1.M23 * other.M34)) + (matrix1.M24 * other.M44);
+			var m31 = (((matrix1.M31 * other.M11) + (matrix1.M32 * other.M21)) + (matrix1.M33 * other.M31)) + (matrix1.M34 * other.M41);
+			var m32 = (((matrix1.M31 * other.M12) + (matrix1.M32 * other.M22)) + (matrix1.M33 * other.M32)) + (matrix1.M34 * other.M42);
+			var m33 = (((matrix1.M31 * other.M13) + (matrix1.M32 * other.M23)) + (matrix1.M33 * other.M33)) + (matrix1.M34 * other.M43);
+			var m34 = (((matrix1.M31 * other.M14) + (matrix1.M32 * other.M24)) + (matrix1.M33 * other.M34)) + (matrix1.M34 * other.M44);
+			var m41 = (((matrix1.M41 * other.M11) + (matrix1.M42 * other.M21)) + (matrix1.M43 * other.M31)) + (matrix1.M44 * other.M41);
+			var m42 = (((matrix1.M41 * other.M12) + (matrix1.M42 * other.M22)) + (matrix1.M43 * other.M32)) + (matrix1.M44 * other.M42);
+			var m43 = (((matrix1.M41 * other.M13) + (matrix1.M42 * other.M23)) + (matrix1.M43 * other.M33)) + (matrix1.M44 * other.M43);
+			var m44 = (((matrix1.M41 * other.M14) + (matrix1.M42 * other.M24)) + (matrix1.M43 * other.M34)) + (matrix1.M44 * other.M44);
+			result.M11 = m11;
+			result.M12 = m12;
+			result.M13 = m13;
+			result.M14 = m14;
+			result.M21 = m21;
+			result.M22 = m22;
+			result.M23 = m23;
+			result.M24 = m24;
+			result.M31 = m31;
+			result.M32 = m32;
+			result.M33 = m33;
+			result.M34 = m34;
+			result.M41 = m41;
+			result.M42 = m42;
+			result.M43 = m43;
+			result.M44 = m44;
+		}
+		else
+		{
+			result.M11 = matrix1.M11 * other;
+			result.M12 = matrix1.M12 * other;
+			result.M13 = matrix1.M13 * other;
+			result.M14 = matrix1.M14 * other;
+			result.M21 = matrix1.M21 * other;
+			result.M22 = matrix1.M22 * other;
+			result.M23 = matrix1.M23 * other;
+			result.M24 = matrix1.M24 * other;
+			result.M31 = matrix1.M31 * other;
+			result.M32 = matrix1.M32 * other;
+			result.M33 = matrix1.M33 * other;
+			result.M34 = matrix1.M34 * other;
+			result.M41 = matrix1.M41 * other;
+			result.M42 = matrix1.M42 * other;
+			result.M43 = matrix1.M43 * other;
+			result.M44 = matrix1.M44 * other;
+		}
+		return result;
+	};
+
+	Matrix.negate = function (matrix)
+	{
+		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		result.M11 = -matrix.M11;
+		result.M12 = -matrix.M12;
+		result.M13 = -matrix.M13;
+		result.M14 = -matrix.M14;
+		result.M21 = -matrix.M21;
+		result.M22 = -matrix.M22;
+		result.M23 = -matrix.M23;
+		result.M24 = -matrix.M24;
+		result.M31 = -matrix.M31;
+		result.M32 = -matrix.M32;
+		result.M33 = -matrix.M33;
+		result.M34 = -matrix.M34;
+		result.M41 = -matrix.M41;
+		result.M42 = -matrix.M42;
+		result.M43 = -matrix.M43;
+		result.M44 = -matrix.M44;
+	};
+
+	Matrix.prototype.toString = function ()
+	{
+		return "{M11:" + this.M11 + " M12:" + this.M12 + " M13:" + this.M13 + " M14:" + this.M14 + "}"
+			 + "{M21:" + this.M21 + " M22:" + this.M22 + " M23:" + this.M23 + " M24:" + this.M24 + "}"
+			 + "{M31:" + this.M31 + " M32:" + this.M32 + " M33:" + this.M33 + " M34:" + this.M34 + "}"
+			 + "{M41:" + this.M41 + " M42:" + this.M42 + " M43:" + this.M43 + " M44:" + this.M44 + "}";
+	};
+
+	//#endregion
 
 })();
