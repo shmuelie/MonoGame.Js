@@ -1588,22 +1588,21 @@
 			throw new Error("Cannot be called till after begin is called");
 		}
 
+		sourceRectangle = sourceRectangle || new Rectangle(0, 0, texture.width, texture.height);
+
 		scale = scale || new Vector2(1);
 		if (!(scale instanceof Vector2))
 		{
 			scale = new Vector2(scale);
 		}
-
 		else if (destinationRectangle instanceof Vector2)
 		{
-			destinationRectangle = new Rectangle(destinationRectangle.x, destinationRectangle.y, texture.width * scale.x, texture.height * scale.y);
+		    destinationRectangle = new Rectangle(destinationRectangle.x, destinationRectangle.y, sourceRectangle.width * scale.x, sourceRectangle.height * scale.y);
 		}
 		else if (!(destinationRectangle instanceof Rectangle))
 		{
 			destinationRectangle = new Rectangle(0, 0, texture.width * scale.x, texture.height * scale.y);
 		}
-
-		sourceRectangle = sourceRectangle || new Rectangle(0, 0, texture.width, texture.height);
 
 		rotation = rotation || 0;
 
