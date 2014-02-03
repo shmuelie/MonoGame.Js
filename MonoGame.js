@@ -1621,17 +1621,253 @@
 
 	SpriteBatch.prototype.drawString = function (spriteFont, text, position, color, rotation, scale)
 	{
-	    text = text.toString();
+		text = text.toString();
 
-	    this._graphicsDevice._currentDraw.save();
-	    this._graphicsDevice._currentDraw.rotate(rotation);
-	    this._graphicsDevice._currentDraw.scale(scale);
-	    this._graphicsDevice._currentDraw.textAlign = "left";
-	    this._graphicsDevice._currentDraw.textBaseline = "top";
-	    this._graphicsDevice._currentDraw.font = spriteFont._font
-	    this._graphicsDevice._currentDraw.fillStyle = color;
-	    this._graphicsDevice._currentDraw.fillText(text, position.x, position.y);
-	    this._graphicsDevice._currentDraw.restore();
+		this._graphicsDevice._currentDraw.save();
+		this._graphicsDevice._currentDraw.rotate(rotation);
+		this._graphicsDevice._currentDraw.scale(scale);
+		this._graphicsDevice._currentDraw.textAlign = "left";
+		this._graphicsDevice._currentDraw.textBaseline = "top";
+		this._graphicsDevice._currentDraw.font = spriteFont._font
+		this._graphicsDevice._currentDraw.fillStyle = color;
+		this._graphicsDevice._currentDraw.fillText(text, position.x, position.y);
+		this._graphicsDevice._currentDraw.restore();
+	};
+
+	//#endregion
+
+	//#region Game
+
+	var maxElapsedMilliseconds = 500;
+
+	Framework.Game = function ()
+	{
+		throw new Error("Don't Call");
+	}
+	var Game = Framework.Game;
+
+	Game.createGame = function (cstr)
+	{
+		function realGameConstructor()
+		{
+			if (Object.defineProperty)
+			{
+				Object.defineProperty(this, "isFixedTimeStep", {
+					value: true,
+					writable: true,
+					enumerable: true
+				});
+				Object.defineProperty(this, "targetElapsedMilliseconds", {
+					value: 100,
+					writable: true,
+					enumerable: true
+				});
+				Object.defineProperty(this, "_gameMilliSeconds", {
+					value: 0,
+					writable: true,
+					enumerable: false
+				});
+				Object.defineProperty(this, "_gameTimer", {
+					value: new Stopwatch(),
+					writable: false,
+					enumerable: false
+				});
+				Object.defineProperty(this, "_suppressDraw", {
+					value: false,
+					writable: true,
+					enumerable: false
+				});
+				Object.defineProperty(this, "_accumulatedElapsedMilliseconds", {
+					value: 0,
+					writable: true,
+					enumerable: false
+				});
+				Object.defineProperty(this, "_timerId", {
+					value: null,
+					writable: true,
+					enumerable: false
+				});	
+			}
+			else
+			{
+				this.isFixedTimeStep = true;
+				this.targetElapsedMilliseconds = 100;
+				this._gameTime = {
+				    totalGameMilliseconds: 0,
+				    elapsedGameMilliseconds: 0,
+                    isRunningSlowly: false
+				};
+				this._gameTimer = new Stopwatch();
+				this._suppressDraw = false;
+				this._accumulatedElapsedMilliseconds = 0;
+				this._timerId = null;
+			}
+
+			cstr.call(this);
+		}
+		realGameConstructor.prototype = Game;
+
+		return realGameConstructor;
+	};
+
+	Game.prototype.initialize = function ()
+	{
+	};
+
+	Game.prototype.base_initialize = function ()
+	{
+		Game.prototype.initialize.call(this);
+	};
+
+	Game.prototype.loadContent = function ()
+	{
+	};
+
+	Game.prototype.base_loadContent = function ()
+	{
+		Game.prototype.loadContent.call(this);
+	};
+
+	Game.prototype.resetElapsedMilliseconds = function ()
+	{
+	    this._gameTimer.restart();
+	    this._gameTime.elapsedGameMilliseconds = 0;
+	    this._accumulatedElapsedMilliseconds = 0;
+	};
+
+	Game.prototype._tick = function ()
+	{
+	    this._accumulatedElapsedMilliseconds += this._gameTimer.elapsedMilliseconds();
+	    this._gameTimer.restart();
+
+	    function continueTick()
+	    {
+	        if (this._accumulatedElapsedMilliseconds > maxElapsedMilliseconds)
+	        {
+	            this._accumulatedElapsedMilliseconds = maxElapsedMilliseconds;
+	        }
+
+	        if (this.isFixedTimeStep)
+	        {
+	            this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds;
+	            var stepCount = 0;
+
+	            this._gameTime.isRunningSlowly = this._accumulatedElapsedMilliseconds > this.targetElapsedMilliseconds;
+
+	            while (this._accumulatedElapsedMilliseconds >= this.targetElapsedMilliseconds)
+	            {
+	                this._gameTime.totalGameMilliseconds += this.targetElapsedMilliseconds;
+	                this._accumulatedElapsedMilliseconds -= this.targetElapsedMilliseconds;
+
+	                ++stepCount;
+
+	                this.update(this._gameTime);
+	            }
+
+	            this._gameTime.elapsedGameMilliseconds = stepCount * this.targetElapsedMilliseconds;
+	        }
+	        else
+	        {
+	            this._gameTime.elapsedGameMilliseconds = this._accumulatedElapsedMilliseconds;
+	            this._gameTime.totalGameMilliseconds += this._accumulatedElapsedMilliseconds;
+	            this._accumulatedElapsedMilliseconds = 0;
+	            this._gameTime.isRunningSlowly = false;
+
+	            this.update(this._gameTime);
+	        }
+
+	        if (this._suppressDraw)
+	        {
+	            this._suppressDraw = false;
+	        }
+	        else
+	        {
+	            this.draw(this._gameTime);
+	        }
+	    }
+
+	    if (this.isFixedTimeStep && (this._accumulatedElapsedMilliseconds < this.targetElapsedMilliseconds))
+	    {
+	        window.clearInterval(this._timerId);
+	        var sleepTime = this.targetElapsedMilliseconds - this._accumulatedElapsedMilliseconds;
+	        var $this = this;
+	        window.setTimeout(function ()
+	        {
+	            continueTick.call($this)
+	            $this._timerId = window.setInterval(function ()
+	            {
+	                $this._tick();
+	            }, $this.targetElapsedMilliseconds);
+	        }, sleepTime);
+	    }
+
+	    continueTick.call(this);
+	};
+
+	Game.prototype.run = function (context)
+	{	
+		if (Object.defineProperty)
+		{
+		    Object.defineProperty(this, "_display", {
+		        value: context,
+		        writable: false,
+		        enumerable: false
+		    });
+		    Object.defineProperty(this, "content", {
+		        value: new ContentManager(context),
+		        writable: false,
+		        enumerable: false
+		    });
+		    Object.defineProperty(this, "graphics", {
+		        value: new GraphicsDeviceManager(this, context.canvas),
+		        writable: false,
+		        enumerable: false
+		    });
+		    Object.defineProperty(this, "spriteBatch", {
+		        value: new SpriteBatch(this.graphics.graphicsDevice),
+		        writable: false,
+		        enumerable: false
+		    });
+		}
+		else
+		{
+		    this._display = context;
+		    this.content = new ContentManager(context);
+		    this.graphics = new GraphicsDeviceManager(this, context.canvas);
+		    this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
+		}
+		this.graphics.graphicsDevice.setRenderTarget(null);
+		this.initialize();
+		this.loadContent();
+		this.resetElapsedMilliseconds();
+		var $this = this;
+		this._timerId = window.setInterval(function ()
+		{
+		    $this._tick();
+		}, this.targetElapsedMilliseconds);
+	};
+
+	Game.prototype.suppressDraw = function ()
+	{
+	    this._suppressDraw = true;
+	};
+
+	Game.prototype.update = function (gameTime)
+	{
+	};
+
+	Game.prototype.base_update = function (gameTime)
+	{
+	    Game.prototype.update.call(this, gameTime);
+	}
+
+	Game.prototype.draw = function (gameTime)
+	{
+	};
+
+	Game.prototype.base_draw = function (gameTime)
+	{
+	    Game.prototype.draw.call(this, gameTime);
 	};
 
 	//#endregion
