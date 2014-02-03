@@ -1355,39 +1355,40 @@
 	{
 		var img = new Image();
 		img.src = url;
+		var texture2D = {};
+		if (Object.defineProperty)
+		{
+		    Object.defineProperty(texture2D, "width", {
+		        get: function ()
+		        {
+		            return img.width;
+		        },
+		        enumerable: true
+		    });
+		    Object.defineProperty(texture2D, "height", {
+		        get: function ()
+		        {
+		            return img.height;
+		        },
+		        enumerable: true
+		    });
+		    Object.defineProperty(texture2D, "_img", {
+		        value: img,
+		        writable: false,
+		        enumerable: false
+		    });
+		}
+		else
+		{
+		    texture2D.with = img.width;
+		    texture2D.height = img.height;
+		    texture2D._img = img;
+		}
 		img.onload = function ()
 		{
-			var texture2D = {};
-			if (Object.defineProperty)
-			{
-				Object.defineProperty(texture2D, "width", {
-					get: function ()
-					{
-						return img.width;
-					},
-					enumerable: true
-				});
-				Object.defineProperty(texture2D, "height", {
-					get: function ()
-					{
-						return img.height;
-					},
-					enumerable: true
-				});
-				Object.defineProperty(texture2D, "_img", {
-					value: img,
-					writable: false,
-					enumerable: false
-				});
-			}
-			else
-			{
-				texture2D.with = img.width;
-				texture2D.height = img.height;
-				texture2D._img = img;
-			}
 			callback(texture2D);
 		}
+		return texture2D;
 	};
 
 	ContentManager.prototype.loadFont = function (name, size, bold, italic)
