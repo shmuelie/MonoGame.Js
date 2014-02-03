@@ -1693,9 +1693,9 @@
 				this.isFixedTimeStep = true;
 				this.targetElapsedMilliseconds = 100;
 				this._gameTime = {
-				    totalGameMilliseconds: 0,
-				    elapsedGameMilliseconds: 0,
-                    isRunningSlowly: false
+					totalGameMilliseconds: 0,
+					elapsedGameMilliseconds: 0,
+					isRunningSlowly: false
 				};
 				this._gameTimer = new Stopwatch();
 				this._suppressDraw = false;
@@ -1730,111 +1730,111 @@
 
 	Game.prototype.resetElapsedMilliseconds = function ()
 	{
-	    this._gameTimer.restart();
-	    this._gameTime.elapsedGameMilliseconds = 0;
-	    this._accumulatedElapsedMilliseconds = 0;
+		this._gameTimer.restart();
+		this._gameTime.elapsedGameMilliseconds = 0;
+		this._accumulatedElapsedMilliseconds = 0;
 	};
 
 	Game.prototype._tick = function ()
 	{
-	    this._accumulatedElapsedMilliseconds += this._gameTimer.elapsedMilliseconds();
-	    this._gameTimer.restart();
+		this._accumulatedElapsedMilliseconds += this._gameTimer.elapsedMilliseconds();
+		this._gameTimer.restart();
 
-	    function continueTick()
-	    {
-	        if (this._accumulatedElapsedMilliseconds > maxElapsedMilliseconds)
-	        {
-	            this._accumulatedElapsedMilliseconds = maxElapsedMilliseconds;
-	        }
+		function continueTick()
+		{
+			if (this._accumulatedElapsedMilliseconds > maxElapsedMilliseconds)
+			{
+				this._accumulatedElapsedMilliseconds = maxElapsedMilliseconds;
+			}
 
-	        if (this.isFixedTimeStep)
-	        {
-	            this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds;
-	            var stepCount = 0;
+			if (this.isFixedTimeStep)
+			{
+				this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds;
+				var stepCount = 0;
 
-	            this._gameTime.isRunningSlowly = this._accumulatedElapsedMilliseconds > this.targetElapsedMilliseconds;
+				this._gameTime.isRunningSlowly = this._accumulatedElapsedMilliseconds > this.targetElapsedMilliseconds;
 
-	            while (this._accumulatedElapsedMilliseconds >= this.targetElapsedMilliseconds)
-	            {
-	                this._gameTime.totalGameMilliseconds += this.targetElapsedMilliseconds;
-	                this._accumulatedElapsedMilliseconds -= this.targetElapsedMilliseconds;
+				while (this._accumulatedElapsedMilliseconds >= this.targetElapsedMilliseconds)
+				{
+					this._gameTime.totalGameMilliseconds += this.targetElapsedMilliseconds;
+					this._accumulatedElapsedMilliseconds -= this.targetElapsedMilliseconds;
 
-	                ++stepCount;
+					++stepCount;
 
-	                this.update(this._gameTime);
-	            }
+					this.update(this._gameTime);
+				}
 
-	            this._gameTime.elapsedGameMilliseconds = stepCount * this.targetElapsedMilliseconds;
-	        }
-	        else
-	        {
-	            this._gameTime.elapsedGameMilliseconds = this._accumulatedElapsedMilliseconds;
-	            this._gameTime.totalGameMilliseconds += this._accumulatedElapsedMilliseconds;
-	            this._accumulatedElapsedMilliseconds = 0;
-	            this._gameTime.isRunningSlowly = false;
+				this._gameTime.elapsedGameMilliseconds = stepCount * this.targetElapsedMilliseconds;
+			}
+			else
+			{
+				this._gameTime.elapsedGameMilliseconds = this._accumulatedElapsedMilliseconds;
+				this._gameTime.totalGameMilliseconds += this._accumulatedElapsedMilliseconds;
+				this._accumulatedElapsedMilliseconds = 0;
+				this._gameTime.isRunningSlowly = false;
 
-	            this.update(this._gameTime);
-	        }
+				this.update(this._gameTime);
+			}
 
-	        if (this._suppressDraw)
-	        {
-	            this._suppressDraw = false;
-	        }
-	        else
-	        {
-	            this.draw(this._gameTime);
-	        }
-	    }
+			if (this._suppressDraw)
+			{
+				this._suppressDraw = false;
+			}
+			else
+			{
+				this.draw(this._gameTime);
+			}
+		}
 
-	    if (this.isFixedTimeStep && (this._accumulatedElapsedMilliseconds < this.targetElapsedMilliseconds))
-	    {
-	        window.clearInterval(this._timerId);
-	        var sleepTime = this.targetElapsedMilliseconds - this._accumulatedElapsedMilliseconds;
-	        var $this = this;
-	        window.setTimeout(function ()
-	        {
-	            continueTick.call($this)
-	            $this._timerId = window.setInterval(function ()
-	            {
-	                $this._tick();
-	            }, $this.targetElapsedMilliseconds);
-	        }, sleepTime);
-	    }
+		if (this.isFixedTimeStep && (this._accumulatedElapsedMilliseconds < this.targetElapsedMilliseconds))
+		{
+			window.clearInterval(this._timerId);
+			var sleepTime = this.targetElapsedMilliseconds - this._accumulatedElapsedMilliseconds;
+			var $this = this;
+			window.setTimeout(function ()
+			{
+				continueTick.call($this)
+				$this._timerId = window.setInterval(function ()
+				{
+					$this._tick();
+				}, $this.targetElapsedMilliseconds);
+			}, sleepTime);
+		}
 
-	    continueTick.call(this);
+		continueTick.call(this);
 	};
 
 	Game.prototype.run = function (context)
 	{	
 		if (Object.defineProperty)
 		{
-		    Object.defineProperty(this, "_display", {
-		        value: context,
-		        writable: false,
-		        enumerable: false
-		    });
-		    Object.defineProperty(this, "content", {
-		        value: new ContentManager(context),
-		        writable: false,
-		        enumerable: false
-		    });
-		    Object.defineProperty(this, "graphics", {
-		        value: new GraphicsDeviceManager(this, context.canvas),
-		        writable: false,
-		        enumerable: false
-		    });
-		    Object.defineProperty(this, "spriteBatch", {
-		        value: new SpriteBatch(this.graphics.graphicsDevice),
-		        writable: false,
-		        enumerable: false
-		    });
+			Object.defineProperty(this, "_display", {
+				value: context,
+				writable: false,
+				enumerable: false
+			});
+			Object.defineProperty(this, "content", {
+				value: new ContentManager(context),
+				writable: false,
+				enumerable: false
+			});
+			Object.defineProperty(this, "graphics", {
+				value: new GraphicsDeviceManager(this, context.canvas),
+				writable: false,
+				enumerable: false
+			});
+			Object.defineProperty(this, "spriteBatch", {
+				value: new SpriteBatch(this.graphics.graphicsDevice),
+				writable: false,
+				enumerable: false
+			});
 		}
 		else
 		{
-		    this._display = context;
-		    this.content = new ContentManager(context);
-		    this.graphics = new GraphicsDeviceManager(this, context.canvas);
-		    this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
+			this._display = context;
+			this.content = new ContentManager(context);
+			this.graphics = new GraphicsDeviceManager(this, context.canvas);
+			this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
 		}
 		this.graphics.graphicsDevice.setRenderTarget(null);
 		this.initialize();
@@ -1843,13 +1843,13 @@
 		var $this = this;
 		this._timerId = window.setInterval(function ()
 		{
-		    $this._tick();
+			$this._tick();
 		}, this.targetElapsedMilliseconds);
 	};
 
 	Game.prototype.suppressDraw = function ()
 	{
-	    this._suppressDraw = true;
+		this._suppressDraw = true;
 	};
 
 	Game.prototype.update = function (gameTime)
@@ -1858,7 +1858,7 @@
 
 	Game.prototype.base_update = function (gameTime)
 	{
-	    Game.prototype.update.call(this, gameTime);
+		Game.prototype.update.call(this, gameTime);
 	}
 
 	Game.prototype.draw = function (gameTime)
@@ -1867,7 +1867,7 @@
 
 	Game.prototype.base_draw = function (gameTime)
 	{
-	    Game.prototype.draw.call(this, gameTime);
+		Game.prototype.draw.call(this, gameTime);
 	};
 
 	//#endregion
