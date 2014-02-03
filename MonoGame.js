@@ -1593,7 +1593,7 @@
 			throw new Error("Cannot be called till after begin is called");
 		}
 
-		scale = scale || Vector2.prototype.zero;
+		scale = scale || new Vector2(1);
 		if (!(scale instanceof Vector2))
 		{
 			scale = new Vector2(scale);
