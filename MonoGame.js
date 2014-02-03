@@ -1448,7 +1448,7 @@
 		        enumerable: false
 		    });
 		    Object.defineProperty(this, "_currentDraw", {
-		        value: null,
+		        value: canvas,
 		        writable: true,
 		        enumerable: false
 		    });
@@ -1493,7 +1493,7 @@
 		else
 		{
 		    this._manager = manager;
-		    this._currentDraw = null;
+		    this._currentDraw = canvas;
 			viewport.x = clientBounds.left;
 			viewport.y = clientBounds.top;
 			viewport.width = clientBounds.right - clientBounds.left;
