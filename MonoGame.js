@@ -1269,14 +1269,14 @@
 		if (this._startTime.getUTCMilliseconds() !== MIN_DATE.getMilliseconds())
 		{
 			var now = new Date();
-			return now.getMilliseconds() - this._startTime.getMilliseconds();
+			return now.valueOf() - this._startTime.valueOf();
 		}
 		return 0;
 	};
 
 	Stopwatch.prototype.start = function ()
 	{
-		if (this._startTime.getUTCMilliseconds() === MIN_DATE.getMilliseconds())
+	    if (this._startTime.valueOf() === MIN_DATE.valueOf())
 		{
 			this._startTime = new Date();
 		}
