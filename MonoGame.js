@@ -577,7 +577,7 @@
 		return new Vector2(this.x * other.x, this.y * other.y);
 	};
 
-	Vector2.prototype.devide = function (other)
+	Vector2.prototype.divide = function (other)
 	{
 		if (typeof other === "number")
 		{
