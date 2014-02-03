@@ -434,7 +434,7 @@
 	{
 		return value.left() < this.right() &&
 				   this.left() < value.right() &&
-				   value.top() < bottom() &&
+				   value.top() < this.bottom() &&
 				   this.top() < value.bottom();
 	};
 
@@ -1616,7 +1616,13 @@
 
 	SpriteBatch.prototype.drawString = function (spriteFont, text, position, color, rotation, scale)
 	{
-		text = text.toString();
+	    text = text.toString();
+
+	    scale = scale || new Vector2(1);
+	    if (!(scale instanceof Vector2))
+	    {
+	        scale = new Vector2(scale);
+	    }
 
 		this._graphicsDevice._currentDraw.save();
 		this._graphicsDevice._currentDraw.rotate(rotation);
