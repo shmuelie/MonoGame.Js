@@ -358,7 +358,6 @@
 				return Rectangle_emptyRectangle;
 			},
 			enumerable: true,
-			writable: false
 		});
 	}
 	else
