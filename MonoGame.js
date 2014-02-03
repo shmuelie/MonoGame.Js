@@ -653,6 +653,40 @@
 		return new Vector2(MathHelper.smoothStep(value1.X, value2.X, amount), MathHelper.smoothStep(value1.Y, value2.Y, amount));
 	};
 
+	Vector2.transform = function ()
+	{
+		switch(arguments.length)
+		{
+			case 2:
+				return Vector2_transform2(arguments[0], arguments[1]);
+			case 3:
+				return Vector2_transform6(arguments[0], 0, arguments[1], arguments[2], 0, arguments[0].length);
+			case 6:
+				return Vector2_transform6(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+		}
+	};
+
+	function Vector2_transform2 (position, matrix)
+	{
+		return new Vector2((position.X * matrix.M11) + (position.Y * matrix.M21) + matrix.M41, (position.X * matrix.M12) + (position.Y * matrix.M22) + matrix.M42);
+	}
+
+	function Vector2_transform6 (sourceArray, sourceIndex, matrix, destinationArray, destinationIndex, length)
+	{
+	    for (var x = 0; x < length; x++) {
+	        var position = sourceArray[sourceIndex + x];
+	        var destination = destinationArray[destinationIndex + x];
+	        destination.X = (position.X * matrix.M11) + (position.Y * matrix.M21) + matrix.M41;
+	        destination.Y = (position.X * matrix.M12) + (position.Y * matrix.M22) + matrix.M42;
+	        destinationArray[destinationIndex + x] = destination;
+	    }
+	}
+
+	Vector2.transformNormal = function (normal, matrix)
+	{
+	    return new Vector2((normal.X * matrix.M11) + (normal.Y * matrix.M21), (normal.X * matrix.M12) + (normal.Y * matrix.M22));
+	};
+
 	//#endregion
 
 	//#region Matrix
