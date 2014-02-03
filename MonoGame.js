@@ -31,6 +31,10 @@
 			{
 				obj.__defineSetter__(prop, desc.set);
 			}
+			if ("value" in desc)
+			{
+				obj[prop] = desc.value;
+			}
 			return obj;
 		}
 	}
@@ -53,7 +57,7 @@
 	}
 
 	var Framework = window.Microsoft.Xna.Framework;
-	var Grapics = Framework.Graphics;
+	var Graphics = Framework.Graphics;
 
 	var MIN_DATE = new Date(-8640000000000000);
 
@@ -1278,37 +1282,60 @@
 
 	Stopwatch.prototype.start = function ()
 	{
-	    if (this._startTime.getUTCMilliseconds() === MIN_DATE.getMilliseconds())
-	    {
-	        this._startTime = new Date();
-	    }
-	    this.isRunning = true;
+		if (this._startTime.getUTCMilliseconds() === MIN_DATE.getMilliseconds())
+		{
+			this._startTime = new Date();
+		}
+		this.isRunning = true;
 	};
 
 	Stopwatch.prototype.stop = function ()
 	{
-	    this.isRunning = false;
+		this.isRunning = false;
 	};
 
 	Stopwatch.prototype.reset = function ()
 	{
-	    this.stop();
-	    this._startTime = MIN_DATE;
+		this.stop();
+		this._startTime = MIN_DATE;
 	};
 
 	Stopwatch.prototype.restart = function ()
 	{
-	    this.reset();
-	    this.start();
+		this.reset();
+		this.start();
 	};
 
 	Stopwatch.StartNew = function ()
 	{
-	    var watch = new Stopwatch();
-	    watch.start();
-	    return watch;
+		var watch = new Stopwatch();
+		watch.start();
+		return watch;
 	}
 
 	//#endregion
+
+	//#region Graphics.RenderTarget2D
+
+	Graphics.RenderTarget2D = function ()
+	{
+		var canvas = document.createElement("canvas");
+		var context = canvas.getContext("2d");
+
+		if (Object.defineProperty)
+		{
+			Object.defineProperty(this, "_context", {
+				value: context,
+				writable: false,
+				enumerable: false
+			});
+		}
+		else
+		{
+			this._context = context;
+		}
+	};
+
+	//#endregion 
 
 })();
