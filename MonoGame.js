@@ -1549,6 +1549,91 @@
 
 	//#endregion
 
-	
+	//#region SpriteBatch
+
+	Graphics.SpriteBatch = function (graphicsDevice)
+	{
+		if (Object.defineProperty)
+		{
+			Object.defineProperty(this, "_graphicsDevice", {
+				value: graphicsDevice,
+				writable: false,
+				enumerable: false
+			});
+			Object.defineProperty(this, "_drawing", {
+				value: false,
+				writable: true,
+				enumerable: false
+			});
+		}
+		else
+		{
+			this._graphicsDevice = graphicsDevice;
+			this._drawing = false;
+		}
+	};
+	var SpriteBatch = Graphics.SpriteBatch;
+
+	SpriteBatch.prototype.begin = function ()
+	{
+		this._drawing = true;
+		this._graphicsDevice._currentDraw.save();
+	};
+
+	SpriteBatch.prototype.end = function ()
+	{
+		this._drawing = false;
+		this._graphicsDevice._currentDraw.restore();
+	};
+
+	SpriteBatch.prototype.draw = function (texture, destinationRectangle, sourceRectangle, rotation, scale)
+	{
+		if (!this._drawing)
+		{
+			throw new Error("Cannot be called till after begin is called");
+		}
+
+		scale = scale || Vector2.prototype.zero;
+		if (!(scale instanceof Vector2))
+		{
+			scale = new Vector2(scale);
+		}
+
+		else if (destinationRectangle instanceof Vector2)
+		{
+			destinationRectangle = new Rectangle(destinationRectangle.x, destinationRectangle.y, texture.width * scale.x, texture.height * scale.y);
+		}
+		else if (!(destinationRectangle instanceof Rectangle))
+		{
+			destinationRectangle = new Rectangle(0, 0, texture.width * scale.x, texture.height * scale.y);
+		}
+
+		sourceRectangle = sourceRectangle || new Rectangle(0, 0, texture.width, texture.height);
+
+		rotation = rotation || 0;
+
+		this._graphicsDevice._currentDraw.save();
+		this._graphicsDevice._currentDraw.rotate(rotation);
+		this._graphicsDevice._currentDraw.scale(scale);
+		this._graphicsDevice._currentDraw.drawImage(texture._img || texture._context, sourceRectangle.x, sourceRectangle.y, sourceRectangle.width, sourceRectangle.height, destinationRectangle.x, destinationRectangle.y, destinationRectangle.width, destinationRectangle.height);
+		this._graphicsDevice._currentDraw.restore();
+	};
+
+	SpriteBatch.prototype.drawString = function (spriteFont, text, position, color, rotation, scale)
+	{
+	    text = text.toString();
+
+	    this._graphicsDevice._currentDraw.save();
+	    this._graphicsDevice._currentDraw.rotate(rotation);
+	    this._graphicsDevice._currentDraw.scale(scale);
+	    this._graphicsDevice._currentDraw.textAlign = "left";
+	    this._graphicsDevice._currentDraw.textBaseline = "top";
+	    this._graphicsDevice._currentDraw.font = spriteFont._font
+	    this._graphicsDevice._currentDraw.fillStyle = color;
+	    this._graphicsDevice._currentDraw.fillText(text, position.x, position.y);
+	    this._graphicsDevice._currentDraw.restore();
+	};
+
+	//#endregion
 
 })();
