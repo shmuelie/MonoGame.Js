@@ -1609,7 +1609,7 @@
 
 		this._graphicsDevice._currentDraw.save();
 		this._graphicsDevice._currentDraw.rotate(rotation);
-		this._graphicsDevice._currentDraw.scale(scale);
+		this._graphicsDevice._currentDraw.scale(scale.x, scale.y);
 		this._graphicsDevice._currentDraw.drawImage(texture._img || texture._context, sourceRectangle.x, sourceRectangle.y, sourceRectangle.width, sourceRectangle.height, destinationRectangle.x, destinationRectangle.y, destinationRectangle.width, destinationRectangle.height);
 		this._graphicsDevice._currentDraw.restore();
 	};
@@ -1626,7 +1626,7 @@
 
 		this._graphicsDevice._currentDraw.save();
 		this._graphicsDevice._currentDraw.rotate(rotation);
-		this._graphicsDevice._currentDraw.scale(scale);
+		this._graphicsDevice._currentDraw.scale(scale.x, scale.y);
 		this._graphicsDevice._currentDraw.textAlign = "left";
 		this._graphicsDevice._currentDraw.textBaseline = "top";
 		this._graphicsDevice._currentDraw.font = spriteFont._font
