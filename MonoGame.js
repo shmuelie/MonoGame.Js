@@ -37,19 +37,19 @@
 
 	if (window.Microsoft === undefined)
 	{
-	    window.Microsoft = {};
+		window.Microsoft = {};
 	}
 	if (window.Microsoft.Xna === undefined)
 	{
-	    window.Microsoft.Xna = {};
+		window.Microsoft.Xna = {};
 	}
 	if (window.Microsoft.Xna.Framework === undefined)
 	{
-	    window.Microsoft.Xna.Framework = {};
+		window.Microsoft.Xna.Framework = {};
 	}
 	if (window.Microsoft.Xna.Framework.Graphics === undefined)
 	{
-	    window.Microsoft.Xna.Framework.Graphics = {};
+		window.Microsoft.Xna.Framework.Graphics = {};
 	}
 
 	var Framework = window.Microsoft.Xna.Framework;
@@ -62,43 +62,43 @@
 
 	if (Object.defineProperty)
 	{
-	    Object.defineProperty(MathHelper, "E", {
+		Object.defineProperty(MathHelper, "E", {
 			value: Math.E,
 			writable: false,
 			enumerable: true
 		});
 
-	    Object.defineProperty(MathHelper, "Log10E", {
+		Object.defineProperty(MathHelper, "Log10E", {
 			value: 0.4342945,
 			writable: false,
 			enumerable: true
 		});
 
-	    Object.defineProperty(MathHelper, "Log2E", {
+		Object.defineProperty(MathHelper, "Log2E", {
 			value: 1.442695,
 			writable: false,
 			enumerable: true
 		});
 
-	    Object.defineProperty(MathHelper, "Pi", {
+		Object.defineProperty(MathHelper, "Pi", {
 			value: Math.PI,
 			writable: false,
 			enumerable: true
 		});
 
-	    Object.defineProperty(MathHelper, "PiOver2", {
+		Object.defineProperty(MathHelper, "PiOver2", {
 			value: Math.PI / 2,
 			writable: false,
 			enumerable: true
 		});
 
-	    Object.defineProperty(MathHelper, "PiOver4", {
+		Object.defineProperty(MathHelper, "PiOver4", {
 			value: Math.PI / 4,
 			writable: false,
 			enumerable: true
 		});
 
-	    Object.defineProperty(MathHelper, "TwoPi", {
+		Object.defineProperty(MathHelper, "TwoPi", {
 			value: 2 * Math.PI,
 			writable: false,
 			enumerable: true
@@ -106,13 +106,13 @@
 	}
 	else
 	{
-	    MathHelper.E = Math.E;
-	    MathHelper.Log10E = 0.4342945;
-	    MathHelper.Log2E = 1.442695;
-	    MathHelper.Pi = Math.PI;
-	    MathHelper.PiOver2 = Math.PI / 2;
-	    MathHelper.PiOver4 = Math.PI / 4;
-	    MathHelper.TwoPi = Math.PI * 2;
+		MathHelper.E = Math.E;
+		MathHelper.Log10E = 0.4342945;
+		MathHelper.Log2E = 1.442695;
+		MathHelper.Pi = Math.PI;
+		MathHelper.PiOver2 = Math.PI / 2;
+		MathHelper.PiOver4 = Math.PI / 4;
+		MathHelper.TwoPi = Math.PI * 2;
 	}
 
 	MathHelper.barycentric = function (value1, value2, value3, amount1, amount2)
@@ -129,100 +129,100 @@
 
 	MathHelper.clamp = function (value, min, max)
 	{
-	    // First we check to see if we're greater than the max
-	    value = (value > max) ? max : value;
+		// First we check to see if we're greater than the max
+		value = (value > max) ? max : value;
 
-	    // Then we check to see if we're less than the min.
-	    value = (value < min) ? min : value;
+		// Then we check to see if we're less than the min.
+		value = (value < min) ? min : value;
 
-	    // There's no check to see if min > max.
-	    return value;
+		// There's no check to see if min > max.
+		return value;
 	};
 
 	MathHelper.distance = function (value1, value2)
 	{
-	    return Math.abs(value1 - value2);
+		return Math.abs(value1 - value2);
 	};
 
 	MathHelper.hermite = function (value1, tangent1, value2, tangent2, amount)
 	{
-	    var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount, result;
-	    var sCubed = s * s * s;
-	    var sSquared = s * s;
+		var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount, result;
+		var sCubed = s * s * s;
+		var sSquared = s * s;
 
-	    if (amount === 0)
-	    {
-	        result = value1;
-	    }
-	    else if (amount === 1)
-	    {	
-	        result = value2;
-	    }
-	    else
-	    {
-	        result = (2 * v1 - 2 * v2 + t2 + t1) * sCubed + (3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared + t1 * s + v1;
-	    }
-	    return result;
+		if (amount === 0)
+		{
+			result = value1;
+		}
+		else if (amount === 1)
+		{
+			result = value2;
+		}
+		else
+		{
+			result = (2 * v1 - 2 * v2 + t2 + t1) * sCubed + (3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared + t1 * s + v1;
+		}
+		return result;
 	};
 
 	MathHelper.lerp = function (value1, value2, amount)
 	{
-	    return value1 + (value2 - value1) * amount;
+		return value1 + (value2 - value1) * amount;
 	};
 
 	MathHelper.max = function (value1, value2)
 	{
-	    return Math.max(value1, value2);
+		return Math.max(value1, value2);
 	};
 
 	MathHelper.min = function (value1, value2)
 	{
-	    return Math.min(value1, value2);
+		return Math.min(value1, value2);
 	};
 
 	MathHelper.smoothStep = function (value1, value2, amount)
 	{
-	    var result = MathHelper.clamp(amount, 0, 1);
-	    result = MathHelper.hermite(value1, 0, value2, 0, result);
+		var result = MathHelper.clamp(amount, 0, 1);
+		result = MathHelper.hermite(value1, 0, value2, 0, result);
 
-	    return result;
+		return result;
 	};
 
 	MathHelper.toDegrees = function (radians)
 	{
-	    return radians * 57.295779513082320876798154814105;
+		return radians * 57.295779513082320876798154814105;
 	};
 
 	MathHelper.toRadians = function (degrees)
 	{
-	    return degrees * 0.017453292519943295769236907684886;
+		return degrees * 0.017453292519943295769236907684886;
 	};
 
 	MathHelper.iEEERemainder = function (x, y)
 	{
-	    return x - (y * Math.round(x / y));
+		return x - (y * Math.round(x / y));
 	};
 
 	MathHelper.wrapAngle = function (angle)
 	{
-	    angle = MathHelper.iEEERemainder(angle, 6.2831854820251465);
-	    if (angle <= -3.14159274)
-	    {
-	        angle += 6.28318548;
-	    }
-	    else
-	    {
-		    if (angle > 3.14159274)
-	        {
-		        angle -= 6.28318548;
-	        }
-	    }
+		angle = MathHelper.iEEERemainder(angle, 6.2831854820251465);
+		if (angle <= -3.14159274)
+		{
+			angle += 6.28318548;
+		}
+		else
+		{
+			if (angle > 3.14159274)
+			{
+				angle -= 6.28318548;
+			}
+		}
 		return angle;
 	};
 
 	MathHelper.isPowerOfTwo = function (value)
 	{
-	    return (value > 0) && ((value & (value - 1)) === 0);
+		return (value > 0) && ((value & (value - 1)) === 0);
 	};
 
 	//#endregion
@@ -464,4 +464,197 @@
 	};
 
 	//#endregion
+
+	//#region Vector2
+
+	var Vector2_zeroVector = new Vector2(0);
+	var Vector2_unitVector = new Vector2(1);
+	var Vector2_unitXVector = new Vector2(1, 0);
+	var Vector2_unitYVector = new Vector2(0, 1);
+
+	Framework.Vector2 = function (x, y)
+	{
+		if (y === undefined)
+		{
+			y = x;
+		}
+
+		if (Object.defineProperty)
+		{
+			Object.defineProperty(this, "X", {
+				value: x,
+				writable: true,
+				enumerable: true,
+			});
+
+			Object.defineProperty(this, "Y", {
+				value: y,
+				writable: true,
+				enumerable: true,
+			});
+		}
+		else
+		{
+			this.X = x;
+			this.Y = y;
+		}
+	}
+	var Vector2 = Framework.Vector2;
+
+	if (Object.defineProperty)
+	{
+		Object.defineProperty(Vector2.prototype, "zero", {
+			get: function ()
+			{
+				return Vector2_zeroVector;
+			},
+			enumerable: true,
+			writable: false
+		});
+
+		Object.defineProperty(Vector2.prototype, "unitVector", {
+			get: function ()
+			{
+				return Vector2_unitVector;
+			},
+			enumerable: true,
+			writable: false
+		});
+
+		Object.defineProperty(Vector2.prototype, "unitXVector", {
+			get: function ()
+			{
+				return Vector2_unitXVector;
+			},
+			enumerable: true,
+			writable: false
+		});
+
+		Object.defineProperty(Vector2.prototype, "unitYVector", {
+			get: function ()
+			{
+				return Vector2_unitYVector;
+			},
+			enumerable: true,
+			writable: false
+		});
+	}
+	else
+	{
+		Vector2.prototype.zero = Vector2_zeroVector;
+		Vector2.prototype.unitVector = Vector2_unitVector;
+		Vector2.prototype.unitXVector = Vector2_unitXVector;
+		Vector2.prototype.unitYVector = Vector2_unitYVector;
+	}
+
+	Vector2.prototype.negate = function ()
+	{
+		return new Vector2(this.X, this.Y);
+	};
+
+	Vector2.prototype.equals = function (obj)
+	{
+		return (obj instanceof Vector2) ? ((obj.X === this.X) && (obj.Y === this.Y)) : false;
+	};
+
+	Vector2.prototype.add = function (other)
+	{
+		return new Vector2(this.X + other.X, this.Y + other.Y);
+	};
+
+	Vector2.prototype.multiply = function (other)
+	{
+		if (typeof other === "number")
+		{
+			return new Vector2(this.X * other, this.Y * other);
+		}
+		return new Vector2(this.X * other.X, this.Y * other.Y);
+	};
+
+	Vector2.prototype.devide = function (other)
+	{
+		if (typeof other === "number")
+		{
+			return new Vector2(this.X / other, this.Y / other);
+		}
+		return new Vector2(this.X / other.X, this.Y / other.Y);
+	};
+
+	Vector2.distance = function (value1, value2)
+	{
+		var v1 = value1.X - value2.X, v2 = value1.Y - value2.Y;
+		return Math.sqrt((v1 * v1) + (v2 * v2));
+	};
+
+	Vector2.distanceSquared = function (value1, value2)
+	{
+		var v1 = value1.X - value2.X, v2 = value1.Y - value2.Y;
+		return (v1 * v1) + (v2 * v2);
+	};
+
+	Vector2.reflect = function (vector, normal)
+	{
+		var result = new Vector2(0, 0);
+		var val = 2.0 * ((vector.X * normal.X) + (vector.Y * normal.Y));
+		result.X = vector.X - (normal.X * val);
+		result.Y = vector.Y - (normal.Y * val);
+		return result;
+	};
+
+	Vector2.prototype.length = function ()
+	{
+		return Math.sqrt((this.X * this.X) + (this.Y * this.Y));
+	};
+
+	Vector2.prototype.lengthSquared = function ()
+	{
+		return (this.X * this.X) + (this.Y * this.Y);
+	};
+
+	Vector2.max = function (value1, value2)
+	{
+		return new Vector2(value1.X > value2.X ? value1.X : value2.X, value1.Y > value2.Y ? value1.Y : value2.Y);
+	};
+
+	Vector2.min = function (value1, value2)
+	{
+		return new Vector2(value1.X < value2.X ? value1.X : value2.X, value1.Y < value2.Y ? value1.Y : value2.Y);
+	};
+
+	Vector2.prototype.normalize = function ()
+	{
+		var val = 1.0 / Math.sqrt((this.X * this.X) + (this.Y * this.Y));
+		this.X *= val;
+		this.Y *= val;
+	};
+
+	Vector2.barycentric = function (value1, value2, value3, amount1, amount2)
+	{
+		return new Vector2(MathHelper.barycentric(value1.X, value2.X, value3.X, amount1, amount2), MathHelper.barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2));
+	};
+
+	Vector2.catmullRom = function (value1, value2, value3, value4, amount)
+	{
+		return new Vector2(MathHelper.catmullRom(value1.X, value2.X, value3.X, value4.X, amount), MathHelper.catmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount));
+	};
+
+	Vector2.clamp = function (value1, min, max)
+	{
+		return new Vector2(MathHelper.clamp(value1.X, min.X, max.X), MathHelper.clamp(value1.Y, min.Y, max.Y));
+	};
+
+	Vector2.lerp = function (value1, value2, amount)
+	{
+		return new Vector2(MathHelper.lerp(value1.X, value2.X, amount), MathHelper.lerp(value1.Y, value2.Y, amount));
+	};
+
+	Vector2.smoothStep = function (value1, value2, amount)
+	{
+		return new Vector2(MathHelper.smoothStep(value1.X, value2.X, amount), MathHelper.smoothStep(value1.Y, value2.Y, amount));
+	};
+
+	//#endregion
+
+	
+
 })();
