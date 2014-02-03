@@ -1386,6 +1386,11 @@
 		}
 		img.onload = function ()
 		{
+		    if (!Object.defineProperties)
+		    {
+		        texture2D.height = img.height;
+		        texture2D.width = img.width;
+		    }
 			callback(texture2D);
 		}
 		return texture2D;
