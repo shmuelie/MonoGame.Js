@@ -12,6 +12,8 @@
             var MathHelper = Microsoft.Xna.Framework.MathHelper;
             var Mouse = Microsoft.Xna.Framework.Input.Mouse;
             var Point = Microsoft.Xna.Framework.Point;
+            var Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
+            var Keys = Microsoft.Xna.Framework.Input.Keys;
 
             window.Clown = {};
             
@@ -154,6 +156,9 @@
 
             ClownGame.prototype.update = function (gameTime)
             {
+                var keyboarState = Keyboard.getState();
+                if (keyboarState.is
+
                 var newPosition = (new Vector2(this._clownArea.x, this._clownArea.y)).add(this._clownVelocity.multiply(gameTime.elapsedGameMilliseconds / 1000));
                 this._clownArea.x = Math.round(newPosition.x);
                 this._clownArea.y = Math.round(newPosition.y);

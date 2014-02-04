@@ -2121,7 +2121,7 @@
 					return !this.isKeyDown(key);
 				}
 			};
-
+			return currentState;
 		}
 	};
 
