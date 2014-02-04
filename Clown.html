@@ -157,7 +157,10 @@
             ClownGame.prototype.update = function (gameTime)
             {
                 var keyboarState = Keyboard.getState();
-                if (keyboarState.is
+                if (keyboarState.isKeyDown(Keys.X))
+                {
+                    this.exit();
+                }
 
                 var newPosition = (new Vector2(this._clownArea.x, this._clownArea.y)).add(this._clownVelocity.multiply(gameTime.elapsedGameMilliseconds / 1000));
                 this._clownArea.x = Math.round(newPosition.x);
@@ -165,7 +168,23 @@
 
 
                 var mouseState = Mouse.getState();
-                this._trampolinePosition.x = Math.min(this._screenSize.width - (this._trampolineTexture.width / 2), Math.max((this._trampolineTexture.width / 2), mouseState.x)) - (this._trampolineTexture.width / 2);
+                var modifier = this._trampolinePosition.x + (this._trampolineTexture.width / 2);
+                if (keyboarState.isKeyDown(Keys.K))
+                {
+                    if (keyboarState.isKeyDown(Keys.Left) && keyboarState.isKeyUp(Keys.Right))
+                    {
+                        modifier -= 20;
+                    }
+                    else if (keyboarState.isKeyDown(Keys.Right) && keyboarState.isKeyUp(Keys.Left))
+                    {
+                        modifier += 20;
+                    }
+                }
+                else
+                {
+                    modifier = mouseState.x;
+                }
+                this._trampolinePosition.x = Math.min(this._screenSize.width - (this._trampolineTexture.width / 2), Math.max((this._trampolineTexture.width / 2), modifier)) - (this._trampolineTexture.width / 2);
 
                 var MaxX = this._screenSize.width - this._clownArea.width;
                 var MinX = 0;
