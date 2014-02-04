@@ -28,6 +28,6 @@ There are places where the API is different in more than just ECMAScript ways
   "pause" the game till all the resources have loaded. For now just recalculate 
   any variables/members that are dependant on the texture's dimensions in the 
   callback.
-* There is not TimeSpan object, instead just plane milliseconds are used. So 
+* There is no TimeSpan object, instead just plane milliseconds are used. So 
   for example you instead of gameTime.elapsedGameTime it's
   gameTime.elapsedGameMilliseconds.
