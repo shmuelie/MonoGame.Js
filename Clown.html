@@ -128,30 +128,25 @@
 
             ClownGame.prototype.loadContent = function ()
             {
-                var $this = this;
-                this._backgroundTexture = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/Background.png", function ()
-                {
-                    $this._backgroundAnimation = new Animation($this._backgroundTexture, 500, 640, 480);
-                });
-                this._backgroundAnimation = new Animation(this._backgroundTexture, 500, 640, 480);
+                this._backgroundTexture = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/Background.png");
+                
 
-                this._trampolineTexture = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/Trampoline.png", function ()
-                {
-                    $this._trampolinePosition = new Vector2(100, $this._screenSize.height - $this._trampolineTexture.height);
-                });
-                this._trampolinePosition = new Vector2(100, this._screenSize.height - this._trampolineTexture.height);
+                this._trampolineTexture = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/Trampoline.png");
 
-                this._clownSpriteSheet = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/clownSpriteSheet.png", function ()
-                {
-                    $this._clownAnimation = new Animation($this._clownSpriteSheet, 200, $this._clownArea.width, $this._clownArea.height);
-                });
+                this._clownSpriteSheet = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/clownSpriteSheet.png");
                 this._clownArea = new Rectangle(100, 100, 58, 64);
-                this._clownAnimation = new Animation(this._clownSpriteSheet, 200, this._clownArea.width, this._clownArea.height);
                 this._clownVelocity = new Vector2(0);
 
                 this._scoreFont = this.content.loadFont("Arial", "24pt", true, false);
 
-                this._balloonTexture = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/balloon.png", function () { });
+                this._balloonTexture = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/balloon.png");
+            };
+
+            ClownGame.prototype.contentLoaded = function ()
+            {
+                this._backgroundAnimation = new Animation(this._backgroundTexture, 500, 640, 480);
+                this._trampolinePosition = new Vector2(100, this._screenSize.height - this._trampolineTexture.height);
+                this._clownAnimation = new Animation(this._clownSpriteSheet, 200, this._clownArea.width, this._clownArea.height);
             };
 
             ClownGame.prototype.update = function (gameTime)
