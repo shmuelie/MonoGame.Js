@@ -1705,6 +1705,11 @@
 					writable: false,
 					enumerable: false
 				});
+				Object.defineProperty(this, "_isExited", {
+					value: false,
+					writable: true,
+					enumerable: false
+				});
 			}
 			else
 			{
@@ -1719,6 +1724,7 @@
 				this._suppressDraw = false;
 				this._accumulatedElapsedMilliseconds = 0;
 				this._timerId = null;
+				this._isExited = false;
 			}
 
 			cstr.call(this);
@@ -1755,11 +1761,21 @@
 
 	Game.prototype._tick = function ()
 	{
+	    if (this._isExited)
+	    {
+	        return;
+	    }
+
 		this._accumulatedElapsedMilliseconds += this._gameTimer.elapsedMilliseconds();
 		this._gameTimer.restart();
 
 		function continueTick()
 		{
+		    if (this._isExited)
+		    {
+		        return;
+		    }
+
 			if (this._accumulatedElapsedMilliseconds > maxElapsedMilliseconds)
 			{
 				this._accumulatedElapsedMilliseconds = maxElapsedMilliseconds;
@@ -1780,6 +1796,10 @@
 					++stepCount;
 
 					this.update(this._gameTime);
+					if (this._isExited)
+					{
+					    return;
+					}
 				}
 
 				this._gameTime.elapsedGameMilliseconds = stepCount * this.targetElapsedMilliseconds;
@@ -1792,6 +1812,10 @@
 				this._gameTime.isRunningSlowly = false;
 
 				this.update(this._gameTime);
+				if (this._isExited)
+				{
+				    return;
+				}
 			}
 
 			if (this._suppressDraw)
@@ -1824,43 +1848,44 @@
 
 	Game.prototype.run = function (context)
 	{
-	    if (this._display === undefined)
-	    {
-	        if (Object.defineProperty)
-	        {
-	            Object.defineProperty(this, "_display", {
-	                value: context,
-	                writable: false,
-	                enumerable: false
-	            });
-	            Object.defineProperty(this, "content", {
-	                value: new ContentManager(context),
-	                writable: false,
-	                enumerable: false
-	            });
-	            Object.defineProperty(this, "graphics", {
-	                value: new GraphicsDeviceManager(this, context.canvas),
-	                writable: false,
-	                enumerable: false
-	            });
-	            Object.defineProperty(this, "spriteBatch", {
-	                value: new SpriteBatch(this.graphics.graphicsDevice),
-	                writable: false,
-	                enumerable: false
-	            });
-	        }
-	        else
-	        {
-	            this._display = context;
-	            this.content = new ContentManager(context);
-	            this.graphics = new GraphicsDeviceManager(this, context.canvas);
-	            this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
-	        }
-	    }
+		if (this._display === undefined)
+		{
+			if (Object.defineProperty)
+			{
+				Object.defineProperty(this, "_display", {
+					value: context,
+					writable: false,
+					enumerable: false
+				});
+				Object.defineProperty(this, "content", {
+					value: new ContentManager(context),
+					writable: false,
+					enumerable: false
+				});
+				Object.defineProperty(this, "graphics", {
+					value: new GraphicsDeviceManager(this, context.canvas),
+					writable: false,
+					enumerable: false
+				});
+				Object.defineProperty(this, "spriteBatch", {
+					value: new SpriteBatch(this.graphics.graphicsDevice),
+					writable: false,
+					enumerable: false
+				});
+			}
+			else
+			{
+				this._display = context;
+				this.content = new ContentManager(context);
+				this.graphics = new GraphicsDeviceManager(this, context.canvas);
+				this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
+			}
+		}
 		this.graphics.graphicsDevice.setRenderTarget(null);
 		this.initialize();
 		this.loadContent();
 		this.resetElapsedMilliseconds();
+		this._isExited = false;
 		var $this = this;
 		this._timerId = window.setInterval(function ()
 		{
@@ -1897,19 +1922,20 @@
 
 	Game.prototype.base_unloadContent = function ()
 	{
-	    Game.prototype.unloadConent.call(this);
+		Game.prototype.unloadConent.call(this);
 	};
 
 	Game.prototype.exit = function ()
 	{
-	    window.clearInterval(this._timerId);
-	    this.graphics.graphicsDevice.clear();
-	    this.unloadConent();
+		window.clearInterval(this._timerId);
+		this.graphics.graphicsDevice.clear();
+		this.unloadConent();
+		this._isExited = true;
 	};
 
 	Game.prototype.base_exit = function ()
 	{
-	    Game.prototype.exit.call(this);
+		Game.prototype.exit.call(this);
 	};
 
 	//#endregion
@@ -1950,22 +1976,22 @@
 
 	function mousewheelHandler(e)
 	{
-	    e = e || event;
-	    mouseState.scrollWheelValue = e.wheelDelta || e.wheelDeltaY || 0;
+		e = e || event;
+		mouseState.scrollWheelValue = e.wheelDelta || e.wheelDeltaY || 0;
 	}
 
 	function DOMMouseScrollHandler (e)
 	{
-	    e = e || event;
-	    mouseState.scrollWheelValue = e.detail * -40;
+		e = e || event;
+		mouseState.scrollWheelValue = e.detail * -40;
 	}
 
 	function wheelHandler(e)
 	{
-	    e = e || event;
-	    mouseState.scrollWheelValue = e.deltaY * -120;
-	    document.removeEventListener("mousewheel", mousewheelHandler);
-	    document.removeEventListener("DOMMouseScroll", DOMMouseScrollHandler);
+		e = e || event;
+		mouseState.scrollWheelValue = e.deltaY * -120;
+		document.removeEventListener("mousewheel", mousewheelHandler);
+		document.removeEventListener("DOMMouseScroll", DOMMouseScrollHandler);
 	}
 
 	document.addEventListener("mousewheel", mousewheelHandler);
@@ -2006,255 +2032,255 @@
 		}
 	});
 
-    //#endregion
+	//#endregion
 
-    //#region Input.Keyboard
+	//#region Input.Keyboard
 
-    //NOTE: currently does not support HTML5 based event, uses old style keyCode based.
+	//NOTE: currently does not support HTML5 based event, uses old style keyCode based.
 
 	var keyboardState = {
-	    downKeys: [],
-	    addKey: function (key)
-	    {
-	        var low = 0;
-	        var high = this.downKeys.length - 1;
-	        var i;
-	        while (low <= high)
-	        {
-	            i = Math.floor((low + high) / 2);
-	            if (this.downKeys[i] < key)
-	            {
-	                low = i + 1;
-	            }
-	            else if (this.downKeys[i] > key)
-	            {
-	                high = i - 1;
-	            }
-	            else
-	            {
-	                return;
-	            }
-	        }
-	        this.downKeys.splice(low, 0, key);
-	    },
-	    removeKey: function (key)
-	    {
-	        var low = 0;
-	        var high = this.downKeys.length - 1;
-	        var i;
-	        while (low <= high)
-	        {
-	            i = Math.floor((low + high) / 2);
-	            if (this.downKeys[i] < key)
-	            {
-	                low = i + 1;
-	            }
-	            else if (this.downKeys[i] > key)
-	            {
-	                high = i - 1;
-	            }
-	            else
-	            {
-	                this.downKeys.splice(i, 1);
-	                return;
-	            }
-	        }
-	    }
+		downKeys: [],
+		addKey: function (key)
+		{
+			var low = 0;
+			var high = this.downKeys.length - 1;
+			var i;
+			while (low <= high)
+			{
+				i = Math.floor((low + high) / 2);
+				if (this.downKeys[i] < key)
+				{
+					low = i + 1;
+				}
+				else if (this.downKeys[i] > key)
+				{
+					high = i - 1;
+				}
+				else
+				{
+					return;
+				}
+			}
+			this.downKeys.splice(low, 0, key);
+		},
+		removeKey: function (key)
+		{
+			var low = 0;
+			var high = this.downKeys.length - 1;
+			var i;
+			while (low <= high)
+			{
+				i = Math.floor((low + high) / 2);
+				if (this.downKeys[i] < key)
+				{
+					low = i + 1;
+				}
+				else if (this.downKeys[i] > key)
+				{
+					high = i - 1;
+				}
+				else
+				{
+					this.downKeys.splice(i, 1);
+					return;
+				}
+			}
+		}
 	};
 
 	Input.Keyboard = {
-	    getState: function()
-	    {
-	        var currentState = {
-	            downKeys: keyboardState.downKeys.slice(0, keyboardState.downKeys.length),
-	            isKeyDown: function (key)
-	            {
-	                var low = 0;
-	                var high = this.downKeys.length - 1;
-	                var i;
-	                while (low <= high)
-	                {
-	                    i = Math.floor((low + high) / 2);
-	                    if (this.downKeys[i] < key)
-	                    {
-	                        low = i + 1;
-	                    }
-	                    else if (this.downKeys[i] > key)
-	                    {
-	                        high = i - 1;
-	                    }
-	                    else
-	                    {
-	                        return true;
-	                    }
-	                }
-	                return false;
-	            },
-	            isKeyUp: function(key)
-	            {
-	                return !this.isKeyDown(key);
-	            }
-	        };
+		getState: function()
+		{
+			var currentState = {
+				downKeys: keyboardState.downKeys.slice(0, keyboardState.downKeys.length),
+				isKeyDown: function (key)
+				{
+					var low = 0;
+					var high = this.downKeys.length - 1;
+					var i;
+					while (low <= high)
+					{
+						i = Math.floor((low + high) / 2);
+						if (this.downKeys[i] < key)
+						{
+							low = i + 1;
+						}
+						else if (this.downKeys[i] > key)
+						{
+							high = i - 1;
+						}
+						else
+						{
+							return true;
+						}
+					}
+					return false;
+				},
+				isKeyUp: function(key)
+				{
+					return !this.isKeyDown(key);
+				}
+			};
 
-	    }
+		}
 	};
 
 	document.addEventListener("keydown", function (e)
 	{
-	    e = e || event;
-	    if ((e.keyCode === 16) || e.shiftKey)
-	    {
-	        keyboardState.addKey(16);
-	    }
-	    else if ((e.keyCode === 17) || e.ctrlKey)
-	    {
-	        keyboardState.addKey(17);
-	    }
-	    else if ((e.keyCode === 18) || e.altKey)
-	    {
-	        keyboardState.addKey(18);
-	    }
-	    
-	    if ((e.keyCode !== 16) && (e.keyCode !== 17) && (e.keyCode !== 18))
-	    {
-	        keyboardState.addKey(e.keyCode);
-	    }
+		e = e || event;
+		if ((e.keyCode === 16) || e.shiftKey)
+		{
+			keyboardState.addKey(16);
+		}
+		else if ((e.keyCode === 17) || e.ctrlKey)
+		{
+			keyboardState.addKey(17);
+		}
+		else if ((e.keyCode === 18) || e.altKey)
+		{
+			keyboardState.addKey(18);
+		}
+		
+		if ((e.keyCode !== 16) && (e.keyCode !== 17) && (e.keyCode !== 18))
+		{
+			keyboardState.addKey(e.keyCode);
+		}
 	});
 
 	document.addEventListener("keyup", function (e)
 	{
-	    e = e || event;
-	    if ((e.keyCode === 16) || e.shiftKey)
-	    {
-	        keyboardState.removeKey(16);
-	    }
-	    else if ((e.keyCode === 17) || e.ctrlKey)
-	    {
-	        keyboardState.removeKey(17);
-	    }
-	    else if ((e.keyCode === 18) || e.altKey)
-	    {
-	        keyboardState.removeKey(18);
-	    }
+		e = e || event;
+		if ((e.keyCode === 16) || e.shiftKey)
+		{
+			keyboardState.removeKey(16);
+		}
+		else if ((e.keyCode === 17) || e.ctrlKey)
+		{
+			keyboardState.removeKey(17);
+		}
+		else if ((e.keyCode === 18) || e.altKey)
+		{
+			keyboardState.removeKey(18);
+		}
 
-	    if ((e.keyCode !== 16) && (e.keyCode !== 17) && (e.keyCode !== 18))
-	    {
-	        keyboardState.removeKey(e.keyCode);
-	    }
+		if ((e.keyCode !== 16) && (e.keyCode !== 17) && (e.keyCode !== 18))
+		{
+			keyboardState.removeKey(e.keyCode);
+		}
 	});
 
 	Input.Keys = {
-        // Keys with words or arrows
-	    Backspace: 8,
-	    Tab: 9,
-	    Enter: 13,
-	    Shift: 16,
-	    Ctrl: 17,
-	    Alt: 18,
-	    Pause: 19,
-	    CapsLock: 20,
-	    Esc: 27,
-	    Spacebar: 32,
-	    PageUp: 33,
-	    PageDown: 34,
-	    End: 35,
-	    Home: 36,
-	    Left: 37,
-	    Up: 38,
-	    Right: 39,
-	    Down: 40,
-	    Insert: 45,
-	    Delete: 46,
-        // Top row numbers
-	    Zero: 48,
-	    One: 49,
-	    Two: 50,
-	    Three: 51,
-	    Four: 52,
-	    Five: 53,
-	    Six: 54,
-	    Seven: 55,
-	    Eight: 56,
-	    Nine: 57,
-        // Letters
-	    A: 65,
-	    B: 66,
-	    C: 67,
-	    D: 68,
-	    E: 69,
-	    F: 70,
-	    G: 71,
-	    H: 72,
-	    I: 73,
-	    J: 74,
-	    K: 75,
-	    L: 76,
-	    M: 77,
-	    N: 78,
-	    O: 79,
-	    P: 80,
-	    Q: 81,
-	    R: 82,
-	    S: 83,
-	    T: 84,
-	    U: 85,
-	    V: 86,
-	    W: 87,
-	    X: 88,
-	    Y: 89,
-	    Z: 90,
-	    // Keypad
-	    NumPadZero: 96,
-	    NumPadOne: 97,
-	    NumPadTwo: 98,
-	    NumPadThree: 99,
-	    NumPadFour: 100,
-	    NumPadFive: 101,
-	    NumPadSix: 102,
-	    NumPadSeven: 103,
-	    NumPadEight: 104,
-	    NumPadNine: 105,
-	    Multiply: 106,
-	    Add: 107,
-	    Subtract: 109,
-	    Decimal: 110,
-	    Divide: 111,
-	    // Function keys
-	    F1: 112,
-	    F2: 113,
-	    F3: 114,
-	    F4: 115,
-	    F5: 116,
-	    F6: 117,
-	    F7: 118,
-	    F8: 119,
-	    F9: 120,
-	    F10: 121,
-	    F11: 122,
-	    F12: 123,
-	    F13: 124,
-	    F14: 125,
-	    F15: 126,
-	    F16: 127,
-	    F17: 128,
-	    F18: 129,
-	    F19: 130,
-	    F20: 131,
-	    F21: 132,
-	    F22: 133,
-	    F23: 134,
-	    F24: 135,
-	    // Punctuation that don't require the shift key
-	    OpenSquareBracket: 219,
-	    CloseSquareBracket: 221,
-	    Backslash: 220,
-	    Forwardslash: 191,
-	    Comma: 188,
-	    Period: 190,
-	    GraveAccent: 192,
-        SingleQuote: 222
+		// Keys with words or arrows
+		Backspace: 8,
+		Tab: 9,
+		Enter: 13,
+		Shift: 16,
+		Ctrl: 17,
+		Alt: 18,
+		Pause: 19,
+		CapsLock: 20,
+		Esc: 27,
+		Spacebar: 32,
+		PageUp: 33,
+		PageDown: 34,
+		End: 35,
+		Home: 36,
+		Left: 37,
+		Up: 38,
+		Right: 39,
+		Down: 40,
+		Insert: 45,
+		Delete: 46,
+		// Top row numbers
+		Zero: 48,
+		One: 49,
+		Two: 50,
+		Three: 51,
+		Four: 52,
+		Five: 53,
+		Six: 54,
+		Seven: 55,
+		Eight: 56,
+		Nine: 57,
+		// Letters
+		A: 65,
+		B: 66,
+		C: 67,
+		D: 68,
+		E: 69,
+		F: 70,
+		G: 71,
+		H: 72,
+		I: 73,
+		J: 74,
+		K: 75,
+		L: 76,
+		M: 77,
+		N: 78,
+		O: 79,
+		P: 80,
+		Q: 81,
+		R: 82,
+		S: 83,
+		T: 84,
+		U: 85,
+		V: 86,
+		W: 87,
+		X: 88,
+		Y: 89,
+		Z: 90,
+		// Keypad
+		NumPadZero: 96,
+		NumPadOne: 97,
+		NumPadTwo: 98,
+		NumPadThree: 99,
+		NumPadFour: 100,
+		NumPadFive: 101,
+		NumPadSix: 102,
+		NumPadSeven: 103,
+		NumPadEight: 104,
+		NumPadNine: 105,
+		Multiply: 106,
+		Add: 107,
+		Subtract: 109,
+		Decimal: 110,
+		Divide: 111,
+		// Function keys
+		F1: 112,
+		F2: 113,
+		F3: 114,
+		F4: 115,
+		F5: 116,
+		F6: 117,
+		F7: 118,
+		F8: 119,
+		F9: 120,
+		F10: 121,
+		F11: 122,
+		F12: 123,
+		F13: 124,
+		F14: 125,
+		F15: 126,
+		F16: 127,
+		F17: 128,
+		F18: 129,
+		F19: 130,
+		F20: 131,
+		F21: 132,
+		F22: 133,
+		F23: 134,
+		F24: 135,
+		// Punctuation that don't require the shift key
+		OpenSquareBracket: 219,
+		CloseSquareBracket: 221,
+		Backslash: 220,
+		Forwardslash: 191,
+		Comma: 188,
+		Period: 190,
+		GraveAccent: 192,
+		SingleQuote: 222
 	};
 
-    //#endregion
+	//#endregion
 
 })();
