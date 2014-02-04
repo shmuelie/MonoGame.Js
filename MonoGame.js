@@ -1338,7 +1338,7 @@
 
 	//#region ContentManager
 
-	Framework.ContentManager = function (context)
+	Framework.ContentManager = function (context, game)
 	{
 		if (Object.defineProperty)
 		{
@@ -1347,57 +1347,90 @@
 				writable: false,
 				enumerable: false
 			});
+			Object.defineProperty(this, "_textures", {
+			    value: {},
+			    writable: false,
+			    enumerable: false
+			});
+			Object.defineProperty(this, "_game", {
+			    value: game,
+			    writable: false,
+			    enumerable: false
+			});
 		}
 		else
 		{
-			this._context = context;
+		    this._context = context;
+		    this._textures = {};
+		    this._game = game;
 		}
 	};
 	var ContentManager = Framework.ContentManager;
 
-	ContentManager.prototype.loadTexture = function (url, callback)
+	ContentManager.prototype.loadTexture = function (url)
 	{
-		var img = new Image();
-		img.src = url;
-		var texture2D = {};
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(texture2D, "width", {
-				get: function ()
-				{
-					return img.width;
-				},
-				enumerable: true
-			});
-			Object.defineProperty(texture2D, "height", {
-				get: function ()
-				{
-					return img.height;
-				},
-				enumerable: true
-			});
-			Object.defineProperty(texture2D, "_img", {
-				value: img,
-				writable: false,
-				enumerable: false
-			});
-		}
-		else
-		{
-			texture2D.with = img.width;
-			texture2D.height = img.height;
-			texture2D._img = img;
-		}
-		img.onload = function ()
-		{
-			if (!Object.defineProperties)
-			{
-				texture2D.height = img.height;
-				texture2D.width = img.width;
-			}
-			callback(texture2D);
-		}
-		return texture2D;
+	    if (this._textures[url] === undefined)
+	    {
+	        var img = new Image();
+	        img.src = url;
+	        var texture2D = {};
+	        if (Object.defineProperty)
+	        {
+	            Object.defineProperty(texture2D, "width", {
+	                get: function ()
+	                {
+	                    return img.width;
+	                },
+	                enumerable: true
+	            });
+	            Object.defineProperty(texture2D, "height", {
+	                get: function ()
+	                {
+	                    return img.height;
+	                },
+	                enumerable: true
+	            });
+	            Object.defineProperty(texture2D, "_img", {
+	                value: img,
+	                writable: false,
+	                enumerable: false
+	            });
+	            Object.defineProperty(texture2D, "_loaded", {
+	                value: false,
+	                writable: true,
+	                enumerable: false
+	            });
+	        }
+	        else
+	        {
+	            texture2D.with = img.width;
+	            texture2D.height = img.height;
+	            texture2D._img = img;
+	            texture2D._loaded = false;
+	        }
+	        var $this = this;
+	        img.onload = function ()
+	        {
+	            if (!Object.defineProperties)
+	            {
+	                texture2D.height = img.height;
+	                texture2D.width = img.width;
+	            }
+	            texture2D._loaded = true;
+	            
+	            for(var tUrl in $this._textures)
+	            {
+	                if (!$this._textures[tUrl]._loaded)
+	                {
+	                    return;
+	                }
+	            }
+
+	            $this._game._continueRun();
+	        }
+	        this._textures[url] = texture2D;
+	    }
+	    return this._textures[url];
 	};
 
 	ContentManager.prototype.loadFont = function (name, size, bold, italic)
@@ -1752,6 +1785,15 @@
 		Game.prototype.loadContent.call(this);
 	};
 
+	Game.prototype.contentLoaded = function ()
+	{
+	};
+
+	Game.prototype.base_contentLoaded = function ()
+	{
+	    Game.prototype.contentLoaded.call(this);
+	};
+
 	Game.prototype.resetElapsedMilliseconds = function ()
 	{
 		this._gameTimer.restart();
@@ -1858,7 +1900,7 @@
 					enumerable: false
 				});
 				Object.defineProperty(this, "content", {
-					value: new ContentManager(context),
+					value: new ContentManager(context, this),
 					writable: false,
 					enumerable: false
 				});
@@ -1876,7 +1918,7 @@
 			else
 			{
 				this._display = context;
-				this.content = new ContentManager(context);
+				this.content = new ContentManager(context, this);
 				this.graphics = new GraphicsDeviceManager(this, context.canvas);
 				this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
 			}
@@ -1884,13 +1926,18 @@
 		this.graphics.graphicsDevice.setRenderTarget(null);
 		this.initialize();
 		this.loadContent();
-		this.resetElapsedMilliseconds();
-		this._isExited = false;
-		var $this = this;
-		this._timerId = window.setInterval(function ()
-		{
-			$this._tick();
-		}, this.targetElapsedMilliseconds);
+	};
+
+	Game.prototype._continueRun = function ()
+	{
+	    this.contentLoaded();
+	    this.resetElapsedMilliseconds();
+	    this._isExited = false;
+	    var $this = this;
+	    this._timerId = window.setInterval(function ()
+	    {
+	        $this._tick();
+	    }, this.targetElapsedMilliseconds);
 	};
 
 	Game.prototype.suppressDraw = function ()
