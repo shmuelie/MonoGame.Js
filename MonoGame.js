@@ -1888,6 +1888,15 @@
 		Game.prototype.draw.call(this, gameTime);
 	};
 
+	Game.prototype.unloadConent = function ()
+	{
+	};
+
+	Game.prototype.base_unloadContent = function ()
+	{
+	    Game.prototype.unloadConent.call(this);
+	};
+
 	//#endregion
 
 	//#region Input.Mouse
