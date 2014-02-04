@@ -1948,11 +1948,29 @@
 		mouseState.y = e.clientY;
 	});
 
-	document.addEventListener("mousewheel", function (e)
+	function mousewheelHandler(e)
 	{
-		e = e || event;
-		mouseState.scrollWheelValue = e.wheelDelta || e.wheelDeltaY || 0;
-	});
+	    e = e || event;
+	    mouseState.scrollWheelValue = e.wheelDelta || e.wheelDeltaY || 0;
+	}
+
+	function DOMMouseScrollHandler (e)
+	{
+	    e = e || event;
+	    mouseState.scrollWheelValue = e.detail * -40;
+	}
+
+	function wheelHandler(e)
+	{
+	    e = e || event;
+	    mouseState.scrollWheelValue = e.deltaY * -120;
+	    document.removeEventListener("mousewheel", mousewheelHandler);
+	    document.removeEventListener("DOMMouseScroll", DOMMouseScrollHandler);
+	}
+
+	document.addEventListener("mousewheel", mousewheelHandler);
+	document.addEventListener("DOMMouseScroll", DOMMouseScrollHandler);
+	document.addEventListener("wheel", wheelHandler);
 
 	document.addEventListener("mousedown", function (e)
 	{
