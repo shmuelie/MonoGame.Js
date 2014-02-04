@@ -2006,6 +2006,143 @@
 		}
 	});
 
-	//#endregion
+    //#endregion
+
+    //#region Input.Keyboard
+
+    //NOTE: currently does not support HTML5 based event, uses old style keyCode based.
+
+	var keyboardState = {
+	    downKeys: [],
+	    addKey: function (key)
+	    {
+	        var low = 0;
+	        var high = this.downKeys.length - 1;
+	        var i;
+	        while (low <= high)
+	        {
+	            i = Math.floor((low + high) / 2);
+	            if (this.downKeys[i] < key)
+	            {
+	                low = i + 1;
+	            }
+	            else if (this.downKeys[i] > key)
+	            {
+	                high = i - 1;
+	            }
+	            else
+	            {
+	                return;
+	            }
+	        }
+	        this.downKeys.splice(low, 0, key);
+	    },
+	    removeKey: function (key)
+	    {
+	        var low = 0;
+	        var high = this.downKeys.length - 1;
+	        var i;
+	        while (low <= high)
+	        {
+	            i = Math.floor((low + high) / 2);
+	            if (this.downKeys[i] < key)
+	            {
+	                low = i + 1;
+	            }
+	            else if (this.downKeys[i] > key)
+	            {
+	                high = i - 1;
+	            }
+	            else
+	            {
+	                this.downKeys.splice(i, 1);
+	                return;
+	            }
+	        }
+	    }
+	};
+
+	Input.Keyboard = {
+	    getState: function()
+	    {
+	        var currentState = {
+	            downKeys: keyboardState.downKeys.slice(0, keyboardState.downKeys.length),
+	            isKeyDown: function (key)
+	            {
+	                var low = 0;
+	                var high = this.downKeys.length - 1;
+	                var i;
+	                while (low <= high)
+	                {
+	                    i = Math.floor((low + high) / 2);
+	                    if (this.downKeys[i] < key)
+	                    {
+	                        low = i + 1;
+	                    }
+	                    else if (this.downKeys[i] > key)
+	                    {
+	                        high = i - 1;
+	                    }
+	                    else
+	                    {
+	                        return true;
+	                    }
+	                }
+	                return false;
+	            },
+	            isKeyUp: function(key)
+	            {
+	                return !this.isKeyDown(key);
+	            }
+	        };
+
+	    }
+	};
+
+	document.addEventListener("keydown", function (e)
+	{
+	    e = e || event;
+	    if ((e.keyCode === 16) || e.shiftKey)
+	    {
+	        keyboardState.addKey(16);
+	    }
+	    else if ((e.keyCode === 17) || e.ctrlKey)
+	    {
+	        keyboardState.addKey(17);
+	    }
+	    else if ((e.keyCode === 18) || e.altKey)
+	    {
+	        keyboardState.addKey(18);
+	    }
+	    
+	    if ((e.keyCode !== 16) && (e.keyCode !== 17) && (e.keyCode !== 18))
+	    {
+	        keyboardState.addKey(e.keyCode);
+	    }
+	});
+
+	document.addEventListener("keyup", function (e)
+	{
+	    e = e || event;
+	    if ((e.keyCode === 16) || e.shiftKey)
+	    {
+	        keyboardState.removeKey(16);
+	    }
+	    else if ((e.keyCode === 17) || e.ctrlKey)
+	    {
+	        keyboardState.removeKey(17);
+	    }
+	    else if ((e.keyCode === 18) || e.altKey)
+	    {
+	        keyboardState.removeKey(18);
+	    }
+
+	    if ((e.keyCode !== 16) && (e.keyCode !== 17) && (e.keyCode !== 18))
+	    {
+	        keyboardState.removeKey(e.keyCode);
+	    }
+	});
+
+    //#endregion
 
 })();
