@@ -248,12 +248,29 @@
                 this.spriteBatch.end();
             };
 
+            ClownGame.prototype.unloadConent = function ()
+            {
+                this._balloons = [];
+                this._score = 0;
+            };
+
             window.onload = function ()
             {
                 var game = new ClownGame();
                 var canvas = document.getElementById("canvasID");
                 var context = canvas.getContext("2d");
-                game.run(context);
+
+                var startBtn = document.getElementById("startButton");
+                var stopBtn = document.getElementById("stopButton");
+
+                startBtn.onclick = function ()
+                {
+                    game.run(context);
+                };
+                stopBtn.onclick = function ()
+                {
+                    game.exit();
+                };
             };
 
         })();
@@ -261,5 +278,7 @@
 </head>
 <body>
     <canvas id="canvasID" style="width: 640px; height: 480px;" width="640" height="480"></canvas>
+    <br />
+    <input type="button" id="startButton" value="Start" /><input type="button" id="stopButton" value="Stop" />
 </body>
 </html>

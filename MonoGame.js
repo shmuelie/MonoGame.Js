@@ -1823,37 +1823,40 @@
 	};
 
 	Game.prototype.run = function (context)
-	{	
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "_display", {
-				value: context,
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "content", {
-				value: new ContentManager(context),
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "graphics", {
-				value: new GraphicsDeviceManager(this, context.canvas),
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "spriteBatch", {
-				value: new SpriteBatch(this.graphics.graphicsDevice),
-				writable: false,
-				enumerable: false
-			});
-		}
-		else
-		{
-			this._display = context;
-			this.content = new ContentManager(context);
-			this.graphics = new GraphicsDeviceManager(this, context.canvas);
-			this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
-		}
+	{
+	    if (this._display === undefined)
+	    {
+	        if (Object.defineProperty)
+	        {
+	            Object.defineProperty(this, "_display", {
+	                value: context,
+	                writable: false,
+	                enumerable: false
+	            });
+	            Object.defineProperty(this, "content", {
+	                value: new ContentManager(context),
+	                writable: false,
+	                enumerable: false
+	            });
+	            Object.defineProperty(this, "graphics", {
+	                value: new GraphicsDeviceManager(this, context.canvas),
+	                writable: false,
+	                enumerable: false
+	            });
+	            Object.defineProperty(this, "spriteBatch", {
+	                value: new SpriteBatch(this.graphics.graphicsDevice),
+	                writable: false,
+	                enumerable: false
+	            });
+	        }
+	        else
+	        {
+	            this._display = context;
+	            this.content = new ContentManager(context);
+	            this.graphics = new GraphicsDeviceManager(this, context.canvas);
+	            this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
+	        }
+	    }
 		this.graphics.graphicsDevice.setRenderTarget(null);
 		this.initialize();
 		this.loadContent();
@@ -1895,6 +1898,18 @@
 	Game.prototype.base_unloadContent = function ()
 	{
 	    Game.prototype.unloadConent.call(this);
+	};
+
+	Game.prototype.exit = function ()
+	{
+	    window.clearInterval(this._timerId);
+	    this.graphics.graphicsDevice.clear();
+	    this.unloadConent();
+	};
+
+	Game.prototype.base_exit = function ()
+	{
+	    Game.prototype.exit.call(this);
 	};
 
 	//#endregion

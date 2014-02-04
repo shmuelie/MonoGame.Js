@@ -18,10 +18,10 @@ There are places where the API is different in more than just ECMAScript ways
   set the prototype of to add instance functions to but inherits from the Game 
   class. The function you pass in will be called as the constructor and can use 
   this as though it is a constructor.
-* The initialize, loadContent, update, draw, and unloadContent methods are 
-  expected to be "replaced" in your game. To call the Game objects base version 
-  call base_[function name], for example base_initialize for Game's initialize 
-  method.
+* The initialize, loadContent, update, draw, unloadContent, and exit methods 
+  are expected to be "replaced" in your game. To call the Game objects base 
+  version call base_[function name], for example base_initialize for Game's 
+  initialize method.
 * loadTexture takes a callback function as it's second argument. While it 
   returns a Texture2D object the image may not be loaded yet. The callback is 
   called once the image is actually loaded. Currently there is no way to 
