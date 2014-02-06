@@ -853,7 +853,6 @@
 
 	Matrix.createPerspective = function (width, height, nearPlaneDistance, farPlaneDistance)
 	{
-		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		if (nearPlaneDistance <= 0)
 		{
 			throw new Error("nearPlaneDistance <= 0");
@@ -866,16 +865,8 @@
 		{
 			throw new Error("nearPlaneDistance >= farPlaneDistance");
 		}
-		matrix.m11 = (2 * nearPlaneDistance) / width;
-		matrix.m12 = matrix.m13 = matrix.m14 = 0;
-		matrix.m22 = (2 * nearPlaneDistance) / height;
-		matrix.m21 = matrix.m23 = matrix.m24 = 0;
-		matrix.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-		matrix.m31 = matrix.m32 = 0;
-		matrix.m34 = -1;
-		matrix.m41 = matrix.m42 = matrix.m44 = 0;
-		matrix.m43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
-		return matrix;
+
+		return new Matrix((2 * nearPlaneDistance) / width, 0, 0, 0, 0, (2 * nearPlaneDistance) / height, 0, 0, 0, 0, farPlaneDistance / (nearPlaneDistance - farPlaneDistance), -1, 0, 0, (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance), 0);
 	};
 
 	Matrix.createPerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance)
