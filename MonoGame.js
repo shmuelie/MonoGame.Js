@@ -1040,80 +1040,14 @@
 		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		if (other instanceof Matrix)
 		{
-			var m11 = (((matrix1.m11 * other.m11) + (matrix1.m12 * other.m21)) + (matrix1.m13 * other.m31)) + (matrix1.m14 * other.m41);
-			var m12 = (((matrix1.m11 * other.m12) + (matrix1.m12 * other.m22)) + (matrix1.m13 * other.m32)) + (matrix1.m14 * other.m42);
-			var m13 = (((matrix1.m11 * other.m13) + (matrix1.m12 * other.m23)) + (matrix1.m13 * other.m33)) + (matrix1.m14 * other.m43);
-			var m14 = (((matrix1.m11 * other.m14) + (matrix1.m12 * other.m24)) + (matrix1.m13 * other.m34)) + (matrix1.m14 * other.m44);
-			var m21 = (((matrix1.m21 * other.m11) + (matrix1.m22 * other.m21)) + (matrix1.m23 * other.m31)) + (matrix1.m24 * other.m41);
-			var m22 = (((matrix1.m21 * other.m12) + (matrix1.m22 * other.m22)) + (matrix1.m23 * other.m32)) + (matrix1.m24 * other.m42);
-			var m23 = (((matrix1.m21 * other.m13) + (matrix1.m22 * other.m23)) + (matrix1.m23 * other.m33)) + (matrix1.m24 * other.m43);
-			var m24 = (((matrix1.m21 * other.m14) + (matrix1.m22 * other.m24)) + (matrix1.m23 * other.m34)) + (matrix1.m24 * other.m44);
-			var m31 = (((matrix1.m31 * other.m11) + (matrix1.m32 * other.m21)) + (matrix1.m33 * other.m31)) + (matrix1.m34 * other.m41);
-			var m32 = (((matrix1.m31 * other.m12) + (matrix1.m32 * other.m22)) + (matrix1.m33 * other.m32)) + (matrix1.m34 * other.m42);
-			var m33 = (((matrix1.m31 * other.m13) + (matrix1.m32 * other.m23)) + (matrix1.m33 * other.m33)) + (matrix1.m34 * other.m43);
-			var m34 = (((matrix1.m31 * other.m14) + (matrix1.m32 * other.m24)) + (matrix1.m33 * other.m34)) + (matrix1.m34 * other.m44);
-			var m41 = (((matrix1.m41 * other.m11) + (matrix1.m42 * other.m21)) + (matrix1.m43 * other.m31)) + (matrix1.m44 * other.m41);
-			var m42 = (((matrix1.m41 * other.m12) + (matrix1.m42 * other.m22)) + (matrix1.m43 * other.m32)) + (matrix1.m44 * other.m42);
-			var m43 = (((matrix1.m41 * other.m13) + (matrix1.m42 * other.m23)) + (matrix1.m43 * other.m33)) + (matrix1.m44 * other.m43);
-			var m44 = (((matrix1.m41 * other.m14) + (matrix1.m42 * other.m24)) + (matrix1.m43 * other.m34)) + (matrix1.m44 * other.m44);
-			result.m11 = m11;
-			result.m12 = m12;
-			result.m13 = m13;
-			result.m14 = m14;
-			result.m21 = m21;
-			result.m22 = m22;
-			result.m23 = m23;
-			result.m24 = m24;
-			result.m31 = m31;
-			result.m32 = m32;
-			result.m33 = m33;
-			result.m34 = m34;
-			result.m41 = m41;
-			result.m42 = m42;
-			result.m43 = m43;
-			result.m44 = m44;
+		    return new Matrix((((matrix1.m11 * other.m11) + (matrix1.m12 * other.m21)) + (matrix1.m13 * other.m31)) + (matrix1.m14 * other.m41), (((matrix1.m11 * other.m12) + (matrix1.m12 * other.m22)) + (matrix1.m13 * other.m32)) + (matrix1.m14 * other.m42), (((matrix1.m11 * other.m13) + (matrix1.m12 * other.m23)) + (matrix1.m13 * other.m33)) + (matrix1.m14 * other.m43), (((matrix1.m11 * other.m14) + (matrix1.m12 * other.m24)) + (matrix1.m13 * other.m34)) + (matrix1.m14 * other.m44), (((matrix1.m21 * other.m11) + (matrix1.m22 * other.m21)) + (matrix1.m23 * other.m31)) + (matrix1.m24 * other.m41), (((matrix1.m21 * other.m12) + (matrix1.m22 * other.m22)) + (matrix1.m23 * other.m32)) + (matrix1.m24 * other.m42), (((matrix1.m21 * other.m13) + (matrix1.m22 * other.m23)) + (matrix1.m23 * other.m33)) + (matrix1.m24 * other.m43), (((matrix1.m21 * other.m14) + (matrix1.m22 * other.m24)) + (matrix1.m23 * other.m34)) + (matrix1.m24 * other.m44), (((matrix1.m31 * other.m11) + (matrix1.m32 * other.m21)) + (matrix1.m33 * other.m31)) + (matrix1.m34 * other.m41), (((matrix1.m31 * other.m12) + (matrix1.m32 * other.m22)) + (matrix1.m33 * other.m32)) + (matrix1.m34 * other.m42), (((matrix1.m31 * other.m13) + (matrix1.m32 * other.m23)) + (matrix1.m33 * other.m33)) + (matrix1.m34 * other.m43), (((matrix1.m31 * other.m14) + (matrix1.m32 * other.m24)) + (matrix1.m33 * other.m34)) + (matrix1.m34 * other.m44), (((matrix1.m41 * other.m11) + (matrix1.m42 * other.m21)) + (matrix1.m43 * other.m31)) + (matrix1.m44 * other.m41), (((matrix1.m41 * other.m12) + (matrix1.m42 * other.m22)) + (matrix1.m43 * other.m32)) + (matrix1.m44 * other.m42),(((matrix1.m41 * other.m13) + (matrix1.m42 * other.m23)) + (matrix1.m43 * other.m33)) + (matrix1.m44 * other.m43), (((matrix1.m41 * other.m14) + (matrix1.m42 * other.m24)) + (matrix1.m43 * other.m34)) + (matrix1.m44 * other.m44));
 		}
-		else
-		{
-			result.m11 = matrix1.m11 * other;
-			result.m12 = matrix1.m12 * other;
-			result.m13 = matrix1.m13 * other;
-			result.m14 = matrix1.m14 * other;
-			result.m21 = matrix1.m21 * other;
-			result.m22 = matrix1.m22 * other;
-			result.m23 = matrix1.m23 * other;
-			result.m24 = matrix1.m24 * other;
-			result.m31 = matrix1.m31 * other;
-			result.m32 = matrix1.m32 * other;
-			result.m33 = matrix1.m33 * other;
-			result.m34 = matrix1.m34 * other;
-			result.m41 = matrix1.m41 * other;
-			result.m42 = matrix1.m42 * other;
-			result.m43 = matrix1.m43 * other;
-			result.m44 = matrix1.m44 * other;
-		}
-		return result;
+		return new Matrix(matrix1.m11 * other, matrix1.m12 * other, matrix1.m13 * other, matrix1.m14 * other, matrix1.m21 * other, matrix1.m22 * other, matrix1.m23 * other, matrix1.m24 * other, matrix1.m31 * other, matrix1.m32 * other, matrix1.m33 * other, matrix1.m34 * other, matrix1.m41 * other, matrix1.m42 * other, matrix1.m43 * other, matrix1.m44 * other);
 	};
 
 	Matrix.negate = function (matrix)
 	{
-		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		result.m11 = -matrix.m11;
-		result.m12 = -matrix.m12;
-		result.m13 = -matrix.m13;
-		result.m14 = -matrix.m14;
-		result.m21 = -matrix.m21;
-		result.m22 = -matrix.m22;
-		result.m23 = -matrix.m23;
-		result.m24 = -matrix.m24;
-		result.m31 = -matrix.m31;
-		result.m32 = -matrix.m32;
-		result.m33 = -matrix.m33;
-		result.m34 = -matrix.m34;
-		result.m41 = -matrix.m41;
-		result.m42 = -matrix.m42;
-		result.m43 = -matrix.m43;
-		result.m44 = -matrix.m44;
+	    return new Matrix(-matrix.m11, -matrix.m12, -matrix.m13, -matrix.m14, -matrix.m21, -matrix.m22, -matrix.m23, -matrix.m24, -matrix.m31, -matrix.m32, -matrix.m33, -matrix.m34, -matrix.m41, -matrix.m42, -matrix.m43, -matrix.m44);
 	};
 
 	Matrix.prototype.toString = function ()
