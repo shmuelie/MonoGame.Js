@@ -354,7 +354,7 @@
 
 	if (Object.defineProperty)
 	{
-		Object.defineProperty(Rectangle.prototype, "empty", {
+		Object.defineProperty(Rectangle, "empty", {
 			get: function ()
 			{
 				return Rectangle_emptyRectangle;
@@ -364,7 +364,7 @@
 	}
 	else
 	{
-		Rectangle.prototype.empty = Rectangle_emptyRectangle;
+		Rectangle.empty = Rectangle_emptyRectangle;
 	}
 
 	Rectangle.prototype.equals = function (obj)
