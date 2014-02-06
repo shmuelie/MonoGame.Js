@@ -958,44 +958,10 @@
 	{
 		if (other instanceof Matrix)
 		{
-			var matrix2 = new Matrix(
-			matrix1.m11 / other.m11,
-			matrix1.m12 / other.m12,
-			matrix1.m13 / other.m13,
-			matrix1.m14 / other.m14,
-			matrix1.m21 / other.m21,
-			matrix1.m22 / other.m22,
-			matrix1.m23 / other.m23,
-			matrix1.m24 / other.m24,
-			matrix1.m31 / other.m31,
-			matrix1.m32 / other.m32,
-			matrix1.m33 / other.m33,
-			matrix1.m34 / other.m34,
-			matrix1.m41 / other.m41,
-			matrix1.m42 / other.m42,
-			matrix1.m43 / other.m43,
-			matrix1.m44 / other.m44);
-			return matrix2;
+			return new Matrix(matrix1.m11 / other.m11, matrix1.m12 / other.m12, matrix1.m13 / other.m13, matrix1.m14 / other.m14, matrix1.m21 / other.m21, matrix1.m22 / other.m22, matrix1.m23 / other.m23, matrix1.m24 / other.m24, matrix1.m31 / other.m31, matrix1.m32 / other.m32, matrix1.m33 / other.m33, matrix1.m34 / other.m34, matrix1.m41 / other.m41, matrix1.m42 / other.m42, matrix1.m43 / other.m43, matrix1.m44 / other.m44);
 		}
 		var num = 1 / other;
-		var matrix3 = new Matrix(
-		matrix1.m11 * num,
-		matrix1.m12 * num,
-		matrix1.m13 * num,
-		matrix1.m14 * num,
-		matrix1.m21 * num,
-		matrix1.m22 * num,
-		matrix1.m23 * num,
-		matrix1.m24 * num,
-		matrix1.m31 * num,
-		matrix1.m32 * num,
-		matrix1.m33 * num,
-		matrix1.m34 * num,
-		matrix1.m41 * num,
-		matrix1.m42 * num,
-		matrix1.m43 * num,
-		matrix1.m44 * num);
-		return matrix3;
+		return new Matrix(matrix1.m11 * num, matrix1.m12 * num, matrix1.m13 * num, matrix1.m14 * num, matrix1.m21 * num, matrix1.m22 * num, matrix1.m23 * num, matrix1.m24 * num, matrix1.m31 * num, matrix1.m32 * num, matrix1.m33 * num, matrix1.m34 * num, matrix1.m41 * num, matrix1.m42 * num, matrix1.m43 * num, matrix1.m44 * num);
 	};
 
 	Matrix.prototype.equals = function (other)
