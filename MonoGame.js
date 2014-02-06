@@ -161,23 +161,19 @@
 
 	MathHelper.hermite = function (value1, tangent1, value2, tangent2, amount)
 	{
-		var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount, result;
+	    var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount;
 		var sCubed = s * s * s;
 		var sSquared = s * s;
 
 		if (amount === 0)
 		{
-			result = value1;
+			return value1;
 		}
 		else if (amount === 1)
 		{
-			result = value2;
+			return value2;
 		}
-		else
-		{
-			result = (2 * v1 - 2 * v2 + t2 + t1) * sCubed + (3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared + t1 * s + v1;
-		}
-		return result;
+		return (2 * v1 - 2 * v2 + t2 + t1) * sCubed + (3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared + t1 * s + v1;
 	};
 
 	MathHelper.lerp = function (value1, value2, amount)
