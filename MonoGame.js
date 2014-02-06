@@ -1283,6 +1283,141 @@
 		return spriteFont;
 	};
 
+	function loadAudio(urls, $this)
+	{
+	    var audioElement = document.createElement("audio");
+	    audioElement.autoplay = false;
+	    audioElement.controls = false;
+	    audioElement.loop = false;
+
+	    for (var i = 0; i < urls.length; i++)
+	    {
+	        var url = urls[i];
+	        var sourceElement = document.createElement("source");
+	        sourceElement.src = url;
+	        if (url.substr(url.length - 3, 3) === "mp3")
+	        {
+	            sourceElement.type = "audio/mpeg";
+	        }
+	        else if ((url.substr(url.length - 3, 3) === "m4a") || (url.substr(url.length - 3, 3) === "mp4"))
+	        {
+	            sourceElement.type = "audio/mp4";
+	        }
+	        else if (url.substr(url.length - 3, 3) === "webm")
+	        {
+	            sourceElement.type = "audio/webm";
+	        }
+	        audioElement.appendChild(sourceElement);
+	    }
+
+	    audioElement.load();
+
+	    audioElement.onload = function ()
+	    {
+	        for (var tUrl in $this._resources)
+	        {
+	            if (!$this._resources[tUrl]._loaded)
+	            {
+	                return;
+	            }
+	        }
+
+	        $this._game._continueRun();
+	    };
+
+	    return audioElement;
+	}
+
+	ContentManager.prototype.loadSoundEffect = function (urls)
+	{
+	    if (typeof urls === "string")
+	    {
+	        urls = [urls];
+	    }
+
+	    if (this._resources[urls] === undefined)
+	    {
+	        var audioElement = loadAudio(urls, this);
+
+	        var soundEffect = {
+	            getDurationMilliseconds: function ()
+	            {
+	                var seconds = this._audio.duration;
+	                if (seconds !== seconds)
+	                {
+	                    seconds = 0;
+	                }
+	                if (!isFinite(seconds))
+	                {
+	                    return seconds;
+	                }
+	                return seconds * 1000;
+	            },
+	            play: function ()
+	            {
+	                this._audio.play();
+	            }
+	        };
+	        if (Object.defineProperty)
+	        {
+	            Object.defineProperty(soundEffect, "_audio", {
+	                value: audioElement,
+	                writable: false,
+	                enumerable: false
+	            });
+	        }
+	        else
+	        {
+	            soundEffect._audio = audioElement;
+	        }
+	        this._resources[urls] = soundEffect;
+	    }
+	    return this._resources[urls];
+	};
+
+	ContentManager.prototype.loadSong = function (urls)
+	{
+	    if (typeof urls === "string")
+	    {
+	        urls = [urls];
+	    }
+
+	    if (this._resources[urls] === undefined)
+	    {
+	        var audioElement = loadAudio(urls, this);
+
+	        var song = {
+	            getDurationMilliseconds: function ()
+	            {
+	                var seconds = this._audio.duration;
+	                if (seconds !== seconds)
+	                {
+	                    seconds = 0;
+	                }
+	                if (!isFinite(seconds))
+	                {
+	                    return seconds;
+	                }
+	                return seconds * 1000;
+	            }
+	        };
+	        if (Object.defineProperty)
+	        {
+	            Object.defineProperty(song, "_audio", {
+	                value: audioElement,
+	                writable: false,
+	                enumerable: false
+	            });
+	        }
+	        else
+	        {
+	            song._audio = audioElement;
+	        }
+	        this._resources[urls] = song;
+	    }
+	    return this._resources[urls];
+	};
+
 	//#endregion
 
 	//#region Graphics.GraphicsDevice
