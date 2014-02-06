@@ -63,6 +63,9 @@
     <Content Include="MonoGame.min.js.map">
       <DependentUpon>MonoGame.min.js</DependentUpon>
     </Content>
+    <Content Include="README.html">
+      <DependentUpon>README.md</DependentUpon>
+    </Content>
     <Content Include="README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

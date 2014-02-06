@@ -1161,7 +1161,7 @@
 				writable: false,
 				enumerable: false
 			});
-			Object.defineProperty(this, "_textures", {
+			Object.defineProperty(this, "_resources", {
 				value: {},
 				writable: false,
 				enumerable: false
@@ -1175,7 +1175,7 @@
 		else
 		{
 			this._context = context;
-			this._textures = {};
+			this._resources = {};
 			this._game = game;
 		}
 	};
@@ -1183,7 +1183,7 @@
 
 	ContentManager.prototype.loadTexture = function (url)
 	{
-		if (this._textures[url] === undefined)
+	    if (this._resources[url] === undefined)
 		{
 			var img = new Image();
 			img.src = url;
@@ -1232,9 +1232,9 @@
 				}
 				texture2D._loaded = true;
 				
-				for(var tUrl in $this._textures)
+				for (var tUrl in $this._resources)
 				{
-					if (!$this._textures[tUrl]._loaded)
+				    if (!$this._resources[tUrl]._loaded)
 					{
 						return;
 					}
@@ -1242,9 +1242,9 @@
 
 				$this._game._continueRun();
 			}
-			this._textures[url] = texture2D;
+			this._resources[url] = texture2D;
 		}
-		return this._textures[url];
+	    return this._resources[url];
 	};
 
 	ContentManager.prototype.loadFont = function (name, size, bold, italic)
