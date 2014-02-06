@@ -507,7 +507,7 @@
 
 	if (Object.defineProperty)
 	{
-		Object.defineProperty(Vector2.prototype, "zero", {
+		Object.defineProperty(Vector2, "zero", {
 			get: function ()
 			{
 				return Vector2_zeroVector;
@@ -515,7 +515,7 @@
 			enumerable: true
 		});
 
-		Object.defineProperty(Vector2.prototype, "unitVector", {
+		Object.defineProperty(Vector2, "unitVector", {
 			get: function ()
 			{
 				return Vector2_unitVector;
@@ -523,7 +523,7 @@
 			enumerable: true
 		});
 
-		Object.defineProperty(Vector2.prototype, "unitXVector", {
+		Object.defineProperty(Vector2, "unitXVector", {
 			get: function ()
 			{
 				return Vector2_unitXVector;
@@ -531,7 +531,7 @@
 			enumerable: true
 		});
 
-		Object.defineProperty(Vector2.prototype, "unitYVector", {
+		Object.defineProperty(Vector2, "unitYVector", {
 			get: function ()
 			{
 				return Vector2_unitYVector;
@@ -541,10 +541,10 @@
 	}
 	else
 	{
-		Vector2.prototype.zero = Vector2_zeroVector;
-		Vector2.prototype.unitVector = Vector2_unitVector;
-		Vector2.prototype.unitXVector = Vector2_unitXVector;
-		Vector2.prototype.unitYVector = Vector2_unitYVector;
+		Vector2.zero = Vector2_zeroVector;
+		Vector2.unitVector = Vector2_unitVector;
+		Vector2.unitXVector = Vector2_unitXVector;
+		Vector2.unitYVector = Vector2_unitYVector;
 	}
 
 	Vector2.prototype.negate = function ()
