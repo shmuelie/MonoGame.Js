@@ -806,7 +806,7 @@
 
 	if (Object.defineProperties)
 	{
-		Object.defineProperty(Matrix.prototype, "identity", {
+		Object.defineProperty(Matrix, "identity", {
 			get: function ()
 			{
 				return Matrix_identity;
@@ -816,7 +816,7 @@
 	}
 	else
 	{
-		Matrix.prototype.identity = Matrix_identity;
+		Matrix.identity = Matrix_identity;
 	}
 
 	Matrix.add = function (matrix1, matrix2)
