@@ -70,10 +70,15 @@
 	{
 		Microsoft.Xna.Framework.Input = {};
 	}
+	if (Microsoft.Xna.Framework.Media === undefined)
+	{
+		Microsoft.Xna.Framework.Media = {};
+	}
 
 	var Framework = Microsoft.Xna.Framework;
 	var Graphics = Framework.Graphics;
 	var Input = Framework.Input;
+	var Media = Framework.Media;
 
 	var MIN_DATE = new Date(-8640000000000000);
 
@@ -151,7 +156,7 @@
 
 	MathHelper.clamp = function (value, min, max)
 	{
-	    return Math.max(min, Math.min(max, value));
+		return Math.max(min, Math.min(max, value));
 	};
 
 	MathHelper.distance = function (value1, value2)
@@ -161,7 +166,7 @@
 
 	MathHelper.hermite = function (value1, tangent1, value2, tangent2, amount)
 	{
-	    var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount;
+		var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount;
 		var sCubed = s * s * s;
 		var sSquared = s * s;
 
@@ -658,7 +663,7 @@
 		switch(arguments.length)
 		{
 			case 2:
-			    return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m41, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m42);
+				return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m41, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m42);
 			case 3:
 				return Vector2_transform6(arguments[0], 0, arguments[1], arguments[2], 0, arguments[0].length);
 			case 6:
@@ -843,12 +848,12 @@
 
 	Matrix.createOrthographic = function (width, height, zNearPlane, zFarPlane)
 	{
-	    return new Matrix(2 / width, 0, 0, 0, 0, 2 / height, 0, 0, 0, 0, 1 / (zNearPlane - zFarPlane), 0, 0, 0, zNearPlane / (zNearPlane - zFarPlane), 1);
+		return new Matrix(2 / width, 0, 0, 0, 0, 2 / height, 0, 0, 0, 0, 1 / (zNearPlane - zFarPlane), 0, 0, 0, zNearPlane / (zNearPlane - zFarPlane), 1);
 	};
 
 	Matrix.createOrthographicOffCenter = function (left, right, bottom, top, zNearPlane, zFarPlane)
 	{
-	    return new Matrix((2.0 / (right - left)), 0, 0, 0, 0, (2.0 / (top - bottom)), 0, 0, 0, 0, (1.0 / (zNearPlane - zFarPlane)), 0, ((left + right) / (left - right)), ((top + bottom) / (bottom - top)), (zNearPlane / (zNearPlane - zFarPlane)), 1);
+		return new Matrix((2.0 / (right - left)), 0, 0, 0, 0, (2.0 / (top - bottom)), 0, 0, 0, 0, (1.0 / (zNearPlane - zFarPlane)), 0, ((left + right) / (left - right)), ((top + bottom) / (bottom - top)), (zNearPlane / (zNearPlane - zFarPlane)), 1);
 	};
 
 	Matrix.createPerspective = function (width, height, nearPlaneDistance, farPlaneDistance)
@@ -1032,7 +1037,7 @@
 
 	Matrix.lerp = function (matrix1, matrix2, amount)
 	{
-	    return new Matrix(matrix1.m11 + ((matrix2.m11 - matrix1.m11) * amount), matrix1.m12 + ((matrix2.m12 - matrix1.m12) * amount), matrix1.m13 + ((matrix2.m13 - matrix1.m13) * amount), matrix1.m14 + ((matrix2.m14 - matrix1.m14) * amount), matrix1.m21 + ((matrix2.m21 - matrix1.m21) * amount), matrix1.m22 + ((matrix2.m22 - matrix1.m22) * amount), matrix1.m23 + ((matrix2.m23 - matrix1.m23) * amount), matrix1.m24 + ((matrix2.m24 - matrix1.m24) * amount), matrix1.m31 + ((matrix2.m31 - matrix1.m31) * amount), matrix1.m32 + ((matrix2.m32 - matrix1.m32) * amount), matrix1.m33 + ((matrix2.m33 - matrix1.m33) * amount), matrix1.m34 + ((matrix2.m34 - matrix1.m34) * amount), matrix1.m41 + ((matrix2.m41 - matrix1.m41) * amount), matrix1.m42 + ((matrix2.m42 - matrix1.m42) * amount), matrix1.m43 + ((matrix2.m43 - matrix1.m43) * amount), matrix1.m44 + ((matrix2.m44 - matrix1.m44) * amount));
+		return new Matrix(matrix1.m11 + ((matrix2.m11 - matrix1.m11) * amount), matrix1.m12 + ((matrix2.m12 - matrix1.m12) * amount), matrix1.m13 + ((matrix2.m13 - matrix1.m13) * amount), matrix1.m14 + ((matrix2.m14 - matrix1.m14) * amount), matrix1.m21 + ((matrix2.m21 - matrix1.m21) * amount), matrix1.m22 + ((matrix2.m22 - matrix1.m22) * amount), matrix1.m23 + ((matrix2.m23 - matrix1.m23) * amount), matrix1.m24 + ((matrix2.m24 - matrix1.m24) * amount), matrix1.m31 + ((matrix2.m31 - matrix1.m31) * amount), matrix1.m32 + ((matrix2.m32 - matrix1.m32) * amount), matrix1.m33 + ((matrix2.m33 - matrix1.m33) * amount), matrix1.m34 + ((matrix2.m34 - matrix1.m34) * amount), matrix1.m41 + ((matrix2.m41 - matrix1.m41) * amount), matrix1.m42 + ((matrix2.m42 - matrix1.m42) * amount), matrix1.m43 + ((matrix2.m43 - matrix1.m43) * amount), matrix1.m44 + ((matrix2.m44 - matrix1.m44) * amount));
 	};
 
 	Matrix.multiply = function (matrix1, other)
@@ -1040,14 +1045,14 @@
 		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		if (other instanceof Matrix)
 		{
-		    return new Matrix((((matrix1.m11 * other.m11) + (matrix1.m12 * other.m21)) + (matrix1.m13 * other.m31)) + (matrix1.m14 * other.m41), (((matrix1.m11 * other.m12) + (matrix1.m12 * other.m22)) + (matrix1.m13 * other.m32)) + (matrix1.m14 * other.m42), (((matrix1.m11 * other.m13) + (matrix1.m12 * other.m23)) + (matrix1.m13 * other.m33)) + (matrix1.m14 * other.m43), (((matrix1.m11 * other.m14) + (matrix1.m12 * other.m24)) + (matrix1.m13 * other.m34)) + (matrix1.m14 * other.m44), (((matrix1.m21 * other.m11) + (matrix1.m22 * other.m21)) + (matrix1.m23 * other.m31)) + (matrix1.m24 * other.m41), (((matrix1.m21 * other.m12) + (matrix1.m22 * other.m22)) + (matrix1.m23 * other.m32)) + (matrix1.m24 * other.m42), (((matrix1.m21 * other.m13) + (matrix1.m22 * other.m23)) + (matrix1.m23 * other.m33)) + (matrix1.m24 * other.m43), (((matrix1.m21 * other.m14) + (matrix1.m22 * other.m24)) + (matrix1.m23 * other.m34)) + (matrix1.m24 * other.m44), (((matrix1.m31 * other.m11) + (matrix1.m32 * other.m21)) + (matrix1.m33 * other.m31)) + (matrix1.m34 * other.m41), (((matrix1.m31 * other.m12) + (matrix1.m32 * other.m22)) + (matrix1.m33 * other.m32)) + (matrix1.m34 * other.m42), (((matrix1.m31 * other.m13) + (matrix1.m32 * other.m23)) + (matrix1.m33 * other.m33)) + (matrix1.m34 * other.m43), (((matrix1.m31 * other.m14) + (matrix1.m32 * other.m24)) + (matrix1.m33 * other.m34)) + (matrix1.m34 * other.m44), (((matrix1.m41 * other.m11) + (matrix1.m42 * other.m21)) + (matrix1.m43 * other.m31)) + (matrix1.m44 * other.m41), (((matrix1.m41 * other.m12) + (matrix1.m42 * other.m22)) + (matrix1.m43 * other.m32)) + (matrix1.m44 * other.m42),(((matrix1.m41 * other.m13) + (matrix1.m42 * other.m23)) + (matrix1.m43 * other.m33)) + (matrix1.m44 * other.m43), (((matrix1.m41 * other.m14) + (matrix1.m42 * other.m24)) + (matrix1.m43 * other.m34)) + (matrix1.m44 * other.m44));
+			return new Matrix((((matrix1.m11 * other.m11) + (matrix1.m12 * other.m21)) + (matrix1.m13 * other.m31)) + (matrix1.m14 * other.m41), (((matrix1.m11 * other.m12) + (matrix1.m12 * other.m22)) + (matrix1.m13 * other.m32)) + (matrix1.m14 * other.m42), (((matrix1.m11 * other.m13) + (matrix1.m12 * other.m23)) + (matrix1.m13 * other.m33)) + (matrix1.m14 * other.m43), (((matrix1.m11 * other.m14) + (matrix1.m12 * other.m24)) + (matrix1.m13 * other.m34)) + (matrix1.m14 * other.m44), (((matrix1.m21 * other.m11) + (matrix1.m22 * other.m21)) + (matrix1.m23 * other.m31)) + (matrix1.m24 * other.m41), (((matrix1.m21 * other.m12) + (matrix1.m22 * other.m22)) + (matrix1.m23 * other.m32)) + (matrix1.m24 * other.m42), (((matrix1.m21 * other.m13) + (matrix1.m22 * other.m23)) + (matrix1.m23 * other.m33)) + (matrix1.m24 * other.m43), (((matrix1.m21 * other.m14) + (matrix1.m22 * other.m24)) + (matrix1.m23 * other.m34)) + (matrix1.m24 * other.m44), (((matrix1.m31 * other.m11) + (matrix1.m32 * other.m21)) + (matrix1.m33 * other.m31)) + (matrix1.m34 * other.m41), (((matrix1.m31 * other.m12) + (matrix1.m32 * other.m22)) + (matrix1.m33 * other.m32)) + (matrix1.m34 * other.m42), (((matrix1.m31 * other.m13) + (matrix1.m32 * other.m23)) + (matrix1.m33 * other.m33)) + (matrix1.m34 * other.m43), (((matrix1.m31 * other.m14) + (matrix1.m32 * other.m24)) + (matrix1.m33 * other.m34)) + (matrix1.m34 * other.m44), (((matrix1.m41 * other.m11) + (matrix1.m42 * other.m21)) + (matrix1.m43 * other.m31)) + (matrix1.m44 * other.m41), (((matrix1.m41 * other.m12) + (matrix1.m42 * other.m22)) + (matrix1.m43 * other.m32)) + (matrix1.m44 * other.m42),(((matrix1.m41 * other.m13) + (matrix1.m42 * other.m23)) + (matrix1.m43 * other.m33)) + (matrix1.m44 * other.m43), (((matrix1.m41 * other.m14) + (matrix1.m42 * other.m24)) + (matrix1.m43 * other.m34)) + (matrix1.m44 * other.m44));
 		}
 		return new Matrix(matrix1.m11 * other, matrix1.m12 * other, matrix1.m13 * other, matrix1.m14 * other, matrix1.m21 * other, matrix1.m22 * other, matrix1.m23 * other, matrix1.m24 * other, matrix1.m31 * other, matrix1.m32 * other, matrix1.m33 * other, matrix1.m34 * other, matrix1.m41 * other, matrix1.m42 * other, matrix1.m43 * other, matrix1.m44 * other);
 	};
 
 	Matrix.negate = function (matrix)
 	{
-	    return new Matrix(-matrix.m11, -matrix.m12, -matrix.m13, -matrix.m14, -matrix.m21, -matrix.m22, -matrix.m23, -matrix.m24, -matrix.m31, -matrix.m32, -matrix.m33, -matrix.m34, -matrix.m41, -matrix.m42, -matrix.m43, -matrix.m44);
+		return new Matrix(-matrix.m11, -matrix.m12, -matrix.m13, -matrix.m14, -matrix.m21, -matrix.m22, -matrix.m23, -matrix.m24, -matrix.m31, -matrix.m32, -matrix.m33, -matrix.m34, -matrix.m41, -matrix.m42, -matrix.m43, -matrix.m44);
 	};
 
 	Matrix.prototype.toString = function ()
@@ -1183,7 +1188,7 @@
 
 	ContentManager.prototype.loadTexture = function (url)
 	{
-	    if (this._resources[url] === undefined)
+		if (this._resources[url] === undefined)
 		{
 			var img = new Image();
 			img.src = url;
@@ -1234,7 +1239,7 @@
 				
 				for (var tUrl in $this._resources)
 				{
-				    if (!$this._resources[tUrl]._loaded)
+					if (!$this._resources[tUrl]._loaded)
 					{
 						return;
 					}
@@ -1244,7 +1249,7 @@
 			}
 			this._resources[url] = texture2D;
 		}
-	    return this._resources[url];
+		return this._resources[url];
 	};
 
 	ContentManager.prototype.loadFont = function (name, size, bold, italic)
@@ -1285,137 +1290,137 @@
 
 	function loadAudio(urls, $this)
 	{
-	    var audioElement = document.createElement("audio");
-	    audioElement.autoplay = false;
-	    audioElement.controls = false;
-	    audioElement.loop = false;
+		var audioElement = document.createElement("audio");
+		audioElement.autoplay = false;
+		audioElement.controls = false;
+		audioElement.loop = false;
 
-	    for (var i = 0; i < urls.length; i++)
-	    {
-	        var url = urls[i];
-	        var sourceElement = document.createElement("source");
-	        sourceElement.src = url;
-	        if (url.substr(url.length - 3, 3) === "mp3")
-	        {
-	            sourceElement.type = "audio/mpeg";
-	        }
-	        else if ((url.substr(url.length - 3, 3) === "m4a") || (url.substr(url.length - 3, 3) === "mp4"))
-	        {
-	            sourceElement.type = "audio/mp4";
-	        }
-	        else if (url.substr(url.length - 3, 3) === "webm")
-	        {
-	            sourceElement.type = "audio/webm";
-	        }
-	        audioElement.appendChild(sourceElement);
-	    }
+		for (var i = 0; i < urls.length; i++)
+		{
+			var url = urls[i];
+			var sourceElement = document.createElement("source");
+			sourceElement.src = url;
+			if (url.substr(url.length - 3, 3) === "mp3")
+			{
+				sourceElement.type = "audio/mpeg";
+			}
+			else if ((url.substr(url.length - 3, 3) === "m4a") || (url.substr(url.length - 3, 3) === "mp4"))
+			{
+				sourceElement.type = "audio/mp4";
+			}
+			else if (url.substr(url.length - 3, 3) === "webm")
+			{
+				sourceElement.type = "audio/webm";
+			}
+			audioElement.appendChild(sourceElement);
+		}
 
-	    audioElement.load();
+		audioElement.load();
 
-	    audioElement.onload = function ()
-	    {
-	        for (var tUrl in $this._resources)
-	        {
-	            if (!$this._resources[tUrl]._loaded)
-	            {
-	                return;
-	            }
-	        }
+		audioElement.onload = function ()
+		{
+			for (var tUrl in $this._resources)
+			{
+				if (!$this._resources[tUrl]._loaded)
+				{
+					return;
+				}
+			}
 
-	        $this._game._continueRun();
-	    };
+			$this._game._continueRun();
+		};
 
-	    return audioElement;
+		return audioElement;
 	}
 
 	ContentManager.prototype.loadSoundEffect = function (urls)
 	{
-	    if (typeof urls === "string")
-	    {
-	        urls = [urls];
-	    }
+		if (typeof urls === "string")
+		{
+			urls = [urls];
+		}
 
-	    if (this._resources[urls] === undefined)
-	    {
-	        var audioElement = loadAudio(urls, this);
+		if (this._resources[urls] === undefined)
+		{
+			var audioElement = loadAudio(urls, this);
 
-	        var soundEffect = {
-	            getDurationMilliseconds: function ()
-	            {
-	                var seconds = this._audio.duration;
-	                if (seconds !== seconds)
-	                {
-	                    seconds = 0;
-	                }
-	                if (!isFinite(seconds))
-	                {
-	                    return seconds;
-	                }
-	                return seconds * 1000;
-	            },
-	            play: function ()
-	            {
-	                this._audio.play();
-	            }
-	        };
-	        if (Object.defineProperty)
-	        {
-	            Object.defineProperty(soundEffect, "_audio", {
-	                value: audioElement,
-	                writable: false,
-	                enumerable: false
-	            });
-	        }
-	        else
-	        {
-	            soundEffect._audio = audioElement;
-	        }
-	        this._resources[urls] = soundEffect;
-	    }
-	    return this._resources[urls];
+			var soundEffect = {
+				getDurationMilliseconds: function ()
+				{
+					var seconds = this._audio.duration;
+					if (seconds !== seconds)
+					{
+						seconds = 0;
+					}
+					if (!isFinite(seconds))
+					{
+						return seconds;
+					}
+					return seconds * 1000;
+				},
+				play: function ()
+				{
+					this._audio.play();
+				}
+			};
+			if (Object.defineProperty)
+			{
+				Object.defineProperty(soundEffect, "_audio", {
+					value: audioElement,
+					writable: false,
+					enumerable: false
+				});
+			}
+			else
+			{
+				soundEffect._audio = audioElement;
+			}
+			this._resources[urls] = soundEffect;
+		}
+		return this._resources[urls];
 	};
 
 	ContentManager.prototype.loadSong = function (urls)
 	{
-	    if (typeof urls === "string")
-	    {
-	        urls = [urls];
-	    }
+		if (typeof urls === "string")
+		{
+			urls = [urls];
+		}
 
-	    if (this._resources[urls] === undefined)
-	    {
-	        var audioElement = loadAudio(urls, this);
+		if (this._resources[urls] === undefined)
+		{
+			var audioElement = loadAudio(urls, this);
 
-	        var song = {
-	            getDurationMilliseconds: function ()
-	            {
-	                var seconds = this._audio.duration;
-	                if (seconds !== seconds)
-	                {
-	                    seconds = 0;
-	                }
-	                if (!isFinite(seconds))
-	                {
-	                    return seconds;
-	                }
-	                return seconds * 1000;
-	            }
-	        };
-	        if (Object.defineProperty)
-	        {
-	            Object.defineProperty(song, "_audio", {
-	                value: audioElement,
-	                writable: false,
-	                enumerable: false
-	            });
-	        }
-	        else
-	        {
-	            song._audio = audioElement;
-	        }
-	        this._resources[urls] = song;
-	    }
-	    return this._resources[urls];
+			var song = {
+				getDurationMilliseconds: function ()
+				{
+					var seconds = this._audio.duration;
+					if (seconds !== seconds)
+					{
+						seconds = 0;
+					}
+					if (!isFinite(seconds))
+					{
+						return seconds;
+					}
+					return seconds * 1000;
+				}
+			};
+			if (Object.defineProperty)
+			{
+				Object.defineProperty(song, "_audio", {
+					value: audioElement,
+					writable: false,
+					enumerable: false
+				});
+			}
+			else
+			{
+				song._audio = audioElement;
+			}
+			this._resources[urls] = song;
+		}
+		return this._resources[urls];
 	};
 
 	//#endregion
@@ -2279,9 +2284,97 @@
 
 	//#endregion
 
+	//#region Media.MediaPlayer
+
+	Media.MediaPlayer = {
+	    play: function (song)
+	    {
+	        this._song = song;
+	        this._song._audio.play();
+	    },
+	    isMuted: function (value)
+	    {
+	        if (this._song === null)
+	        {
+	            return false;
+	        }
+	        if (value === undefined)
+	        {
+	            return this._song._audio.muted;
+	        }
+	        this._song._audio.muted = value;
+	    },
+	    isRepeating: function (value)
+	    {
+	        if (this._song === null)
+	        {
+	            return false;
+	        }
+	        if (value === undefined)
+	        {
+	            return this._song._audio.loop;
+	        }
+	        this._song._audio.loop = value;
+	    },
+	    volume: function (value)
+	    {
+	        if (this._song === null)
+	        {
+	            return false;
+	        }
+	        if (value === undefined)
+	        {
+	            return this._song._audio.volume;
+	        }
+	        this._song._audio.volume = value;
+	    },
+	    resume: function ()
+	    {
+	        if (this._song === null)
+	        {
+	            return;
+	        }
+	        this._song._audio.play();
+	    },
+	    pause: function ()
+	    {
+	        if (this._song=== null)
+	        {
+	            return;
+	        }
+	        this._song._audio.pause();
+	    },
+	    stop: function ()
+	    {
+	        if (this._song === null)
+	        {
+	            return;
+	        }
+	        this._song._audio.pause();
+	        this._song._audio.currentTime = 0;
+	        this._song._audio.pause();
+	    }
+	};
+	var MediaPlayer = Media.MediaPlayer;
+
+	if (Object.defineProperty)
+	{
+		Object.defineProperty(MediaPlayer, "_song", {
+			value: null,
+			writable: true,
+			enumerable: false
+		});
+	}
+	else
+	{
+		MediaPlayer._song = null;
+	}
+
+	//#endregion
+
 	if (window.define !== undefined)
 	{
-	    window.define(Microsoft);
+		window.define(Microsoft);
 	}
 
 })();
