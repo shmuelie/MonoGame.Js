@@ -444,9 +444,7 @@
 	{
 		var x = Math.min(value1.x, value2.x);
 		var y = Math.min(value1.y, value2.y);
-		return new Rectangle(x, y,
-							 Math.max(value1.right(), value2.right()) - x,
-								 Math.max(value1.bottom(), value2.bottom()) - y);
+		return new Rectangle(x, y, Math.max(value1.right(), value2.right()) - x, Math.max(value1.bottom(), value2.bottom()) - y);
 	};
 
 	Rectangle.prototype.left = function ()
