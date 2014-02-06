@@ -894,7 +894,6 @@
 
 	Matrix.createPerspectiveOffCenter = function (left, right, bottom, top, nearPlaneDistance, farPlaneDistance)
 	{
-		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		if (nearPlaneDistance <= 0)
 		{
 			throw new Error("nearPlaneDistance <= 0");
@@ -907,17 +906,7 @@
 		{
 			throw new Error("nearPlaneDistance >= farPlaneDistance");
 		}
-		matrix.m11 = (2 * nearPlaneDistance) / (right - left);
-		matrix.m12 = matrix.m13 = matrix.m14 = 0;
-		matrix.m22 = (2 * nearPlaneDistance) / (top - bottom);
-		matrix.m21 = matrix.m23 = matrix.m24 = 0;
-		matrix.m31 = (left + right) / (right - left);
-		matrix.m32 = (top + bottom) / (top - bottom);
-		matrix.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-		matrix.m34 = -1;
-		matrix.m43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
-		matrix.m41 = matrix.m42 = matrix.m44 = 0;
-		return matrix;
+		return new Matrix((2 * nearPlaneDistance) / (right - left), 0, 0, 0, 0, (2 * nearPlaneDistance) / (top - bottom), 0, 0, (left + right) / (right - left), (top + bottom) / (top - bottom), farPlaneDistance / (nearPlaneDistance - farPlaneDistance), -1, 0, 0, (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance), 0);
 	};
 
 	Matrix.createScale = function ()
