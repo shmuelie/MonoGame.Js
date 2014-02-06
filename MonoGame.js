@@ -658,18 +658,13 @@
 		switch(arguments.length)
 		{
 			case 2:
-				return Vector2_transform2(arguments[0], arguments[1]);
+			    return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m41, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m42);
 			case 3:
 				return Vector2_transform6(arguments[0], 0, arguments[1], arguments[2], 0, arguments[0].length);
 			case 6:
 				return Vector2_transform6(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
 		}
 	};
-
-	function Vector2_transform2 (position, matrix)
-	{
-		return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m41, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m42);
-	}
 
 	function Vector2_transform6 (sourceArray, sourceIndex, matrix, destinationArray, destinationIndex, length)
 	{
