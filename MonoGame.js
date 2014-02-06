@@ -843,17 +843,7 @@
 
 	Matrix.createOrthographic = function (width, height, zNearPlane, zFarPlane)
 	{
-		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		matrix.m11 = 2 / width;
-		matrix.m12 = matrix.m13 = matrix.m14 = 0;
-		matrix.m22 = 2 / height;
-		matrix.m21 = matrix.m23 = matrix.m24 = 0;
-		matrix.m33 = 1 / (zNearPlane - zFarPlane);
-		matrix.m31 = matrix.m32 = matrix.m34 = 0;
-		matrix.m41 = matrix.m42 = 0;
-		matrix.m43 = zNearPlane / (zNearPlane - zFarPlane);
-		matrix.m44 = 1;
-		return matrix;
+	    return new Matrix(2 / width, 0, 0, 0, 0, 2 / height, 0, 0, 0, 0, 1 / (zNearPlane - zFarPlane), 0, 0, 0, zNearPlane / (zNearPlane - zFarPlane), 1);
 	};
 
 	Matrix.createOrthographicOffCenter = function (left, right, bottom, top, zNearPlane, zFarPlane)
