@@ -27,3 +27,5 @@ There are places where the API is different in more than just ECMAScript ways
 * There is no TimeSpan object, instead just plane milliseconds are used. So 
   for example you instead of gameTime.elapsedGameTime it's
   gameTime.elapsedGameMilliseconds.
+* Remember that Point, Vector2, and Matrix are all copy by ref not copy by 
+  value.
