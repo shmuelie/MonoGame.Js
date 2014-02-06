@@ -1032,24 +1032,7 @@
 
 	Matrix.lerp = function (matrix1, matrix2, amount)
 	{
-		var result = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		result.m11 = matrix1.m11 + ((matrix2.m11 - matrix1.m11) * amount);
-		result.m12 = matrix1.m12 + ((matrix2.m12 - matrix1.m12) * amount);
-		result.m13 = matrix1.m13 + ((matrix2.m13 - matrix1.m13) * amount);
-		result.m14 = matrix1.m14 + ((matrix2.m14 - matrix1.m14) * amount);
-		result.m21 = matrix1.m21 + ((matrix2.m21 - matrix1.m21) * amount);
-		result.m22 = matrix1.m22 + ((matrix2.m22 - matrix1.m22) * amount);
-		result.m23 = matrix1.m23 + ((matrix2.m23 - matrix1.m23) * amount);
-		result.m24 = matrix1.m24 + ((matrix2.m24 - matrix1.m24) * amount);
-		result.m31 = matrix1.m31 + ((matrix2.m31 - matrix1.m31) * amount);
-		result.m32 = matrix1.m32 + ((matrix2.m32 - matrix1.m32) * amount);
-		result.m33 = matrix1.m33 + ((matrix2.m33 - matrix1.m33) * amount);
-		result.m34 = matrix1.m34 + ((matrix2.m34 - matrix1.m34) * amount);
-		result.m41 = matrix1.m41 + ((matrix2.m41 - matrix1.m41) * amount);
-		result.m42 = matrix1.m42 + ((matrix2.m42 - matrix1.m42) * amount);
-		result.m43 = matrix1.m43 + ((matrix2.m43 - matrix1.m43) * amount);
-		result.m44 = matrix1.m44 + ((matrix2.m44 - matrix1.m44) * amount);
-		return result;
+	    return new Matrix(matrix1.m11 + ((matrix2.m11 - matrix1.m11) * amount), matrix1.m12 + ((matrix2.m12 - matrix1.m12) * amount), matrix1.m13 + ((matrix2.m13 - matrix1.m13) * amount), matrix1.m14 + ((matrix2.m14 - matrix1.m14) * amount), matrix1.m21 + ((matrix2.m21 - matrix1.m21) * amount), matrix1.m22 + ((matrix2.m22 - matrix1.m22) * amount), matrix1.m23 + ((matrix2.m23 - matrix1.m23) * amount), matrix1.m24 + ((matrix2.m24 - matrix1.m24) * amount), matrix1.m31 + ((matrix2.m31 - matrix1.m31) * amount), matrix1.m32 + ((matrix2.m32 - matrix1.m32) * amount), matrix1.m33 + ((matrix2.m33 - matrix1.m33) * amount), matrix1.m34 + ((matrix2.m34 - matrix1.m34) * amount), matrix1.m41 + ((matrix2.m41 - matrix1.m41) * amount), matrix1.m42 + ((matrix2.m42 - matrix1.m42) * amount), matrix1.m43 + ((matrix2.m43 - matrix1.m43) * amount), matrix1.m44 + ((matrix2.m44 - matrix1.m44) * amount));
 	};
 
 	Matrix.multiply = function (matrix1, other)
