@@ -265,7 +265,7 @@
 
 	if (Object.defineProperty)
 	{
-		Object.defineProperty(Point.prototype, "zero", {
+		Object.defineProperty(Point, "zero", {
 			get: function ()
 			{
 				return Point_zeroPoint;
@@ -275,7 +275,7 @@
 	}
 	else
 	{
-		Point.prototype.zero = Point_zeroPoint;
+		Point.zero = Point_zeroPoint;
 	}
 
 	Point.prototype.add = function (other)
