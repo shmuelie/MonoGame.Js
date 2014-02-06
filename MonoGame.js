@@ -151,14 +151,7 @@
 
 	MathHelper.clamp = function (value, min, max)
 	{
-		// First we check to see if we're greater than the max
-		value = (value > max) ? max : value;
-
-		// Then we check to see if we're less than the min.
-		value = (value < min) ? min : value;
-
-		// There's no check to see if min > max.
-		return value;
+	    return Math.max(min, Math.min(max, value));
 	};
 
 	MathHelper.distance = function (value1, value2)
