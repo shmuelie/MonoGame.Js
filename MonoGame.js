@@ -848,24 +848,7 @@
 
 	Matrix.createOrthographicOffCenter = function (left, right, bottom, top, zNearPlane, zFarPlane)
 	{
-		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		matrix.m11 = (2.0 / (right - left));
-		matrix.m12 = 0.0;
-		matrix.m13 = 0.0;
-		matrix.m14 = 0.0;
-		matrix.m21 = 0.0;
-		matrix.m22 = (2.0 / (top - bottom));
-		matrix.m23 = 0.0;
-		matrix.m24 = 0.0;
-		matrix.m31 = 0.0;
-		matrix.m32 = 0.0;
-		matrix.m33 = (1.0 / (zNearPlane - zFarPlane));
-		matrix.m34 = 0.0;
-		matrix.m41 = ((left + right) / (left - right));
-		matrix.m42 = ((top + bottom) / (bottom - top));
-		matrix.m43 = (zNearPlane / (zNearPlane - zFarPlane));
-		matrix.m44 = 1.0;
-		return matrix;
+	    return new Matrix((2.0 / (right - left)), 0, 0, 0, 0, (2.0 / (top - bottom)), 0, 0, 0, 0, (1.0 / (zNearPlane - zFarPlane)), 0, ((left + right) / (left - right)), ((top + bottom) / (bottom - top)), (zNearPlane / (zNearPlane - zFarPlane)), 1);
 	};
 
 	Matrix.createPerspective = function (width, height, nearPlaneDistance, farPlaneDistance)
