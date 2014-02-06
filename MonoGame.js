@@ -871,7 +871,6 @@
 
 	Matrix.createPerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance)
 	{
-		var matrix = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		if ((fieldOfView <= 0) || (fieldOfView >= 3.141593))
 		{
 			throw new Error("fieldOfView <= 0 O >= PI");
@@ -890,16 +889,7 @@
 		}
 		var num = 1 / (Math.tan((fieldOfView * 0.5)));
 		var num9 = num / aspectRatio;
-		matrix.m11 = num9;
-		matrix.m12 = matrix.m13 = matrix.m14 = 0;
-		matrix.m22 = num;
-		matrix.m21 = matrix.m23 = matrix.m24 = 0;
-		matrix.m31 = matrix.m32 = 0;
-		matrix.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-		matrix.m34 = -1;
-		matrix.m41 = matrix.m42 = matrix.m44 = 0;
-		matrix.m43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
-		return matrix;
+		return new Matrix(num9, 0, 0, 0, 0, num, 0, 0, 0, 0, farPlaneDistance / (nearPlaneDistance - farPlaneDistance), -1, 0, 0, (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance), 0);
 	};
 
 	Matrix.createPerspectiveOffCenter = function (left, right, bottom, top, nearPlaneDistance, farPlaneDistance)
