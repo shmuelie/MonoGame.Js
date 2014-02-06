@@ -193,10 +193,7 @@
 
 	MathHelper.smoothStep = function (value1, value2, amount)
 	{
-		var result = MathHelper.clamp(amount, 0, 1);
-		result = MathHelper.hermite(value1, 0, value2, 0, result);
-
-		return result;
+		return MathHelper.hermite(value1, 0, value2, 0, MathHelper.clamp(amount, 0, 1));
 	};
 
 	MathHelper.toDegrees = function (radians)
