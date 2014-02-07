@@ -1288,7 +1288,7 @@
 		return spriteFont;
 	};
 
-	function loadAudio(urls, $this)
+	function loadAudio(urls, $this, resource)
 	{
 		var audioElement = document.createElement("audio");
 		audioElement.autoplay = false;
@@ -1317,8 +1317,10 @@
 
 		audioElement.load();
 
-		audioElement.onload = function ()
+		audioElement.oncanplay = function ()
 		{
+		    resource._loaded = true;
+
 			for (var tUrl in $this._resources)
 			{
 				if (!$this._resources[tUrl]._loaded)
@@ -1342,27 +1344,28 @@
 
 		if (this._resources[urls] === undefined)
 		{
-			var audioElement = loadAudio(urls, this);
+		    var soundEffect = {
+		        getDurationMilliseconds: function ()
+		        {
+		            var seconds = this._audio.duration;
+		            if (seconds !== seconds)
+		            {
+		                seconds = 0;
+		            }
+		            if (!isFinite(seconds))
+		            {
+		                return seconds;
+		            }
+		            return seconds * 1000;
+		        },
+		        play: function ()
+		        {
+		            this._audio.play();
+		        }
+		    };
 
-			var soundEffect = {
-				getDurationMilliseconds: function ()
-				{
-					var seconds = this._audio.duration;
-					if (seconds !== seconds)
-					{
-						seconds = 0;
-					}
-					if (!isFinite(seconds))
-					{
-						return seconds;
-					}
-					return seconds * 1000;
-				},
-				play: function ()
-				{
-					this._audio.play();
-				}
-			};
+			var audioElement = loadAudio(urls, this, soundEffect);
+
 			if (Object.defineProperty)
 			{
 				Object.defineProperty(soundEffect, "_audio", {
@@ -1370,10 +1373,16 @@
 					writable: false,
 					enumerable: false
 				});
+				Object.defineProperty(soundEffect, "_loaded", {
+				    value: false,
+				    writable: true,
+				    enumerable: false
+				});
 			}
 			else
 			{
-				soundEffect._audio = audioElement;
+			    soundEffect._audio = audioElement;
+			    soundEffect._loaded = false;
 			}
 			this._resources[urls] = soundEffect;
 		}
@@ -1389,23 +1398,24 @@
 
 		if (this._resources[urls] === undefined)
 		{
-			var audioElement = loadAudio(urls, this);
+		    var song = {
+		        getDurationMilliseconds: function ()
+		        {
+		            var seconds = this._audio.duration;
+		            if (seconds !== seconds)
+		            {
+		                seconds = 0;
+		            }
+		            if (!isFinite(seconds))
+		            {
+		                return seconds;
+		            }
+		            return seconds * 1000;
+		        }
+		    };
 
-			var song = {
-				getDurationMilliseconds: function ()
-				{
-					var seconds = this._audio.duration;
-					if (seconds !== seconds)
-					{
-						seconds = 0;
-					}
-					if (!isFinite(seconds))
-					{
-						return seconds;
-					}
-					return seconds * 1000;
-				}
-			};
+			var audioElement = loadAudio(urls, this, song);
+
 			if (Object.defineProperty)
 			{
 				Object.defineProperty(song, "_audio", {
@@ -1413,10 +1423,16 @@
 					writable: false,
 					enumerable: false
 				});
+				Object.defineProperty(song, "_loaded", {
+				    value: false,
+				    writable: true,
+				    enumerable: false
+				});
 			}
 			else
 			{
-				song._audio = audioElement;
+			    song._audio = audioElement;
+			    song._loaded = false;
 			}
 			this._resources[urls] = song;
 		}
