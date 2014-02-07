@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Clown</title>
-    <script src="MonoGame.min.js" type="text/javascript"></script>
+    <script src="MonoGame.js" type="text/javascript"></script>
     <script type="text/javascript">
         (function ()
         {
@@ -100,6 +100,8 @@
                 this._balloons = [];
                 this._score = 0;
                 this._scoreFont = null;
+                this._bounce = null;
+                this._pop = null;
             });
 
             ClownGame.prototype.initialize = function ()
@@ -140,6 +142,9 @@
                 this._scoreFont = this.content.loadFont("Arial", "24pt", true, false);
 
                 this._balloonTexture = this.content.loadTexture("https://raw.github.com/SamuelEnglard/CrossPlatformCircus/master/CircusContent/balloon.png");
+
+                this._bounce = this.content.loadSoundEffect(["https://raw.github.com/SamuelEnglard/MonoGame.Js/master/bounce.m4a", "https://raw.github.com/SamuelEnglard/MonoGame.Js/master/bounce.mp3"]);
+                this._pop = this.content.loadSoundEffect(["https://raw.github.com/SamuelEnglard/MonoGame.Js/master/pop.m4a", "https://raw.github.com/SamuelEnglard/MonoGame.Js/master/pop.mp3"]);
             };
 
             ClownGame.prototype.contentLoaded = function ()
@@ -228,6 +233,8 @@
 
                     this._clownVelocity.y *= -1;
                     this._clownArea.y = Math.round(this._trampolinePosition.y - this._clownArea.height);
+
+                    this._bounce.play();
                 }
 
                 for (var i = 0; i < this._balloons.length; i++)
@@ -238,7 +245,7 @@
                         this._balloons.splice(i, 1);
                         this._clownVelocity.x *= -1;
                         this._clownVelocity.y *= -1;
-
+                        this._pop.play();
                         break;
                     }
                 }
