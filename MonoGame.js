@@ -2284,76 +2284,87 @@
 
 	//#endregion
 
+	//#region Media.MediaState
+
+	Media.MediaState = {
+		Paused: 1,
+		Playing: 2,
+		Stopped: 3
+	};
+	var MediaState = Media.MediaState;
+
+	//#endregion
+
 	//#region Media.MediaPlayer
 
 	Media.MediaPlayer = {
-	    play: function (song)
-	    {
-	        this._song = song;
-	        this._song._audio.play();
-	    },
-	    isMuted: function (value)
-	    {
-	        if (this._song === null)
-	        {
-	            return false;
-	        }
-	        if (value === undefined)
-	        {
-	            return this._song._audio.muted;
-	        }
-	        this._song._audio.muted = value;
-	    },
-	    isRepeating: function (value)
-	    {
-	        if (this._song === null)
-	        {
-	            return false;
-	        }
-	        if (value === undefined)
-	        {
-	            return this._song._audio.loop;
-	        }
-	        this._song._audio.loop = value;
-	    },
-	    volume: function (value)
-	    {
-	        if (this._song === null)
-	        {
-	            return false;
-	        }
-	        if (value === undefined)
-	        {
-	            return this._song._audio.volume;
-	        }
-	        this._song._audio.volume = value;
-	    },
-	    resume: function ()
-	    {
-	        if (this._song === null)
-	        {
-	            return;
-	        }
-	        this._song._audio.play();
-	    },
-	    pause: function ()
-	    {
-	        if (this._song=== null)
-	        {
-	            return;
-	        }
-	        this._song._audio.pause();
-	    },
-	    stop: function ()
-	    {
-	        if (this._song === null)
-	        {
-	            return;
-	        }
-	        this._song._audio.pause();
-	        this._song._audio.currentTime = 0;
-	        this._song._audio.pause();
-	    }
+		play: function (song)
+		{
+			this._song = song;
+			this._song._audio.play();
+		},
+		isMuted: function (value)
+		{
+			if (this._song === null)
+			{
+				return false;
+			}
+			if (value === undefined)
+			{
+				return this._song._audio.muted;
+			}
+			this._song._audio.muted = value;
+		},
+		isRepeating: function (value)
+		{
+			if (this._song === null)
+			{
+				return false;
+			}
+			if (value === undefined)
+			{
+				return this._song._audio.loop;
+			}
+			this._song._audio.loop = value;
+		},
+		volume: function (value)
+		{
+			if (this._song === null)
+			{
+				return false;
+			}
+			if (value === undefined)
+			{
+				return this._song._audio.volume;
+			}
+			this._song._audio.volume = value;
+		},
+		resume: function ()
+		{
+			if (this._song === null)
+			{
+				return;
+			}
+			this._song._audio.play();
+		},
+		pause: function ()
+		{
+			if (this._song=== null)
+			{
+				return;
+			}
+			this._song._audio.pause();
+		},
+		stop: function ()
+		{
+			if (this._song === null)
+			{
+				return;
+			}
+			this._song._audio.pause();
+			this._song._audio.currentTime = 0;
+			this._song._audio.pause();
+		}
 	};
 	var MediaPlayer = Media.MediaPlayer;
 
