@@ -2302,6 +2302,7 @@
 		{
 			this._song = song;
 			this._song._audio.play();
+			this.state = MediaState.Playing;
 		},
 		isMuted: function (value)
 		{
@@ -2346,6 +2347,7 @@
 				return;
 			}
 			this._song._audio.play();
+			this.state = MediaState.Playing;
 		},
 		pause: function ()
 		{
@@ -2354,6 +2356,7 @@
 				return;
 			}
 			this._song._audio.pause();
+			this.state = MediaState.Paused;
 		},
 		stop: function ()
 		{
@@ -2364,6 +2367,7 @@
 			this._song._audio.pause();
 			this._song._audio.currentTime = 0;
 			this._song._audio.pause();
+			this.state = MediaState.Stopped;
 		}
 	};
 	var MediaPlayer = Media.MediaPlayer;
@@ -2375,10 +2379,16 @@
 			writable: true,
 			enumerable: false
 		});
+		Object.defineProperty(MediaPlayer, "state", {
+		    value: MediaState.Stopped,
+		    writable: true,
+		    enumerable: false
+		});
 	}
 	else
 	{
-		MediaPlayer._song = null;
+	    MediaPlayer._song = null;
+	    MediaPlayer.state = MediaState.Stopped;
 	}
 
 	//#endregion
