@@ -29,3 +29,5 @@ There are places where the API is different in more than just ECMAScript ways
   gameTime.elapsedGameMilliseconds.
 * Remember that Point, Vector2, and Matrix are all copy by ref not copy by 
   value.
+* loadSong and loadSoundEffect both can take an array of urls to allow for 
+  mutiple encoding formats to help with cross-browser development.
