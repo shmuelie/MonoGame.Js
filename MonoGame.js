@@ -657,7 +657,7 @@
 
 	Vector2.transform = function ()
 	{
-		switch(arguments.length)
+		switch (arguments.length)
 		{
 			case 2:
 				return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m41, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m42);
@@ -2078,7 +2078,7 @@
 		getState: function ()
 		{
 			var currentState = {};
-			for(var p in mouseState)
+			for (var p in mouseState)
 			{
 				if (mouseState.hasOwnProperty(p))
 				{
@@ -2472,7 +2472,7 @@
 		},
 		pause: function ()
 		{
-			if (this._song=== null)
+			if (this._song === null)
 			{
 				return;
 			}
