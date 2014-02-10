@@ -1219,7 +1219,7 @@
 			}
 			else
 			{
-				texture2D.with = img.width;
+				texture2D.width = img.width;
 				texture2D.height = img.height;
 				texture2D._img = img;
 				texture2D._loaded = false;
