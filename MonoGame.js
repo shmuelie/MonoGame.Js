@@ -439,10 +439,7 @@
 
 	Rectangle.prototype.intersects = function (value)
 	{
-		return value.left() < this.right() &&
-				   this.left() < value.right() &&
-				   value.top() < this.bottom() &&
-				   this.top() < value.bottom();
+		return value.left() < this.right() && this.left() < value.right() && value.top() < this.bottom() && this.top() < value.bottom();
 	};
 
 	Rectangle.union = function (value1, value2)
