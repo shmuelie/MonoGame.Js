@@ -1071,10 +1071,10 @@
 				enumerable: false
 			});
 			Object.defineProperty(this, "isRunning", {
-				value: false,
-				writable: true,
-				enumerable: true
-			})
+			    value: false,
+			    writable: true,
+			    enumerable: true
+			});
 		}
 		else
 		{
@@ -1122,10 +1122,10 @@
 
 	Stopwatch.StartNew = function ()
 	{
-		var watch = new Stopwatch();
-		watch.start();
-		return watch;
-	}
+	    var watch = new Stopwatch();
+	    watch.start();
+	    return watch;
+	};
 
 	//#endregion
 
@@ -1227,23 +1227,23 @@
 			var $this = this;
 			img.onload = function ()
 			{
-				if (!Object.defineProperties)
-				{
-					texture2D.height = img.height;
-					texture2D.width = img.width;
-				}
-				texture2D._loaded = true;
-				
-				for (var tUrl in $this._resources)
-				{
-					if (!$this._resources[tUrl]._loaded)
-					{
-						return;
-					}
-				}
+			    if (!Object.defineProperties)
+			    {
+			        texture2D.height = img.height;
+			        texture2D.width = img.width;
+			    }
+			    texture2D._loaded = true;
 
-				$this._game._continueRun();
-			}
+			    for (var tUrl in $this._resources)
+			    {
+			        if (!$this._resources[tUrl]._loaded)
+			        {
+			            return;
+			        }
+			    }
+
+			    $this._game._continueRun();
+			};
 			this._resources[url] = texture2D;
 		}
 		return this._resources[url];
