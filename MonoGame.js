@@ -1439,6 +1439,114 @@
 		return this._resources[urls];
 	};
 
+	ContentManager.prototype.loadVideo = function (urls)
+	{
+	    if (typeof urls === "string")
+	    {
+	        urls = [urls];
+	    }
+
+	    if (this._resources[urls] === undefined)
+	    {
+	        var videoElement = document.createElement("video");
+	        videoElement.autoplay = false;
+	        videoElement.controls = false;
+	        videoElement.loop = false;
+
+	        for (var i = 0; i < urls.length; i++)
+	        {
+	            var url = urls[i];
+	            var sourceElement = document.createElement("source");
+	            sourceElement.src = url;
+	            if ((url.substr(url.length - 3, 3) === "m4v") || (url.substr(url.length - 3, 3) === "mp4"))
+	            {
+	                sourceElement.type = "video/mp4";
+	            }
+	            else if (url.substr(url.length - 3, 3) === "webm")
+	            {
+	                sourceElement.type = "vide/webm";
+	            }
+	            videoElement.appendChild(sourceElement);
+	        }
+
+	        videoElement.load();
+
+	        var video = {
+	            getDurationMilliseconds: function ()
+	            {
+	                var seconds = this._video.duration;
+	                if (seconds !== seconds)
+	                {
+	                    seconds = 0;
+	                }
+	                if (!isFinite(seconds))
+	                {
+	                    return seconds;
+	                }
+	                return seconds * 1000;
+	            }
+	        };
+	        if (Object.defineProperty)
+	        {
+	            Object.defineProperty(video, "_video", {
+	                value: videoElement,
+	                writable: false,
+	                enumerable: false
+	            });
+	            Object.defineProperty(video, "_loaded", {
+	                value: false,
+	                writable: true,
+	                enumerable: false
+	            });
+	            Object.defineProperty(video, "width", {
+	                get: function ()
+	                {
+	                    return this._video.width;
+	                },
+	                enumerable: true
+	            });
+	            Object.defineProperty(video, "height", {
+	                get: function ()
+	                {
+	                    return this._video.height;
+	                },
+	                enumerable: true
+	            });
+	        }
+	        else
+	        {
+	            video._video = videoElement;
+	            video._loaded = false;
+	            video.width = 0;
+	            video.height = 0;
+	        }
+
+	        var $this = this;
+	        videoElement.oncanplay = function ()
+	        {
+	            video._loaded = true;
+
+	            if (!Object.defineProperty)
+	            {
+	                video.height = video._video.height;
+	                video.width = video._video.width;
+	            }
+
+	            for (var tUrl in $this._resources)
+	            {
+	                if (!$this._resources[tUrl]._loaded)
+	                {
+	                    return;
+	                }
+	            }
+
+	            $this._game._continueRun();
+	        };
+	        this._resources[urls] = video;
+	    }
+	    return this._resources[urls];
+	};
+
 	//#endregion
 
 	//#region Graphics.GraphicsDevice
