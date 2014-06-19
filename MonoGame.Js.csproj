@@ -60,13 +60,13 @@
     <Content Include="MonoGame.min.js">
       <DependentUpon>MonoGame.js</DependentUpon>
     </Content>
-    <Content Include="MonoGame.min.js.map">
-      <DependentUpon>MonoGame.min.js</DependentUpon>
-    </Content>
     <Content Include="README.html">
       <DependentUpon>README.md</DependentUpon>
     </Content>
     <Content Include="README.md" />
+    <Content Include="MonoGame.min.js.map">
+      <DependentUpon>MonoGame.min.js</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
