@@ -24,7 +24,7 @@ There are places where the API is different in more than just ECMAScript ways
   for Game's initialize method.
 * Because textures are loaded asynchronously you just load content in 
   loadContent and then in contentLoaded do any logic based on that content.
-* There is no TimeSpan object, instead just plane milliseconds are used. So 
+* There is no TimeSpan object, instead just plain milliseconds are used. So 
   for example you instead of gameTime.elapsedGameTime it's
   gameTime.elapsedGameMilliseconds.
 * Remember that Point, Vector2, and Matrix are all copy by ref not copy by 

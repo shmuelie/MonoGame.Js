@@ -41,10 +41,15 @@
 		};
 	}
 
-	var Microsoft;
+	var Framework;
 	if (window.define !== undefined)
 	{
-		Microsoft = {};
+		Framework = {};
+		
+		if (window.define !== undefined)
+		{
+			window.define("Microsoft/XNA/Framework", Framework);
+		}
 	}
 	else
 	{
@@ -52,32 +57,31 @@
 		{
 			window.Microsoft = {};
 		}
-		Microsoft = window.Microsoft;
+		if (window.Microsoft.Xna === undefined)
+		{
+			window.Microsoft.Xna = {};
+		}
+		if (window.Microsoft.Xna.Framework === undefined)
+		{
+			window.Microsoft.Xna.Framework = {};
+		}
+		Framework = window.Microsoft.Xna.Framework;
 	}
-	if (Microsoft.Xna === undefined)
+	
+	if (Framework.Graphics === undefined)
 	{
-		Microsoft.Xna = {};
+		Framework.Graphics = {};
 	}
-	if (Microsoft.Xna.Framework === undefined)
-	{
-		Microsoft.Xna.Framework = {};
-	}
-	if (Microsoft.Xna.Framework.Graphics === undefined)
-	{
-		Microsoft.Xna.Framework.Graphics = {};
-	}
-	if (Microsoft.Xna.Framework.Input === undefined)
-	{
-		Microsoft.Xna.Framework.Input = {};
-	}
-	if (Microsoft.Xna.Framework.Media === undefined)
-	{
-		Microsoft.Xna.Framework.Media = {};
-	}
-
-	var Framework = Microsoft.Xna.Framework;
 	var Graphics = Framework.Graphics;
+	if (Framework.Input === undefined)
+	{
+		Framework.Input = {};
+	}
 	var Input = Framework.Input;
+	if (Framework.Media === undefined)
+	{
+		Framework.Media = {};
+	}
 	var Media = Framework.Media;
 
 	var MIN_DATE = new Date(-8640000000000000);
@@ -2513,10 +2517,4 @@
 	}
 
 	//#endregion
-
-	if (window.define !== undefined)
-	{
-		window.define(Microsoft);
-	}
-
 })();
