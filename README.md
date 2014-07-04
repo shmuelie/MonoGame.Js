@@ -3,7 +3,7 @@ MonoGame.Js
 
 JavaScript game libary that is based on the XNA/MonoGame API
 
-The only ""dependancies" on modern browsers the API takes is the HTML canvas 
+The only "dependancies" on modern browsers the API takes is the HTML canvas 
 object and the addEventListener function. Otherwise the code is valid 
 ECMAScript 3 code and should work if those two are pollyfilled.
 
