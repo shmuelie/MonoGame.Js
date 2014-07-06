@@ -1745,7 +1745,7 @@
 					enumerable: true
 				});
 				Object.defineProperty(this, "_gameTimer", {
-					value: new Stopwatch(),
+					value: null,
 					writable: false,
 					enumerable: false
 				});
@@ -1798,7 +1798,7 @@
 					elapsedGameMilliseconds: 0,
 					isRunningSlowly: false
 				};
-				this._gameTimer = new Stopwatch();
+				this._gameTimer = null;
 				this._suppressDraw = false;
 				this._accumulatedElapsedMilliseconds = 0;
 				this._timerId = null;
@@ -1846,6 +1846,7 @@
 		this._gameTimer.restart();
 		this._gameTime.elapsedGameMilliseconds = 0;
 		this._accumulatedElapsedMilliseconds = 0;
+		this._previousMilliseconds = 0;
 	};
 
 	Game.prototype._tick = function ()
@@ -1999,6 +2000,7 @@
 				this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
 			}
 		}
+		this._gameTimer = Stopwatch.StartNew();
 		this.graphics.graphicsDevice.setRenderTarget(null);
 		this.initialize();
 		this.loadContent();
