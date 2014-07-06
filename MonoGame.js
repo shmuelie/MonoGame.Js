@@ -1036,9 +1036,9 @@
 				enumerable: false
 			});
 			Object.defineProperty(this, "isRunning", {
-			    value: false,
-			    writable: true,
-			    enumerable: true
+				value: false,
+				writable: true,
+				enumerable: true
 			});
 		}
 		else
@@ -1087,9 +1087,9 @@
 
 	Stopwatch.StartNew = function ()
 	{
-	    var watch = new Stopwatch();
-	    watch.start();
-	    return watch;
+		var watch = new Stopwatch();
+		watch.start();
+		return watch;
 	};
 
 	//#endregion
@@ -1192,22 +1192,22 @@
 			var $this = this;
 			img.onload = function ()
 			{
-			    if (!Object.defineProperties)
-			    {
-			        texture2D.height = img.height;
-			        texture2D.width = img.width;
-			    }
-			    texture2D._loaded = true;
+				if (!Object.defineProperties)
+				{
+					texture2D.height = img.height;
+					texture2D.width = img.width;
+				}
+				texture2D._loaded = true;
 
-			    for (var tUrl in $this._resources)
-			    {
-			        if (!$this._resources[tUrl]._loaded)
-			        {
-			            return;
-			        }
-			    }
+				for (var tUrl in $this._resources)
+				{
+					if (!$this._resources[tUrl]._loaded)
+					{
+						return;
+					}
+				}
 
-			    $this._game._continueRun();
+				$this._game._continueRun();
 			};
 			this._resources[url] = texture2D;
 		}
@@ -1281,7 +1281,7 @@
 
 		audioElement.oncanplay = function ()
 		{
-		    resource._loaded = true;
+			resource._loaded = true;
 
 			for (var tUrl in $this._resources)
 			{
@@ -1306,25 +1306,25 @@
 
 		if (this._resources[urls] === undefined)
 		{
-		    var soundEffect = {
-		        getDurationMilliseconds: function ()
-		        {
-		            var seconds = this._audio.duration;
-		            if (seconds !== seconds)
-		            {
-		                seconds = 0;
-		            }
-		            if (!isFinite(seconds))
-		            {
-		                return seconds;
-		            }
-		            return seconds * 1000;
-		        },
-		        play: function ()
-		        {
-		            this._audio.play();
-		        }
-		    };
+			var soundEffect = {
+				getDurationMilliseconds: function ()
+				{
+					var seconds = this._audio.duration;
+					if (seconds !== seconds)
+					{
+						seconds = 0;
+					}
+					if (!isFinite(seconds))
+					{
+						return seconds;
+					}
+					return seconds * 1000;
+				},
+				play: function ()
+				{
+					this._audio.play();
+				}
+			};
 
 			var audioElement = loadAudio(urls, this, soundEffect);
 
@@ -1336,15 +1336,15 @@
 					enumerable: false
 				});
 				Object.defineProperty(soundEffect, "_loaded", {
-				    value: false,
-				    writable: true,
-				    enumerable: false
+					value: false,
+					writable: true,
+					enumerable: false
 				});
 			}
 			else
 			{
-			    soundEffect._audio = audioElement;
-			    soundEffect._loaded = false;
+				soundEffect._audio = audioElement;
+				soundEffect._loaded = false;
 			}
 			this._resources[urls] = soundEffect;
 		}
@@ -1360,21 +1360,21 @@
 
 		if (this._resources[urls] === undefined)
 		{
-		    var song = {
-		        getDurationMilliseconds: function ()
-		        {
-		            var seconds = this._audio.duration;
-		            if (seconds !== seconds)
-		            {
-		                seconds = 0;
-		            }
-		            if (!isFinite(seconds))
-		            {
-		                return seconds;
-		            }
-		            return seconds * 1000;
-		        }
-		    };
+			var song = {
+				getDurationMilliseconds: function ()
+				{
+					var seconds = this._audio.duration;
+					if (seconds !== seconds)
+					{
+						seconds = 0;
+					}
+					if (!isFinite(seconds))
+					{
+						return seconds;
+					}
+					return seconds * 1000;
+				}
+			};
 
 			var audioElement = loadAudio(urls, this, song);
 
@@ -1386,15 +1386,15 @@
 					enumerable: false
 				});
 				Object.defineProperty(song, "_loaded", {
-				    value: false,
-				    writable: true,
-				    enumerable: false
+					value: false,
+					writable: true,
+					enumerable: false
 				});
 			}
 			else
 			{
-			    song._audio = audioElement;
-			    song._loaded = false;
+				song._audio = audioElement;
+				song._loaded = false;
 			}
 			this._resources[urls] = song;
 		}
@@ -1403,110 +1403,110 @@
 
 	ContentManager.prototype.loadVideo = function (urls)
 	{
-	    if (typeof urls === "string")
-	    {
-	        urls = [urls];
-	    }
+		if (typeof urls === "string")
+		{
+			urls = [urls];
+		}
 
-	    if (this._resources[urls] === undefined)
-	    {
-	        var videoElement = document.createElement("video");
-	        videoElement.autoplay = false;
-	        videoElement.controls = false;
-	        videoElement.loop = false;
+		if (this._resources[urls] === undefined)
+		{
+			var videoElement = document.createElement("video");
+			videoElement.autoplay = false;
+			videoElement.controls = false;
+			videoElement.loop = false;
 
-	        for (var i = 0; i < urls.length; i++)
-	        {
-	            var url = urls[i];
-	            var sourceElement = document.createElement("source");
-	            sourceElement.src = url;
-	            if ((url.substr(url.length - 3, 3) === "m4v") || (url.substr(url.length - 3, 3) === "mp4"))
-	            {
-	                sourceElement.type = "video/mp4";
-	            }
-	            else if (url.substr(url.length - 3, 3) === "webm")
-	            {
-	                sourceElement.type = "vide/webm";
-	            }
-	            videoElement.appendChild(sourceElement);
-	        }
+			for (var i = 0; i < urls.length; i++)
+			{
+				var url = urls[i];
+				var sourceElement = document.createElement("source");
+				sourceElement.src = url;
+				if ((url.substr(url.length - 3, 3) === "m4v") || (url.substr(url.length - 3, 3) === "mp4"))
+				{
+					sourceElement.type = "video/mp4";
+				}
+				else if (url.substr(url.length - 3, 3) === "webm")
+				{
+					sourceElement.type = "vide/webm";
+				}
+				videoElement.appendChild(sourceElement);
+			}
 
-	        videoElement.load();
+			videoElement.load();
 
-	        var video = {
-	            getDurationMilliseconds: function ()
-	            {
-	                var seconds = this._video.duration;
-	                if (seconds !== seconds)
-	                {
-	                    seconds = 0;
-	                }
-	                if (!isFinite(seconds))
-	                {
-	                    return seconds;
-	                }
-	                return seconds * 1000;
-	            }
-	        };
-	        if (Object.defineProperty)
-	        {
-	            Object.defineProperty(video, "_video", {
-	                value: videoElement,
-	                writable: false,
-	                enumerable: false
-	            });
-	            Object.defineProperty(video, "_loaded", {
-	                value: false,
-	                writable: true,
-	                enumerable: false
-	            });
-	            Object.defineProperty(video, "width", {
-	                get: function ()
-	                {
-	                    return this._video.width;
-	                },
-	                enumerable: true
-	            });
-	            Object.defineProperty(video, "height", {
-	                get: function ()
-	                {
-	                    return this._video.height;
-	                },
-	                enumerable: true
-	            });
-	        }
-	        else
-	        {
-	            video._video = videoElement;
-	            video._loaded = false;
-	            video.width = 0;
-	            video.height = 0;
-	        }
+			var video = {
+				getDurationMilliseconds: function ()
+				{
+					var seconds = this._video.duration;
+					if (seconds !== seconds)
+					{
+						seconds = 0;
+					}
+					if (!isFinite(seconds))
+					{
+						return seconds;
+					}
+					return seconds * 1000;
+				}
+			};
+			if (Object.defineProperty)
+			{
+				Object.defineProperty(video, "_video", {
+					value: videoElement,
+					writable: false,
+					enumerable: false
+				});
+				Object.defineProperty(video, "_loaded", {
+					value: false,
+					writable: true,
+					enumerable: false
+				});
+				Object.defineProperty(video, "width", {
+					get: function ()
+					{
+						return this._video.width;
+					},
+					enumerable: true
+				});
+				Object.defineProperty(video, "height", {
+					get: function ()
+					{
+						return this._video.height;
+					},
+					enumerable: true
+				});
+			}
+			else
+			{
+				video._video = videoElement;
+				video._loaded = false;
+				video.width = 0;
+				video.height = 0;
+			}
 
-	        var $this = this;
-	        videoElement.oncanplay = function ()
-	        {
-	            video._loaded = true;
+			var $this = this;
+			videoElement.oncanplay = function ()
+			{
+				video._loaded = true;
 
-	            if (!Object.defineProperty)
-	            {
-	                video.height = video._video.height;
-	                video.width = video._video.width;
-	            }
+				if (!Object.defineProperty)
+				{
+					video.height = video._video.height;
+					video.width = video._video.width;
+				}
 
-	            for (var tUrl in $this._resources)
-	            {
-	                if (!$this._resources[tUrl]._loaded)
-	                {
-	                    return;
-	                }
-	            }
+				for (var tUrl in $this._resources)
+				{
+					if (!$this._resources[tUrl]._loaded)
+					{
+						return;
+					}
+				}
 
-	            $this._game._continueRun();
-	        };
-	        this._resources[urls] = video;
-	    }
-	    return this._resources[urls];
+				$this._game._continueRun();
+			};
+			this._resources[urls] = video;
+		}
+		return this._resources[urls];
 	};
 
 	//#endregion
@@ -1778,6 +1778,16 @@
 					writable: true,
 					enumerable: false
 				});
+				Object.defineProperty(this, "-previousMilliseconds", {
+				    value: 0,
+				    writable: true,
+				    enumerable: false
+				});
+				Object.defineProperty(this, "_updateFrameLag", {
+				    value: 0,
+				    writable: true,
+				    enumerable: false
+				});
 			}
 			else
 			{
@@ -1793,6 +1803,8 @@
 				this._accumulatedElapsedMilliseconds = 0;
 				this._timerId = null;
 				this._isExited = false;
+				this._previousMilliseconds = 0;
+				this._updateFrameLag = 0;
 			}
 
 			cstr.call(this);
@@ -1843,8 +1855,9 @@
 			return;
 		}
 
-		this._accumulatedElapsedMilliseconds += this._gameTimer.elapsedMilliseconds();
-		this._gameTimer.restart();
+		var currentMilliseconds = this._gameTimer.elapsedMilliseconds();
+		this._accumulatedElapsedMilliseconds = currentMilliseconds - this._previousMilliseconds;
+		this._previousMilliseconds = currentMilliseconds;
 
 		function continueTick()
 		{
@@ -1853,6 +1866,7 @@
 				return;
 			}
 
+		    // Do not allow any update to take longer than our maximum.
 			if (this._accumulatedElapsedMilliseconds > maxElapsedMilliseconds)
 			{
 				this._accumulatedElapsedMilliseconds = maxElapsedMilliseconds;
@@ -1863,26 +1877,51 @@
 				this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds;
 				var stepCount = 0;
 
-				this._gameTime.isRunningSlowly = this._accumulatedElapsedMilliseconds > this.targetElapsedMilliseconds;
-
+			    // Perform as many full fixed length time steps as we can.
 				while (this._accumulatedElapsedMilliseconds >= this.targetElapsedMilliseconds)
 				{
-					this._gameTime.totalGameMilliseconds += this.targetElapsedMilliseconds;
-					this._accumulatedElapsedMilliseconds -= this.targetElapsedMilliseconds;
+				    this._gameTime.totalGameMilliseconds += this.targetElapsedMilliseconds;
+				    this._accumulatedElapsedMilliseconds -= this.targetElapsedMilliseconds;
 
-					++stepCount;
+				    ++stepCount;
 
-					this.update(this._gameTime);
-					if (this._isExited)
-					{
-						return;
-					}
+				    this.update(this._gameTime);
+				    if (this._isExited)
+				    {
+				        return;
+				    }
 				}
 
-				this._gameTime.elapsedGameMilliseconds = stepCount * this.targetElapsedMilliseconds;
+			    //Every update after the first accumulates lag
+				this._updateFrameLag += Math.max(0, stepCount - 1);
+
+			    //If we think we are running slowly, wait until the lag clears before resetting it
+				if (this._gameTime.isRunningSlowly)
+				{
+				    if (this._updateFrameLag === 0)
+				    {
+				        this._gameTime.isRunningSlowly = false;
+				    }
+				}
+				else if (this._updateFrameLag >= 5)
+				{
+				    //If we lag more than 5 frames, start thinking we are running slowly
+				    this._gameTime.isRunningSlowly = true;
+				}
+
+			    //Every time we just do one update and one draw, then we are not running slowly, so decrease the lag
+				if ((stepCount === 1) && (this._updateFrameLag > 0))
+				{
+				    this._updateFrameLag--;
+				}
+
+			    // Draw needs to know the total elapsed time
+			    // that occurred for the fixed length updates.
+				this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds * stepCount;
 			}
 			else
 			{
+			    // Perform a single variable length update.
 				this._gameTime.elapsedGameMilliseconds = this._accumulatedElapsedMilliseconds;
 				this._gameTime.totalGameMilliseconds += this._accumulatedElapsedMilliseconds;
 				this._accumulatedElapsedMilliseconds = 0;
@@ -1895,6 +1934,7 @@
 				}
 			}
 
+		    // Draw unless the update suppressed it.
 			if (this._suppressDraw)
 			{
 				this._suppressDraw = false;
@@ -2462,15 +2502,15 @@
 			enumerable: false
 		});
 		Object.defineProperty(MediaPlayer, "state", {
-		    value: MediaState.Stopped,
-		    writable: true,
-		    enumerable: false
+			value: MediaState.Stopped,
+			writable: true,
+			enumerable: false
 		});
 	}
 	else
 	{
-	    MediaPlayer._song = null;
-	    MediaPlayer.state = MediaState.Stopped;
+		MediaPlayer._song = null;
+		MediaPlayer.state = MediaState.Stopped;
 	}
 
 	//#endregion
