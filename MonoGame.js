@@ -1923,6 +1923,7 @@
 					$this._tick();
 				}, $this.targetElapsedMilliseconds);
 			}, sleepTime);
+			return;
 		}
 
 		continueTick.call(this);
