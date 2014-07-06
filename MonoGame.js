@@ -1744,11 +1744,6 @@
 					writable: true,
 					enumerable: true
 				});
-				Object.defineProperty(this, "_gameMilliSeconds", {
-					value: 0,
-					writable: true,
-					enumerable: false
-				});
 				Object.defineProperty(this, "_gameTimer", {
 					value: new Stopwatch(),
 					writable: false,
