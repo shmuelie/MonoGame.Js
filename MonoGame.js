@@ -1746,7 +1746,7 @@
 				});
 				Object.defineProperty(this, "_gameTimer", {
 					value: null,
-					writable: false,
+					writable: true,
 					enumerable: false
 				});
 				Object.defineProperty(this, "_suppressDraw", {
