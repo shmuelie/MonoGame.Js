@@ -6,7 +6,8 @@ JavaScript game libary that is based on the XNA/MonoGame API
 The only "dependancies" on modern browsers the API takes is the HTML canvas 
 object, addEventListener function, and if you want to use Songs and sound 
 effects a dependancy on the audio tag too. Otherwise the code is valid 
-ECMAScript 3 code and should work if those two are pollyfilled.
+ECMAScript 3 code and should work if canvas and addEventListener are 
+pollyfilled.
 
 Clown.html contains both a game that is both an example of how to use 
 MonoGame.Js and is used as a basic test to make sure it works correctly.
