@@ -209,25 +209,8 @@
 
 	Framework.Point = function (x, y)
 	{
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "x", {
-				value: x,
-				writable: true,
-				enumerable: true,
-			});
-
-			Object.defineProperty(this, "y", {
-				value: y,
-				writable: true,
-				enumerable: true,
-			});
-		}
-		else
-		{
-			this.x = x;
-			this.y = y;
-		}
+		this.x = x;
+		this.y = y;
 	};
 	var Point = Framework.Point;
 
@@ -284,39 +267,10 @@
 
 	Framework.Rectangle = function (x, y, width, height)
 	{
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "x", {
-				value: x,
-				writable: true,
-				enumerable: true,
-			});
-
-			Object.defineProperty(this, "y", {
-				value: y,
-				writable: true,
-				enumerable: true,
-			});
-
-			Object.defineProperty(this, "width", {
-				value: width,
-				writable: true,
-				enumerable: true,
-			});
-
-			Object.defineProperty(this, "height", {
-				value: height,
-				writable: true,
-				enumerable: true,
-			});
-		}
-		else
-		{
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
-		}
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 	};
 	var Rectangle = Framework.Rectangle;
 
@@ -445,25 +399,8 @@
 			y = x;
 		}
 
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "x", {
-				value: x,
-				writable: true,
-				enumerable: true,
-			});
-
-			Object.defineProperty(this, "y", {
-				value: y,
-				writable: true,
-				enumerable: true,
-			});
-		}
-		else
-		{
-			this.x = x;
-			this.y = y;
-		}
+		this.x = x;
+		this.y = y;
 	};
 	var Vector2 = Framework.Vector2;
 
@@ -655,114 +592,25 @@
 
 	Framework.Matrix = function (m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44)
 	{
-		if (Object.defineProperties)
-		{
-			Object.defineProperty(Matrix, "m11", {
-				value: m11,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m12", {
-				value: m12,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m13", {
-				value: m13,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m14", {
-				value: m14,
-				writable: true,
-				enumerable: true,
-			});
+		this.m11 = m11;
+		this.m12 = m12;
+		this.m13 = m13;
+		this.m14 = m14;
 
-			Object.defineProperty(Matrix, "m21", {
-				value: m21,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m22", {
-				value: m22,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m23", {
-				value: m23,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m24", {
-				value: m24,
-				writable: true,
-				enumerable: true,
-			});
+		this.m21 = m21;
+		this.m22 = m22;
+		this.m23 = m23;
+		this.m24 = m24;
 
-			Object.defineProperty(Matrix, "m31", {
-				value: m31,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m32", {
-				value: m32,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m33", {
-				value: m33,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m34", {
-				value: m34,
-				writable: true,
-				enumerable: true,
-			});
+		this.m31 = m31;
+		this.m32 = m32;
+		this.m33 = m33;
+		this.m34 = m34;
 
-			Object.defineProperty(Matrix, "m41", {
-				value: m41,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m42", {
-				value: m42,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m43", {
-				value: m43,
-				writable: true,
-				enumerable: true,
-			});
-			Object.defineProperty(Matrix, "m44", {
-				value: m44,
-				writable: true,
-				enumerable: true,
-			});
-		}
-		else
-		{
-			this.m11 = m11;
-			this.m12 = m12;
-			this.m13 = m13;
-			this.m14 = m14;
-
-			this.m21 = m21;
-			this.m22 = m22;
-			this.m23 = m23;
-			this.m24 = m24;
-
-			this.m31 = m31;
-			this.m32 = m32;
-			this.m33 = m33;
-			this.m34 = m34;
-
-			this.m41 = m41;
-			this.m42 = m42;
-			this.m43 = m43;
-			this.m44 = m44;
-		}
+		this.m41 = m41;
+		this.m42 = m42;
+		this.m43 = m43;
+		this.m44 = m44;
 	};
 	var Matrix = Framework.Matrix;
 
@@ -1028,6 +876,7 @@
 
 	Framework.Stopwatch = function ()
 	{
+		this.isRunning = false;
 		if (Object.defineProperty)
 		{
 			Object.defineProperty(this, "_startTime", {
@@ -1035,16 +884,11 @@
 				writable: true,
 				enumerable: false
 			});
-			Object.defineProperty(this, "isRunning", {
-				value: false,
-				writable: true,
-				enumerable: true
-			});
 		}
 		else
 		{
 			this._startTime = MIN_DATE;
-			this.isRunning = false;
+			
 		}
 	};
 	var Stopwatch = Framework.Stopwatch;
@@ -1732,18 +1576,10 @@
 	{
 		function realGameConstructor()
 		{
+			this.isFixedTimeStep = true;
+			this.targetElapsedMilliseconds = 100;
 			if (Object.defineProperty)
 			{
-				Object.defineProperty(this, "isFixedTimeStep", {
-					value: true,
-					writable: true,
-					enumerable: true
-				});
-				Object.defineProperty(this, "targetElapsedMilliseconds", {
-					value: 100,
-					writable: true,
-					enumerable: true
-				});
 				Object.defineProperty(this, "_gameTimer", {
 					value: null,
 					writable: true,
@@ -1791,8 +1627,6 @@
 			}
 			else
 			{
-				this.isFixedTimeStep = true;
-				this.targetElapsedMilliseconds = 100;
 				this._gameTime = {
 					totalGameMilliseconds: 0,
 					elapsedGameMilliseconds: 0,
