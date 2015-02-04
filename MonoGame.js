@@ -1838,6 +1838,14 @@
 		this.graphics.graphicsDevice.setRenderTarget(null);
 		this.initialize();
 		this.loadContent();
+		for (var tUrl in this.content._resources)
+		{
+		    if (!this.content._resources[tUrl]._loaded)
+		    {
+		        return;
+		    }
+		}
+		this._continueRun();
 	};
 
 	Game.prototype._continueRun = function ()
