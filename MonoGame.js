@@ -52,60 +52,13 @@
 	Framework.MathHelper = {};
 	var MathHelper = Framework.MathHelper;
 
-	if (Object.defineProperty)
-	{
-		Object.defineProperty(MathHelper, "E", {
-			value: Math.E,
-			writable: false,
-			enumerable: true
-		});
-
-		Object.defineProperty(MathHelper, "Log10E", {
-			value: 0.4342945,
-			writable: false,
-			enumerable: true
-		});
-
-		Object.defineProperty(MathHelper, "Log2E", {
-			value: 1.442695,
-			writable: false,
-			enumerable: true
-		});
-
-		Object.defineProperty(MathHelper, "Pi", {
-			value: Math.PI,
-			writable: false,
-			enumerable: true
-		});
-
-		Object.defineProperty(MathHelper, "PiOver2", {
-			value: Math.PI / 2,
-			writable: false,
-			enumerable: true
-		});
-
-		Object.defineProperty(MathHelper, "PiOver4", {
-			value: Math.PI / 4,
-			writable: false,
-			enumerable: true
-		});
-
-		Object.defineProperty(MathHelper, "TwoPi", {
-			value: 2 * Math.PI,
-			writable: false,
-			enumerable: true
-		});
-	}
-	else
-	{
-		MathHelper.E = Math.E;
-		MathHelper.Log10E = 0.4342945;
-		MathHelper.Log2E = 1.442695;
-		MathHelper.Pi = Math.PI;
-		MathHelper.PiOver2 = Math.PI / 2;
-		MathHelper.PiOver4 = Math.PI / 4;
-		MathHelper.TwoPi = Math.PI * 2;
-	}
+	MathHelper.E = Math.E;
+	MathHelper.Log10E = 0.4342945;
+	MathHelper.Log2E = 1.442695;
+	MathHelper.Pi = Math.PI;
+	MathHelper.PiOver2 = Math.PI / 2;
+	MathHelper.PiOver4 = Math.PI / 4;
+	MathHelper.TwoPi = Math.PI * 2;
 
 	MathHelper.barycentric = function (value1, value2, value3, amount1, amount2)
 	{
@@ -214,22 +167,7 @@
 	};
 	var Point = Framework.Point;
 
-	var Point_zeroPoint = new Point(0, 0);
-
-	if (Object.defineProperty)
-	{
-		Object.defineProperty(Point, "zero", {
-			get: function ()
-			{
-				return Point_zeroPoint;
-			},
-			enumerable: true
-		});
-	}
-	else
-	{
-		Point.zero = Point_zeroPoint;
-	}
+	Point.zero = new Point(0, 0);
 
 	Point.prototype.add = function (other)
 	{
@@ -274,22 +212,7 @@
 	};
 	var Rectangle = Framework.Rectangle;
 
-	var Rectangle_emptyRectangle = new Rectangle(0, 0, 0, 0);
-
-	if (Object.defineProperty)
-	{
-		Object.defineProperty(Rectangle, "empty", {
-			get: function ()
-			{
-				return Rectangle_emptyRectangle;
-			},
-			enumerable: true,
-		});
-	}
-	else
-	{
-		Rectangle.empty = Rectangle_emptyRectangle;
-	}
+	Rectangle.empty = new Rectangle(0, 0, 0, 0);
 
 	Rectangle.prototype.equals = function (obj)
 	{
@@ -404,52 +327,10 @@
 	};
 	var Vector2 = Framework.Vector2;
 
-	var Vector2_zeroVector = new Vector2(0);
-	var Vector2_unitVector = new Vector2(1);
-	var Vector2_unitXVector = new Vector2(1, 0);
-	var Vector2_unitYVector = new Vector2(0, 1);
-
-	if (Object.defineProperty)
-	{
-		Object.defineProperty(Vector2, "zero", {
-			get: function ()
-			{
-				return Vector2_zeroVector;
-			},
-			enumerable: true
-		});
-
-		Object.defineProperty(Vector2, "unitVector", {
-			get: function ()
-			{
-				return Vector2_unitVector;
-			},
-			enumerable: true
-		});
-
-		Object.defineProperty(Vector2, "unitXVector", {
-			get: function ()
-			{
-				return Vector2_unitXVector;
-			},
-			enumerable: true
-		});
-
-		Object.defineProperty(Vector2, "unitYVector", {
-			get: function ()
-			{
-				return Vector2_unitYVector;
-			},
-			enumerable: true
-		});
-	}
-	else
-	{
-		Vector2.zero = Vector2_zeroVector;
-		Vector2.unitVector = Vector2_unitVector;
-		Vector2.unitXVector = Vector2_unitXVector;
-		Vector2.unitYVector = Vector2_unitYVector;
-	}
+	Vector2.zero = new Vector2(0);
+	Vector2.unitVector = new Vector2(1);
+	Vector2.unitXVector = new Vector2(1, 0);
+	Vector2.unitYVector = new Vector2(0, 1);
 
 	Vector2.prototype.negate = function ()
 	{
@@ -614,25 +495,10 @@
 	};
 	var Matrix = Framework.Matrix;
 
-	var Matrix_identity = new Matrix(1, 0, 0, 0,
+	Matrix.identity = new Matrix(1, 0, 0, 0,
 									 0, 1, 0, 0,
 									 0, 0, 1, 0,
 									 0, 0, 0, 1);
-
-	if (Object.defineProperties)
-	{
-		Object.defineProperty(Matrix, "identity", {
-			get: function ()
-			{
-				return Matrix_identity;
-			},
-			enumerable: true
-		});
-	}
-	else
-	{
-		Matrix.identity = Matrix_identity;
-	}
 
 	Matrix.add = function (matrix1, matrix2)
 	{
@@ -877,19 +743,7 @@
 	Framework.Stopwatch = function ()
 	{
 		this.isRunning = false;
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "_startTime", {
-				value: MIN_DATE,
-				writable: true,
-				enumerable: false
-			});
-		}
-		else
-		{
-			this._startTime = MIN_DATE;
-			
-		}
+		this._startTime = MIN_DATE;
 	};
 	var Stopwatch = Framework.Stopwatch;
 
@@ -943,20 +797,7 @@
 	Graphics.RenderTarget2D = function ()
 	{
 		var canvas = document.createElement("canvas");
-		var context = canvas.getContext("2d");
-
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "_context", {
-				value: context,
-				writable: false,
-				enumerable: false
-			});
-		}
-		else
-		{
-			this._context = context;
-		}
+		this._context = canvas.getContext("2d");
 	};
 
 	//#endregion 
@@ -965,30 +806,9 @@
 
 	Framework.ContentManager = function (context, game)
 	{
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "_context", {
-				value: context,
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "_resources", {
-				value: {},
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "_game", {
-				value: game,
-				writable: false,
-				enumerable: false
-			});
-		}
-		else
-		{
-			this._context = context;
-			this._resources = {};
-			this._game = game;
-		}
+	    this._context = context;
+	    this._resources = {};
+	    this._game = game;
 	};
 	var ContentManager = Framework.ContentManager;
 
@@ -998,49 +818,17 @@
 		{
 			var img = new Image();
 			img.src = url;
-			var texture2D = {};
-			if (Object.defineProperty)
-			{
-				Object.defineProperty(texture2D, "width", {
-					get: function ()
-					{
-						return img.width;
-					},
-					enumerable: true
-				});
-				Object.defineProperty(texture2D, "height", {
-					get: function ()
-					{
-						return img.height;
-					},
-					enumerable: true
-				});
-				Object.defineProperty(texture2D, "_img", {
-					value: img,
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(texture2D, "_loaded", {
-					value: false,
-					writable: true,
-					enumerable: false
-				});
-			}
-			else
-			{
-				texture2D.width = img.width;
-				texture2D.height = img.height;
-				texture2D._img = img;
-				texture2D._loaded = false;
-			}
+			var texture2D = {
+			    width: img.width,
+			    height: img.height,
+			    _img: img,
+                _loaded: false
+			};
 			var $this = this;
 			img.onload = function ()
 			{
-				if (!Object.defineProperties)
-				{
-					texture2D.height = img.height;
-					texture2D.width = img.width;
-				}
+			    texture2D.height = img.height;
+			    texture2D.width = img.width;
 				texture2D._loaded = true;
 
 				for (var tUrl in $this._resources)
@@ -1073,19 +861,9 @@
 
 		style += size + " " + name;
 
-		var spriteFont = {};
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(spriteFont, "_font", {
-				value: style,
-				writable: false,
-				enumerable: false
-			});
-		}
-		else
-		{
-			spriteFont._font = style;
-		}
+		var spriteFont = {
+            _font: style
+        };
 		var $this = this;
 		spriteFont.measureString = function (text)
 		{
@@ -1172,24 +950,8 @@
 
 			var audioElement = loadAudio(urls, this, soundEffect);
 
-			if (Object.defineProperty)
-			{
-				Object.defineProperty(soundEffect, "_audio", {
-					value: audioElement,
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(soundEffect, "_loaded", {
-					value: false,
-					writable: true,
-					enumerable: false
-				});
-			}
-			else
-			{
-				soundEffect._audio = audioElement;
-				soundEffect._loaded = false;
-			}
+			soundEffect._audio = audioElement;
+			soundEffect._loaded = false;
 			this._resources[urls] = soundEffect;
 		}
 		return this._resources[urls];
@@ -1222,24 +984,8 @@
 
 			var audioElement = loadAudio(urls, this, song);
 
-			if (Object.defineProperty)
-			{
-				Object.defineProperty(song, "_audio", {
-					value: audioElement,
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(song, "_loaded", {
-					value: false,
-					writable: true,
-					enumerable: false
-				});
-			}
-			else
-			{
-				song._audio = audioElement;
-				song._loaded = false;
-			}
+			song._audio = audioElement;
+			song._loaded = false;
 			this._resources[urls] = song;
 		}
 		return this._resources[urls];
@@ -1290,53 +1036,20 @@
 						return seconds;
 					}
 					return seconds * 1000;
-				}
+				},
+				_video: videoElement,
+				_loaded: false,
+				width: 0,
+                height: 0
 			};
-			if (Object.defineProperty)
-			{
-				Object.defineProperty(video, "_video", {
-					value: videoElement,
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(video, "_loaded", {
-					value: false,
-					writable: true,
-					enumerable: false
-				});
-				Object.defineProperty(video, "width", {
-					get: function ()
-					{
-						return this._video.width;
-					},
-					enumerable: true
-				});
-				Object.defineProperty(video, "height", {
-					get: function ()
-					{
-						return this._video.height;
-					},
-					enumerable: true
-				});
-			}
-			else
-			{
-				video._video = videoElement;
-				video._loaded = false;
-				video.width = 0;
-				video.height = 0;
-			}
 
 			var $this = this;
 			videoElement.oncanplay = function ()
 			{
 				video._loaded = true;
 
-				if (!Object.defineProperty)
-				{
-					video.height = video._video.height;
-					video.width = video._video.width;
-				}
+				video.height = video._video.height;
+				video.width = video._video.width;
 
 				for (var tUrl in $this._resources)
 				{
@@ -1360,66 +1073,13 @@
 	Graphics.GraphicsDevice = function (manager, canvas)
 	{
 		var clientBounds = canvas.getBoundingClientRect();
-		var viewport = {};
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "_manager", {
-				value: manager,
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "_currentDraw", {
-				value: manager._game._display,
-				writable: true,
-				enumerable: false
-			});
-			Object.defineProperty(viewport, "x", {
-				get: function ()
-				{
-					var xclientBounds = canvas.getBoundingClientRect();
-					return xclientBounds.left;
-				},
-				enumerable: false
-			});
-			Object.defineProperty(viewport, "y", {
-				get: function ()
-				{
-					var yclientBounds = canvas.getBoundingClientRect();
-					return yclientBounds.top;
-				},
-				enumerable: false
-			});
-			Object.defineProperty(viewport, "width", {
-				get: function ()
-				{
-					var widthclientBounds = canvas.getBoundingClientRect();
-					return widthclientBounds.right - widthclientBounds.left;
-				},
-				enumerable: false
-			});
-			Object.defineProperty(viewport, "height", {
-				get: function ()
-				{
-					var heightclientBounds = canvas.getBoundingClientRect();
-					return heightclientBounds.bottom - heightclientBounds.top;
-				},
-				enumerable: false
-			});
-			Object.defineProperty(this, "viewport", {
-				value: viewport,
-				writable: false,
-				enumerable: true
-			});
-		}
-		else
-		{
-			this._manager = manager;
-			this._currentDraw = manager._game._display;
-			viewport.x = clientBounds.left;
-			viewport.y = clientBounds.top;
-			viewport.width = clientBounds.right - clientBounds.left;
-			viewport.height = clientBounds.bottom - clientBounds.top;
-			this.viewport = viewport;
+		this._manager = manager;
+		this._currentDraw = manager._game._display;
+		this.viewport = {
+		    x: clientBounds.left,
+		    y: clientBounds.top,
+		    width: clientBounds.right - clientBounds.left,
+            height: clientBounds.bottom - clientBounds.top
 		}
 	}
 	var GraphicsDevice = Graphics.GraphicsDevice;
@@ -1447,24 +1107,8 @@
 
 	Framework.GraphicsDeviceManager = function (game, canvas)
 	{
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "_game", {
-				value: game,
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "graphicsDevice", {
-				value: new GraphicsDevice(this, canvas),
-				writable: false,
-				enumerable: false
-			});
-		}
-		else
-		{
-			this._game = game;
-			this.graphicsDevice = new GraphicsDevice(this, canvas);
-		}
+	    this._game = game;
+	    this.graphicsDevice = new GraphicsDevice(this, canvas);
 	};
 	var GraphicsDeviceManager = Framework.GraphicsDeviceManager;
 
@@ -1474,24 +1118,8 @@
 
 	Graphics.SpriteBatch = function (graphicsDevice)
 	{
-		if (Object.defineProperty)
-		{
-			Object.defineProperty(this, "_graphicsDevice", {
-				value: graphicsDevice,
-				writable: false,
-				enumerable: false
-			});
-			Object.defineProperty(this, "_drawing", {
-				value: false,
-				writable: true,
-				enumerable: false
-			});
-		}
-		else
-		{
-			this._graphicsDevice = graphicsDevice;
-			this._drawing = false;
-		}
+	    this._graphicsDevice = graphicsDevice;
+	    this._drawing = false;
 	};
 	var SpriteBatch = Graphics.SpriteBatch;
 
@@ -1578,68 +1206,18 @@
 		{
 			this.isFixedTimeStep = true;
 			this.targetElapsedMilliseconds = 100;
-			if (Object.defineProperty)
-			{
-				Object.defineProperty(this, "_gameTimer", {
-					value: null,
-					writable: true,
-					enumerable: false
-				});
-				Object.defineProperty(this, "_suppressDraw", {
-					value: false,
-					writable: true,
-					enumerable: false
-				});
-				Object.defineProperty(this, "_accumulatedElapsedMilliseconds", {
-					value: 0,
-					writable: true,
-					enumerable: false
-				});
-				Object.defineProperty(this, "_timerId", {
-					value: null,
-					writable: true,
-					enumerable: false
-				});
-				Object.defineProperty(this, "_gameTime", {
-					value: {
-						totalGameMilliseconds: 0,
-						elapsedGameMilliseconds: 0,
-						isRunningSlowly: false
-					},
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(this, "_isExited", {
-					value: false,
-					writable: true,
-					enumerable: false
-				});
-				Object.defineProperty(this, "-previousMilliseconds", {
-				    value: 0,
-				    writable: true,
-				    enumerable: false
-				});
-				Object.defineProperty(this, "_updateFrameLag", {
-				    value: 0,
-				    writable: true,
-				    enumerable: false
-				});
-			}
-			else
-			{
-				this._gameTime = {
-					totalGameMilliseconds: 0,
-					elapsedGameMilliseconds: 0,
-					isRunningSlowly: false
-				};
-				this._gameTimer = null;
-				this._suppressDraw = false;
-				this._accumulatedElapsedMilliseconds = 0;
-				this._timerId = null;
-				this._isExited = false;
-				this._previousMilliseconds = 0;
-				this._updateFrameLag = 0;
-			}
+			this._gameTime = {
+			    totalGameMilliseconds: 0,
+			    elapsedGameMilliseconds: 0,
+			    isRunningSlowly: false
+			};
+			this._gameTimer = null;
+			this._suppressDraw = false;
+			this._accumulatedElapsedMilliseconds = 0;
+			this._timerId = null;
+			this._isExited = false;
+			this._previousMilliseconds = 0;
+			this._updateFrameLag = 0;
 
 			cstr.call(this);
 		}
@@ -1803,36 +1381,10 @@
 	{
 		if (this._display === undefined)
 		{
-			if (Object.defineProperty)
-			{
-				Object.defineProperty(this, "_display", {
-					value: context,
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(this, "content", {
-					value: new ContentManager(context, this),
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(this, "graphics", {
-					value: new GraphicsDeviceManager(this, context.canvas),
-					writable: false,
-					enumerable: false
-				});
-				Object.defineProperty(this, "spriteBatch", {
-					value: new SpriteBatch(this.graphics.graphicsDevice),
-					writable: false,
-					enumerable: false
-				});
-			}
-			else
-			{
-				this._display = context;
-				this.content = new ContentManager(context, this);
-				this.graphics = new GraphicsDeviceManager(this, context.canvas);
-				this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
-			}
+		    this._display = context;
+		    this.content = new ContentManager(context, this);
+		    this.graphics = new GraphicsDeviceManager(this, context.canvas);
+		    this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice);
 		}
 		this._gameTimer = Stopwatch.StartNew();
 		this.graphics.graphicsDevice.setRenderTarget(null);
@@ -2338,24 +1890,8 @@
 	};
 	var MediaPlayer = Media.MediaPlayer;
 
-	if (Object.defineProperty)
-	{
-		Object.defineProperty(MediaPlayer, "_song", {
-			value: null,
-			writable: true,
-			enumerable: false
-		});
-		Object.defineProperty(MediaPlayer, "state", {
-			value: MediaState.Stopped,
-			writable: true,
-			enumerable: false
-		});
-	}
-	else
-	{
-		MediaPlayer._song = null;
-		MediaPlayer.state = MediaState.Stopped;
-	}
+	MediaPlayer._song = null;
+	MediaPlayer.state = MediaState.Stopped;
 
 	//#endregion
 })();
