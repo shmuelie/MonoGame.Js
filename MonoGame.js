@@ -1269,94 +1269,8 @@
 		}
 
 		var currentMilliseconds = this._gameTimer.elapsedMilliseconds();
-		this._accumulatedElapsedMilliseconds = currentMilliseconds - this._previousMilliseconds;
+		this._accumulatedElapsedMilliseconds += currentMilliseconds - this._previousMilliseconds;
 		this._previousMilliseconds = currentMilliseconds;
-
-		function continueTick()
-		{
-			if (this._isExited)
-			{
-				return;
-			}
-
-		    // Do not allow any update to take longer than our maximum.
-			if (this._accumulatedElapsedMilliseconds > maxElapsedMilliseconds)
-			{
-				this._accumulatedElapsedMilliseconds = maxElapsedMilliseconds;
-			}
-
-			if (this.isFixedTimeStep)
-			{
-				this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds;
-				var stepCount = 0;
-
-			    // Perform as many full fixed length time steps as we can.
-				while (this._accumulatedElapsedMilliseconds >= this.targetElapsedMilliseconds)
-				{
-				    this._gameTime.totalGameMilliseconds += this.targetElapsedMilliseconds;
-				    this._accumulatedElapsedMilliseconds -= this.targetElapsedMilliseconds;
-
-				    ++stepCount;
-
-				    this.update(this._gameTime);
-				    if (this._isExited)
-				    {
-				        return;
-				    }
-				}
-
-			    //Every update after the first accumulates lag
-				this._updateFrameLag += Math.max(0, stepCount - 1);
-
-			    //If we think we are running slowly, wait until the lag clears before resetting it
-				if (this._gameTime.isRunningSlowly)
-				{
-				    if (this._updateFrameLag === 0)
-				    {
-				        this._gameTime.isRunningSlowly = false;
-				    }
-				}
-				else if (this._updateFrameLag >= 5)
-				{
-				    //If we lag more than 5 frames, start thinking we are running slowly
-				    this._gameTime.isRunningSlowly = true;
-				}
-
-			    //Every time we just do one update and one draw, then we are not running slowly, so decrease the lag
-				if ((stepCount === 1) && (this._updateFrameLag > 0))
-				{
-				    this._updateFrameLag--;
-				}
-
-			    // Draw needs to know the total elapsed time
-			    // that occurred for the fixed length updates.
-				this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds * stepCount;
-			}
-			else
-			{
-			    // Perform a single variable length update.
-				this._gameTime.elapsedGameMilliseconds = this._accumulatedElapsedMilliseconds;
-				this._gameTime.totalGameMilliseconds += this._accumulatedElapsedMilliseconds;
-				this._accumulatedElapsedMilliseconds = 0;
-				this._gameTime.isRunningSlowly = false;
-
-				this.update(this._gameTime);
-				if (this._isExited)
-				{
-					return;
-				}
-			}
-
-		    // Draw unless the update suppressed it.
-			if (this._suppressDraw)
-			{
-				this._suppressDraw = false;
-			}
-			else
-			{
-				this.draw(this._gameTime);
-			}
-		}
 
 		if (this.isFixedTimeStep && (this._accumulatedElapsedMilliseconds < this.targetElapsedMilliseconds))
 		{
@@ -1365,7 +1279,7 @@
 			var $this = this;
 			window.setTimeout(function ()
 			{
-				continueTick.call($this)
+			    $this._tick.call($this);
 				$this._timerId = window.setInterval(function ()
 				{
 					$this._tick();
@@ -1374,7 +1288,83 @@
 			return;
 		}
 
-		continueTick.call(this);
+	    // Do not allow any update to take longer than our maximum.
+		if (this._accumulatedElapsedMilliseconds > maxElapsedMilliseconds)
+		{
+		    this._accumulatedElapsedMilliseconds = maxElapsedMilliseconds;
+		}
+
+		if (this.isFixedTimeStep)
+		{
+		    this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds;
+		    var stepCount = 0;
+
+		    // Perform as many full fixed length time steps as we can.
+		    while (this._accumulatedElapsedMilliseconds >= this.targetElapsedMilliseconds)
+		    {
+		        this._gameTime.totalGameMilliseconds += this.targetElapsedMilliseconds;
+		        this._accumulatedElapsedMilliseconds -= this.targetElapsedMilliseconds;
+
+		        ++stepCount;
+
+		        this.update(this._gameTime);
+		        if (this._isExited)
+		        {
+		            return;
+		        }
+		    }
+
+		    //Every update after the first accumulates lag
+		    this._updateFrameLag += Math.max(0, stepCount - 1);
+
+		    //If we think we are running slowly, wait until the lag clears before resetting it
+		    if (this._gameTime.isRunningSlowly)
+		    {
+		        if (this._updateFrameLag === 0)
+		        {
+		            this._gameTime.isRunningSlowly = false;
+		        }
+		    }
+		    else if (this._updateFrameLag >= 5)
+		    {
+		        //If we lag more than 5 frames, start thinking we are running slowly
+		        this._gameTime.isRunningSlowly = true;
+		    }
+
+		    //Every time we just do one update and one draw, then we are not running slowly, so decrease the lag
+		    if ((stepCount === 1) && (this._updateFrameLag > 0))
+		    {
+		        this._updateFrameLag--;
+		    }
+
+		    // Draw needs to know the total elapsed time
+		    // that occurred for the fixed length updates.
+		    this._gameTime.elapsedGameMilliseconds = this.targetElapsedMilliseconds * stepCount;
+		}
+		else
+		{
+		    // Perform a single variable length update.
+		    this._gameTime.elapsedGameMilliseconds = this._accumulatedElapsedMilliseconds;
+		    this._gameTime.totalGameMilliseconds += this._accumulatedElapsedMilliseconds;
+		    this._accumulatedElapsedMilliseconds = 0;
+		    this._gameTime.isRunningSlowly = false;
+
+		    this.update(this._gameTime);
+		    if (this._isExited)
+		    {
+		        return;
+		    }
+		}
+
+	    // Draw unless the update suppressed it.
+		if (this._suppressDraw)
+		{
+		    this._suppressDraw = false;
+		}
+		else
+		{
+		    this.draw(this._gameTime);
+		}
 	};
 
 	Game.prototype.run = function (context)
