@@ -111,7 +111,7 @@
                 this._balloons.length = 0;
 
                 var rows = 3;
-                var columns = 21;
+                var columns = 17;
                 var columnSpacing = 36;
                 var rowSpacing = 40;
                 var leftMargin = 20;
@@ -162,108 +162,119 @@
                     this.exit();
                 }
 
-                var newPosition = (new Vector2(this._clownArea.x, this._clownArea.y)).add(this._clownVelocity.multiply(gameTime.elapsedGameMilliseconds / 1000));
-                this._clownArea.x = Math.round(newPosition.x);
-                this._clownArea.y = Math.round(newPosition.y);
-
-
-                var mouseState = Mouse.getState();
-                var modifier = this._trampolinePosition.x + (this._trampolineTexture.width / 2);
-                if (keyboarState.isKeyDown(Keys.K))
+                if (this._balloons.length > 0)
                 {
-                    if (keyboarState.isKeyDown(Keys.Left) && keyboarState.isKeyUp(Keys.Right))
+                    var newPosition = (new Vector2(this._clownArea.x, this._clownArea.y)).add(this._clownVelocity.multiply(gameTime.elapsedGameMilliseconds / 1000));
+                    this._clownArea.x = Math.round(newPosition.x);
+                    this._clownArea.y = Math.round(newPosition.y);
+
+
+                    var mouseState = Mouse.getState();
+                    var modifier = this._trampolinePosition.x + (this._trampolineTexture.width / 2);
+                    if (keyboarState.isKeyDown(Keys.K))
                     {
-                        modifier -= 20;
+                        if (keyboarState.isKeyDown(Keys.Left) && keyboarState.isKeyUp(Keys.Right))
+                        {
+                            modifier -= 20;
+                        }
+                        else if (keyboarState.isKeyDown(Keys.Right) && keyboarState.isKeyUp(Keys.Left))
+                        {
+                            modifier += 20;
+                        }
                     }
-                    else if (keyboarState.isKeyDown(Keys.Right) && keyboarState.isKeyUp(Keys.Left))
+                    else
                     {
-                        modifier += 20;
+                        modifier = mouseState.x;
                     }
-                }
-                else
-                {
-                    modifier = mouseState.x;
-                }
-                this._trampolinePosition.x = Math.min(this._screenSize.width - (this._trampolineTexture.width / 2), Math.max((this._trampolineTexture.width / 2), modifier)) - (this._trampolineTexture.width / 2);
+                    this._trampolinePosition.x = Math.min(this._screenSize.width - (this._trampolineTexture.width / 2), Math.max((this._trampolineTexture.width / 2), modifier)) - (this._trampolineTexture.width / 2);
 
-                var MaxX = this._screenSize.width - this._clownArea.width;
-                var MinX = 0;
-                var MaxY = this._screenSize.height - this._clownArea.height;
-                var MinY = 0;
+                    var MaxX = this._screenSize.width - this._clownArea.width;
+                    var MinX = 0;
+                    var MaxY = this._screenSize.height - this._clownArea.height;
+                    var MinY = 0;
 
-                if (this._clownArea.x > MaxX)
-                {
-                    this._clownVelocity.x *= -1;
-                    this._clownArea.x = MaxX;
-                }
-                else if (this._clownArea.x < MinX)
-                {
-                    this._clownVelocity.x *= -1;
-                    this._clownArea.x = MinX;
-                }
-
-                if (this._clownArea.y > MaxY)
-                {
-                    var newY = 515 * Math.sin(MathHelper.toRadians(90.0));
-                    var newX = 515 * Math.cos(MathHelper.toRadians(90.0));
-                    this._clownVelocity.x = newX;
-                    this._clownVelocity.y = newY;
-
-                    this._clownVelocity.y *= -1;
-                    this._clownArea.y = MaxY;
-
-                    this._score = Math.max(0, this._score - 50);
-                }
-                else if (this._clownArea.y < MinY)
-                {
-                    this._clownVelocity.y *= -1;
-                    this._clownArea.y = MinY;
-                }
-
-                var trampolineRectangle = new Rectangle(this._trampolinePosition.x, this._trampolinePosition.y, this._trampolineTexture.width, this._trampolineTexture.height);
-
-                if (trampolineRectangle.intersects(this._clownArea))
-                {
-                    var angle = this._clownArea.center().x - trampolineRectangle.center().x + 90;
-
-                    var newY = 800 * Math.sin(MathHelper.toRadians(angle));
-                    var newX = 800 * Math.cos(MathHelper.toRadians(angle));
-                    this._clownVelocity.x = newX;
-                    this._clownVelocity.y = newY;
-
-                    this._clownVelocity.y *= -1;
-                    this._clownArea.y = Math.round(this._trampolinePosition.y - this._clownArea.height);
-
-                    this._bounce.play();
-                }
-
-                for (var i = 0; i < this._balloons.length; i++)
-                {
-                    if (this._clownArea.intersects(this._balloons[i].boundingBox()))
+                    if (this._clownArea.x > MaxX)
                     {
-                        this._score += this._balloons[i].color * 10 + 10;
-                        this._balloons.splice(i, 1);
                         this._clownVelocity.x *= -1;
-                        this._clownVelocity.y *= -1;
-                        this._pop.play();
-                        break;
+                        this._clownArea.x = MaxX;
                     }
-                }
+                    else if (this._clownArea.x < MinX)
+                    {
+                        this._clownVelocity.x *= -1;
+                        this._clownArea.x = MinX;
+                    }
 
-                Balloon.updateAnimation(gameTime);
+                    if (this._clownArea.y > MaxY)
+                    {
+                        var newY = 515 * Math.sin(MathHelper.toRadians(90.0));
+                        var newX = 515 * Math.cos(MathHelper.toRadians(90.0));
+                        this._clownVelocity.x = newX;
+                        this._clownVelocity.y = newY;
+
+                        this._clownVelocity.y *= -1;
+                        this._clownArea.y = MaxY;
+
+                        this._score = Math.max(0, this._score - 50);
+                    }
+                    else if (this._clownArea.y < MinY)
+                    {
+                        this._clownVelocity.y *= -1;
+                        this._clownArea.y = MinY;
+                    }
+
+                    var trampolineRectangle = new Rectangle(this._trampolinePosition.x, this._trampolinePosition.y, this._trampolineTexture.width, this._trampolineTexture.height);
+
+                    if (trampolineRectangle.intersects(this._clownArea))
+                    {
+                        var angle = this._clownArea.center().x - trampolineRectangle.center().x + 90;
+
+                        var newY = 800 * Math.sin(MathHelper.toRadians(angle));
+                        var newX = 800 * Math.cos(MathHelper.toRadians(angle));
+                        this._clownVelocity.x = newX;
+                        this._clownVelocity.y = newY;
+
+                        this._clownVelocity.y *= -1;
+                        this._clownArea.y = Math.round(this._trampolinePosition.y - this._clownArea.height);
+
+                        this._bounce.play();
+                    }
+
+                    for (var i = 0; i < this._balloons.length; i++)
+                    {
+                        if (this._clownArea.intersects(this._balloons[i].boundingBox()))
+                        {
+                            this._score += this._balloons[i].color * 10 + 10;
+                            this._balloons.splice(i, 1);
+                            this._clownVelocity.x *= -1;
+                            this._clownVelocity.y *= -1;
+                            this._pop.play();
+                            break;
+                        }
+                    }
+
+                    Balloon.updateAnimation(gameTime);
+
+                    this._clownAnimation.update(gameTime);
+                    this._clownVelocity.y += 15.0;
+                }
 
                 this._backgroundAnimation.update(gameTime);
-                this._clownAnimation.update(gameTime);
-                this._clownVelocity.y  += 15.0;
             };
 
             ClownGame.prototype.draw = function (gameTime)
             {
                 this.spriteBatch.begin();
                 this.spriteBatch.draw(this._backgroundTexture, this._screenSize, this._backgroundAnimation.currentFrame());
-                this.spriteBatch.draw(this._clownSpriteSheet, new Vector2(this._clownArea.x, this._clownArea.y), this._clownAnimation.currentFrame());
-                this.spriteBatch.draw(this._trampolineTexture, this._trampolinePosition);
-                this.spriteBatch.drawString(this._scoreFont, "Score: " + this._score, new Vector2(450.0, 150.0), "black");
+                if (this._balloons.length > 0)
+                {
+                    this.spriteBatch.draw(this._clownSpriteSheet, new Vector2(this._clownArea.x, this._clownArea.y), this._clownAnimation.currentFrame());
+                    this.spriteBatch.draw(this._trampolineTexture, this._trampolinePosition);
+                    this.spriteBatch.drawString(this._scoreFont, "Score: " + this._score, new Vector2(450.0, 150.0), "black");
+                }
+                else
+                {
+                    this.spriteBatch.drawString(this._scoreFont, "Final Score: " + this._score, new Vector2(20.0, 150.0), "black");
+                }
                 
                 for (var i = 0; i < this._balloons.length; i++)
                 {
