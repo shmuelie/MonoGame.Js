@@ -84,18 +84,17 @@
 
 	MathHelper.hermite = function (value1, tangent1, value2, tangent2, amount)
 	{
+	    switch (amount)
+	    {
+	        case 0:
+	            return value1;
+	        case 1:
+	            return value2;
+	    }
+
 		var v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount;
 		var sCubed = s * s * s;
 		var sSquared = s * s;
-
-		if (amount === 0)
-		{
-			return value1;
-		}
-		else if (amount === 1)
-		{
-			return value2;
-		}
 		return (2 * v1 - 2 * v2 + t2 + t1) * sCubed + (3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared + t1 * s + v1;
 	};
 
