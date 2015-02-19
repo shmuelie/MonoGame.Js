@@ -646,7 +646,7 @@
 
 	Matrix.prototype.equals = function (other)
 	{
-		return (other instanceof Matrix) ? ((((((this.m11 == other.m11) && (this.m22 == other.m22)) && ((this.m33 == other.m33) && (this.m44 == other.m44))) && (((this.m12 == other.m12) && (this.m13 == other.m13)) && ((this.m14 == other.m14) && (this.m21 == other.m21)))) && ((((this.m23 == other.m23) && (this.m24 == other.m24)) && ((this.m31 == other.m31) && (this.m32 == other.m32))) && (((this.m34 == other.m34) && (this.m41 == other.m41)) && (this.m42 == other.m42)))) && (this.m43 == other.m43)) : false;
+		return (other instanceof Matrix) ? ((((((this.m11 === other.m11) && (this.m22 === other.m22)) && ((this.m33 === other.m33) && (this.m44 === other.m44))) && (((this.m12 === other.m12) && (this.m13 === other.m13)) && ((this.m14 === other.m14) && (this.m21 === other.m21)))) && ((((this.m23 === other.m23) && (this.m24 === other.m24)) && ((this.m31 === other.m31) && (this.m32 === other.m32))) && (((this.m34 === other.m34) && (this.m41 === other.m41)) && (this.m42 === other.m42)))) && (this.m43 === other.m43)) : false;
 	};
 
 	Matrix.invert = function (matrix)
