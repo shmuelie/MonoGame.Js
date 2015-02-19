@@ -832,7 +832,7 @@
 
 				for (var tUrl in $this._resources)
 				{
-					if (!$this._resources[tUrl]._loaded)
+					if ($this._resources.hasOwnProperty(tUrl) && !$this._resources[tUrl]._loaded)
 					{
 						return;
 					}
@@ -906,7 +906,7 @@
 
 			for (var tUrl in $this._resources)
 			{
-				if (!$this._resources[tUrl]._loaded)
+			    if ($this._resources.hasOwnProperty(tUrl) && !$this._resources[tUrl]._loaded)
 				{
 					return;
 				}
@@ -1052,7 +1052,7 @@
 
 				for (var tUrl in $this._resources)
 				{
-					if (!$this._resources[tUrl]._loaded)
+				    if ($this._resources.hasOwnProperty(tUrl) && !$this._resources[tUrl]._loaded)
 					{
 						return;
 					}
@@ -1381,7 +1381,7 @@
 		this.loadContent();
 		for (var tUrl in this.content._resources)
 		{
-		    if (!this.content._resources[tUrl]._loaded)
+		    if (this._resources.hasOwnProperty(tUrl) && !this.content._resources[tUrl]._loaded)
 		    {
 		        return;
 		    }
