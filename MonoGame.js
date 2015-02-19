@@ -442,7 +442,7 @@
 		switch (arguments.length)
 		{
 			case 2:
-				return new Vector2((position.x * matrix.m11) + (position.y * matrix.m21) + matrix.m41, (position.x * matrix.m12) + (position.y * matrix.m22) + matrix.m42);
+			    return new Vector2((arguments[0].x * arguments[1].m11) + (arguments[0].y * arguments[1].m21) + arguments[1].m41, (arguments[0].x * arguments[1].m12) + (arguments[0].y * arguments[1].m22) + arguments[1].m42);
 			case 3:
 				return Vector2_transform6(arguments[0], 0, arguments[1], arguments[2], 0, arguments[0].length);
 			case 6:
