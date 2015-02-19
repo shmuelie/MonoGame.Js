@@ -1071,16 +1071,16 @@
 
 	Graphics.GraphicsDevice = function (manager, canvas)
 	{
-		var clientBounds = canvas.getBoundingClientRect();
-		this._manager = manager;
-		this._currentDraw = manager._game._display;
-		this.viewport = {
-		    x: clientBounds.left,
-		    y: clientBounds.top,
-		    width: clientBounds.right - clientBounds.left,
-            height: clientBounds.bottom - clientBounds.top
-		}
-	}
+	    var clientBounds = canvas.getBoundingClientRect();
+	    this._manager = manager;
+	    this._currentDraw = manager._game._display;
+	    this.viewport = {
+	        x: clientBounds.left,
+	        y: clientBounds.top,
+	        width: clientBounds.right - clientBounds.left,
+	        height: clientBounds.bottom - clientBounds.top
+	    };
+	};
 	var GraphicsDevice = Graphics.GraphicsDevice;
 
 	GraphicsDevice.prototype.clear = function ()
@@ -1090,15 +1090,15 @@
 
 	GraphicsDevice.prototype.setRenderTarget = function (target)
 	{
-		if (target === null)
-		{
-			this._currentDraw = this._manager._game._display;
-		}
-		else
-		{
-			this._currentDraw = target;
-		}
-	}
+	    if (target === null)
+	    {
+	        this._currentDraw = this._manager._game._display;
+	    }
+	    else
+	    {
+	        this._currentDraw = target;
+	    }
+	};
 
 	//#endregion
 
@@ -1182,7 +1182,7 @@
 		this._graphicsDevice._currentDraw.scale(scale.x, scale.y);
 		this._graphicsDevice._currentDraw.textAlign = "left";
 		this._graphicsDevice._currentDraw.textBaseline = "top";
-		this._graphicsDevice._currentDraw.font = spriteFont._font
+		this._graphicsDevice._currentDraw.font = spriteFont._font;
 		this._graphicsDevice._currentDraw.fillStyle = color;
 		this._graphicsDevice._currentDraw.fillText(text, position.x, position.y);
 		this._graphicsDevice._currentDraw.restore();
@@ -1196,7 +1196,7 @@
 
 	Framework.Game = function ()
 	{
-	}
+	};
 	var Game = Framework.Game;
 
 	Game.createGame = function (cstr)
@@ -1412,8 +1412,8 @@
 
 	Game.prototype.base_update = function (gameTime)
 	{
-		Game.prototype.update.call(this, gameTime);
-	}
+	    Game.prototype.update.call(this, gameTime);
+	};
 
 	Game.prototype.draw = function (gameTime)
 	{
