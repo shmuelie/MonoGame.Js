@@ -599,7 +599,7 @@
 		var xScale = arguments[0];
 		var yScale = arguments[1];
 		var zScale = arguments[2];
-		return new Matrix(zScale, 0, 0, 0, 0, yScale, 0, 0, 0, 0, zScale, 0, 0, 0, 0, 1);
+		return new Matrix(xScale, 0, 0, 0, 0, yScale, 0, 0, 0, 0, zScale, 0, 0, 0, 0, 1);
 	};
 
 	Matrix.createTranslation = function (xPosition, yPosition, zPosition)
