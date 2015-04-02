@@ -103,15 +103,9 @@
 		return value1 + (value2 - value1) * amount;
 	};
 
-	MathHelper.max = function (value1, value2)
-	{
-		return Math.max(value1, value2);
-	};
+	MathHelper.max = Math.max;
 
-	MathHelper.min = function (value1, value2)
-	{
-		return Math.min(value1, value2);
-	};
+	MathHelper.min = Math.min;
 
 	MathHelper.smoothStep = function (value1, value2, amount)
 	{
