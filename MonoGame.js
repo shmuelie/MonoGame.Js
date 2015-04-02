@@ -1162,6 +1162,11 @@
 
 	SpriteBatch.prototype.drawString = function (spriteFont, text, position, color, rotation, scale)
 	{
+	    if (!this._drawing)
+	    {
+	        throw new Error("Cannot be called till after begin is called");
+	    }
+
 		text = text.toString();
 
 		scale = scale || new Vector2(1);
