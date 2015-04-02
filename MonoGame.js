@@ -264,7 +264,7 @@
 
 	Rectangle.prototype.isEmpty = function ()
 	{
-		return ((((this.width === 0) && (this.height === 0)) && (this.x === 0)) && (this.y === 0));
+		return (this.width === 0) && (this.height === 0) && (this.x === 0) && (this.y === 0);
 	};
 
 	Rectangle.prototype.toString = function ()
