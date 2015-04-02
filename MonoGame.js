@@ -219,17 +219,17 @@
 			var value = arguments[0];
 			if (value instanceof Point)
 			{
-				return ((((this.x <= value.x) && (value.x < (this.x + this.width))) && (this.y <= value.y)) && (value.y < (this.y + this.height)));
+				return (this.x <= value.x) && (value.x < this.x + this.width) && (this.y <= value.y) && (value.y < this.y + this.height);
 			}
 			else if (value instanceof Rectangle)
 			{
-				return ((((this.x <= value.x) && ((value.x + value.width) <= (this.x + this.width))) && (this.y <= value.y)) && ((value.y + value.height) <= (this.y + this.height)));
+				return (this.x <= value.x) && (value.x + value.width <= this.x + this.width) && (this.y <= value.y) && (value.y + value.height <= this.y + this.height);
 			}
 			return false;
 		}
 		var x = arguments[0];
 		var y = arguments[1];
-		return ((((this.x <= x) && (x < (this.x + this.width))) && (this.y <= y)) && (y < (this.y + this.height)));
+		return (this.x <= x) && (x < this.x + this.width) && (this.y <= y) && (y < this.y + this.height);
 	};
 
 	Rectangle.prototype.offset = function ()
