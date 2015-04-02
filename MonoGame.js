@@ -332,7 +332,7 @@
 
 	Vector2.prototype.equals = function (obj)
 	{
-		return (obj instanceof Vector2) ? ((obj.x === this.x) && (obj.y === this.y)) : false;
+	    return (obj instanceof Vector2) && (obj.x === this.x) && (obj.y === this.y);
 	};
 
 	Vector2.prototype.add = function (other)
