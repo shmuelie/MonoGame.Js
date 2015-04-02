@@ -184,7 +184,7 @@
 
 	Point.prototype.equals = function (obj)
 	{
-		return (obj instanceof Point) ? ((this.x === obj.x) && (this.y === obj.y)) : false;
+		return (obj instanceof Point) && (this.x === obj.x) && (this.y === obj.y);
 	};
 
 	Point.prototype.toString = function ()
