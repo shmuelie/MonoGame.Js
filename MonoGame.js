@@ -209,7 +209,7 @@
 
 	Rectangle.prototype.equals = function (obj)
 	{
-		return (obj instanceof Rectangle) ? ((this.x === obj.x) && (this.y === obj.y) && (this.width === obj.width) && (this.height === obj.height)) : false;
+		return (obj instanceof Rectangle) && (this.x === obj.x) && (this.y === obj.y) && (this.width === obj.width) && (this.height === obj.height);
 	};
 
 	Rectangle.prototype.contains = function ()
