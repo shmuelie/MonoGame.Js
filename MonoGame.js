@@ -1407,7 +1407,7 @@
 		this.loadContent();
 		for (var tUrl in this.content._resources)
 		{
-		    if (this._resources.hasOwnProperty(tUrl) && !this.content._resources[tUrl]._loaded)
+		    if (this.content._resources.hasOwnProperty(tUrl) && !this.content._resources[tUrl]._loaded)
 		    {
 		        return;
 		    }
