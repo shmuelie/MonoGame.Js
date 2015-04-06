@@ -813,6 +813,10 @@
 
 	ContentManager.prototype.loadTexture = function (url)
 	{
+	    if (!this._game.isRunning)
+	    {
+	        throw new Error("Cannot load Texture once game is running");
+	    }
 		if (this._resources[url] === undefined)
 		{
 			var img = new Image();
@@ -847,6 +851,10 @@
 
 	ContentManager.prototype.loadFont = function (name, size, bold, italic)
 	{
+	    if (!this._game.isRunning)
+	    {
+	        throw new Error("Cannot load Font once game is running");
+	    }
 		var style = "";
 		
 		if (bold)
@@ -873,6 +881,10 @@
 
 	function loadAudio(urls, $this, resource)
 	{
+	    if (!this._game.isRunning)
+	    {
+	        throw new Error("Cannot load Audio once game is running");
+	    }
 		var audioElement = document.createElement("audio");
 		audioElement.autoplay = false;
 		audioElement.controls = false;
@@ -920,6 +932,10 @@
 
 	ContentManager.prototype.loadSoundEffect = function (urls)
 	{
+	    if (!this._game.isRunning)
+	    {
+	        throw new Error("Cannot load Video once game is running");
+	    }
 		if (typeof urls === "string")
 		{
 			urls = [urls];
@@ -1222,6 +1238,7 @@
 			this._isExited = false;
 			this._previousMilliseconds = 0;
 			this._updateFrameLag = 0;
+			this.isRunning = false;
 
 			cstr.call(this);
 		}
@@ -1396,7 +1413,8 @@
 
 	Game.prototype._continueRun = function ()
 	{
-		this.contentLoaded();
+	    this.contentLoaded();
+	    this.isRunning = true;
 		this.resetElapsedMilliseconds();
 		this._isExited = false;
 		var $this = this;
@@ -1444,6 +1462,7 @@
 		this.graphics.graphicsDevice.clear();
 		this.unloadConent();
 		this._isExited = true;
+		this.isRunning = false;
 	};
 
 	Game.prototype.base_exit = function ()

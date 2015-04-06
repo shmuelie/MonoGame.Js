@@ -26,6 +26,8 @@ There are places where the API is different in more than just ECMAScript ways
   for Game's initialize method.
 * Because textures are loaded asynchronously you just load content in 
   loadContent and then in contentLoaded do any logic based on that content.
+* You can only load content in loadContent. Trying to load content later will 
+  result in an exception.
 * There is no TimeSpan object, instead just plain milliseconds are used. So 
   for example instead of gameTime.elapsedGameTime it's
   gameTime.elapsedGameMilliseconds.
