@@ -1,15 +1,15 @@
-<h1>MonoGame.Js</h1>
+﻿<h1>MonoGame.Js</h1>
 
 <p>JavaScript game libary that is based on the XNA/MonoGame API</p>
 
 <p>The only "dependancies" on modern browsers the API takes is the HTML canvas 
 object, addEventListener function, and if you want to use Songs and sound 
 effects a dependancy on the audio tag too. Otherwise the code is valid 
-ECMAScript 3 code and should work if canvas and addEventListener are 
+ECMAScript 3 code and should work fine if canvas and addEventListener are 
 pollyfilled.</p>
 
-<p>Clown.html contains both a game that is both an example of how to use 
-MonoGame.Js and is used as a basic test to make sure it works correctly.</p>
+<p>Clown.html contains a game that is both an example of how to use MonoGame.Js 
+and is used as a basic test to make sure it works correctly.</p>
 
 <p>There are places where the API is different in more than just ECMAScript ways 
 (so besides making methods start with lowercase letters):</p>
@@ -26,8 +26,10 @@ objects base version call base<em>[function name], for example base</em>initiali
 for Game's initialize method.</li>
 <li>Because textures are loaded asynchronously you just load content in 
 loadContent and then in contentLoaded do any logic based on that content.</li>
+<li>You can only load content in loadContent. Trying to load content later will 
+result in an exception.</li>
 <li>There is no TimeSpan object, instead just plain milliseconds are used. So 
-for example you instead of gameTime.elapsedGameTime it's
+for example instead of gameTime.elapsedGameTime it's
 gameTime.elapsedGameMilliseconds.</li>
 <li>Remember that Point, Vector2, and Matrix are all copy by ref not copy by 
 value.</li>
