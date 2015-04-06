@@ -736,11 +736,16 @@
 	{
 		this.isRunning = false;
 		this._startTime = MIN_DATE;
+		this._lastTime = 0;
 	};
 	var Stopwatch = Framework.Stopwatch;
 
 	Stopwatch.prototype.elapsedMilliseconds = function ()
 	{
+	    if (!this.isRunning)
+	    {
+	        return this._lastTime;
+	    }
 		if (this._startTime.getUTCMilliseconds() !== MIN_DATE.getMilliseconds())
 		{
 			var now = new Date();
@@ -760,12 +765,14 @@
 
 	Stopwatch.prototype.stop = function ()
 	{
-		this.isRunning = false;
+	    this._lastTime = this.elapsedMilliseconds();
+	    this.isRunning = false;
 	};
 
 	Stopwatch.prototype.reset = function ()
 	{
-		this.stop();
+	    this.stop();
+	    this._lastTime = 0;
 		this._startTime = MIN_DATE;
 	};
 
