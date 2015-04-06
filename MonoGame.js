@@ -881,6 +881,10 @@
 
 	function loadAudio(urls, $this, resource)
 	{
+	    if (!this._game.isRunning)
+	    {
+	        throw new Error("Cannot load Audio once game is running");
+	    }
 		var audioElement = document.createElement("audio");
 		audioElement.autoplay = false;
 		audioElement.controls = false;
